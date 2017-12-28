@@ -7,7 +7,7 @@ ClickerMath.GameState = {
   init: function() {
 
     this.totalX = 0;
-    this.Xnow = 0;
+    this.xNow = 0;
 
     this.clickGain = 1;
     this.xGainPerSecond = 0;
@@ -16,9 +16,29 @@ ClickerMath.GameState = {
     this.easyTaskReward = 100;
     this.easyTasksSolved = 0;
 
+    this.normalTaskPrice = 200;
+    this.normalTaskReward = 1000;
+    this.normalTasksSolved = 0;
+
+    this.hardTaskPrice = 500;
+    this.hardTaskReward = 2500;
+    this.hardTasksSolved = 0;
+
+    this.asianTaskPrice = 1000;
+    this.asianTaskReward = 10000;
+    this.asianTasksSolved = 0;
+
     this.studentPrice = 20;
     this.studentGain = 1;
     this.studentPriceGrow = 20;
+
+    this.profPrice = 50;
+    this.profGain = 5;
+    this.profPriceGrow = 20;
+
+    this.xFarmPrice = 400;
+    this.xFarmGain = 10;
+    this.xFarmPriceGrow = 20;
 
 
 
@@ -68,7 +88,7 @@ ClickerMath.GameState = {
     // this.game.world.sendToBack(this.backgroundSprite);
 
     //x number now
-    this.xAmountText = this.game.add.text(400, 40, this.Xnow, this.xAmountStyle);
+    this.xAmountText = this.game.add.text(400, 40, this.xNow, this.xAmountStyle);
     this.xAmountText.anchor.setTo(0.5);
 
     this.xAmountIcon = this.game.add.sprite(this.xAmountText.right + 30, this.xAmountText.y, "xIcon");
@@ -102,7 +122,7 @@ ClickerMath.GameState = {
   update: function() {
 
     //update current x and total x
-    this.xAmountText.text = Math.floor(this.Xnow);
+    this.xAmountText.text = Math.floor(this.xNow);
     this.xAmountIcon.x = this.xAmountText.right + 30;
 
     
@@ -122,7 +142,7 @@ ClickerMath.GameState = {
   updateXPerSecond: function(){
 
     this.totalX += this.xGainPerSecond/10;
-    this.Xnow += this.xGainPerSecond/10;
+    this.xNow += this.xGainPerSecond/10;
   },
 
   xIconClicked: function(sprite, pointer){
@@ -130,10 +150,10 @@ ClickerMath.GameState = {
 
     //update xamounts
     this.totalX += this.clickGain;
-    this.Xnow += this.clickGain;
+    this.xNow += this.clickGain;
 
     //update text
-    this.xAmountText.text = Math.floor(this.Xnow);
+    this.xAmountText.text = Math.floor(this.xNow);
     this.xAmountIcon.x = this.xAmountText.right + 30
 
     //tween x
@@ -241,11 +261,7 @@ ClickerMath.GameState = {
       font: "30px Bungee",
       fill: "black"
     };
-    this.storeTextGroup = this.game.add.group();
 
-    this.buyTaskText = this.game.add.text(1040, 110, "Buy Equations", buyTaskTextStyle);
-    this.buyTaskText.anchor.setTo(0.5);
-    this.storeTextGroup.add(this.buyTaskText);
 
     //buttons for tasks
     this.storeButtons = this.game.add.group();
@@ -259,193 +275,263 @@ ClickerMath.GameState = {
       asianButtonColor:0x4B6540
     }
     //taskbuttons
-    this.easyTaskButton = this.add.graphics(0, 0);                     
-    this.easyTaskButton.lineStyle(2, 0x000000, 1);            
-    this.easyTaskButton.beginFill(eqBtnData.easyButtonColor, 1);            
-    this.easyTaskButton.drawRect(800, eqBtnData.buttonTop, 480, eqBtnData.buttonHeight);                      
-    this.easyTaskButton.endFill(); 
-    this.easyTaskButton.alpha = 1;
-    this.easyTaskButton.inputEnabled = true;           
-    this.easyTaskButton.events.onInputDown.add(this.taskButtonHandler, this);
-    this.easyTaskButton.events.onInputOver.add(function(){
-      this.easyTaskButton.tint = 0.5 * 0xffffff;
-    }, this)
-    this.easyTaskButton.events.onInputOut.add(function(){
-      this.easyTaskButton.tint = 0xffffff;
-    }, this)
-    this.storeButtons.add(this.easyTaskButton);
+    this.easyTaskButton = this.add.graphics(0, 0); 
+    this.easyTaskButton.data.price = this.easyTaskPrice;
+    this.easyTaskButton.data.reward = this.easyTaskReward;
+    this.easyTaskButton.data.solved = this.easyTasksSolved;
 
+    this.createStoreButton(this.easyTaskButton, eqBtnData.easyButtonColor, eqBtnData.buttonTop, eqBtnData.buttonHeight, this.storeButtons, this.taskButtonHandler);
+    this.normalTaskButton = this.add.graphics(0, 0); 
+    this.normalTaskButton.data.price = this.normalTaskPrice;
+    this.normalTaskButton.data.reward = this.normalTaskReward;
+    this.normalTaskButton.data.solved = this.normalTasksSolved;
+    this.createStoreButton(this.normalTaskButton, eqBtnData.normalButtonColor, eqBtnData.buttonTop + eqBtnData.buttonHeight * 1, eqBtnData.buttonHeight, this.storeButtons, this.taskButtonHandler);
+    this.hardTaskButton = this.add.graphics(0, 0); 
+    this.hardTaskButton.data.price = this.hardTaskPrice;
+    this.hardTaskButton.data.reward = this.hardTaskReward;
+    this.hardTaskButton.data.solved = this.hardTasksSolved;                    
+    this.createStoreButton(this.hardTaskButton, eqBtnData.hardButtonColor, eqBtnData.buttonTop + eqBtnData.buttonHeight * 2, eqBtnData.buttonHeight, this.storeButtons, this.taskButtonHandler);          
+    this.asianTaskButton = this.add.graphics(0, 0); 
+    this.asianTaskButton.data.price = this.asianTaskPrice;
+    this.asianTaskButton.data.reward = this.asianTaskReward;
+    this.asianTaskButton.data.solved = this.asianTasksSolved;
+    this.createStoreButton(this.asianTaskButton, eqBtnData.asianButtonColor, eqBtnData.buttonTop + eqBtnData.buttonHeight * 3, eqBtnData.buttonHeight, this.storeButtons, this.taskButtonHandler);
 
-    this.normalTaskButton = this.add.graphics(0, 0);                     
-    this.normalTaskButton.lineStyle(2, 0x000000, 1);            
-    this.normalTaskButton.beginFill(eqBtnData.normalButtonColor, 0.8);            
-    this.normalTaskButton.drawRect(800, eqBtnData.buttonTop + eqBtnData.buttonHeight, 480, eqBtnData.buttonHeight);                      
-    this.normalTaskButton.endFill(); 
-    this.normalTaskButton.alpha = 1;
-    this.normalTaskButton.inputEnabled = true;           
-    this.normalTaskButton.events.onInputDown.add(this.taskButtonHandler, this);
-    this.normalTaskButton.events.onInputOver.add(function(){
-      this.normalTaskButton.tint = 0.5 * 0xffffff;
-    }, this)
-    this.normalTaskButton.events.onInputOut.add(function(){
-      this.normalTaskButton.tint = 0xffffff;
-    }, this)
-    this.storeButtons.add(this.normalTaskButton);
-
-    this.hardTaskButton = this.add.graphics(0, 0);                     
-    this.hardTaskButton.lineStyle(2, 0x000000, 1);            
-    this.hardTaskButton.beginFill(eqBtnData.hardButtonColor, 0.8);            
-    this.hardTaskButton.drawRect(800, eqBtnData.buttonTop + eqBtnData.buttonHeight * 2, 480, eqBtnData.buttonHeight);                      
-    this.hardTaskButton.endFill(); 
-    this.hardTaskButton.alpha = 1;
-    this.hardTaskButton.inputEnabled = true;           
-    this.hardTaskButton.events.onInputDown.add(this.taskButtonHandler, this);
-    this.hardTaskButton.events.onInputOver.add(function(){
-      this.hardTaskButton.tint = 0.5 * 0xffffff;
-    }, this)
-    this.hardTaskButton.events.onInputOut.add(function(){
-      this.hardTaskButton.tint = 0xffffff;
-    }, this)
-    this.storeButtons.add(this.hardTaskButton);
-
-    this.asianTaskButton = this.add.graphics(0, 0);                     
-    this.asianTaskButton.lineStyle(2, 0x000000, 1);            
-    this.asianTaskButton.beginFill(eqBtnData.asianButtonColor, 0.8);            
-    this.asianTaskButton.drawRect(800, eqBtnData.buttonTop + eqBtnData.buttonHeight * 3, 480, eqBtnData.buttonHeight);                      
-    this.asianTaskButton.endFill(); 
-    this.asianTaskButton.alpha = 1;
-    this.asianTaskButton.inputEnabled = true;           
-    this.asianTaskButton.events.onInputDown.add(this.taskButtonHandler, this);
-    this.asianTaskButton.events.onInputOver.add(function(){
-      this.asianTaskButton.tint = 0.5 * 0xffffff;
-    }, this)
-    this.asianTaskButton.events.onInputOut.add(function(){
-      this.asianTaskButton.tint = 0xffffff;
-    }, this)
-    this.storeButtons.add(this.asianTaskButton);
-    
 
     //HELPER BUTTONS
-
     var hlBtnData = {
       buttonTop: 530,
       buttonHeight: 70
-    }
+    };
 
-    this.profHelperButton = this.add.graphics(0, 0);                     
-    this.profHelperButton.lineStyle(2, 0x000000, 1);            
-    this.profHelperButton.beginFill(0x45818E, 0.8);            
-    this.profHelperButton.drawRect(800, hlBtnData.buttonTop + hlBtnData.buttonHeight * 0, 480, hlBtnData.buttonHeight);                      
-    this.profHelperButton.endFill(); 
-    this.profHelperButton.alpha = 1;
-    this.profHelperButton.inputEnabled = true;           
-    this.profHelperButton.events.onInputDown.add(this.helperButtonHandler, this);
-    this.profHelperButton.events.onInputOver.add(function(){
-      this.profHelperButton.tint = 0.5 * 0xffffff;
-    }, this)
-    this.profHelperButton.events.onInputOut.add(function(){
-      this.profHelperButton.tint = 0xffffff;
-    }, this)
-    this.storeButtons.add(this.profHelperButton);    
+    this.studentHelperButton = this.add.graphics(0, 0);   
+    this.studentHelperButton.data.price = this.studentPrice;
+    this.studentHelperButton.data.gain = this.studentGain;
+    this.createStoreButton(this.studentHelperButton, 0xC2D5DA, hlBtnData.buttonTop + hlBtnData.buttonHeight * 0, hlBtnData.buttonHeight, this.storeButtons, this.helperButtonHandler);
+    
+    this.profHelperButton = this.add.graphics(0, 0); 
+    this.profHelperButton.data.price = this.profPrice;
+    this.profHelperButton.data.gain = this.profGain; 
+    this.createStoreButton(this.profHelperButton, 0x88AEB7, hlBtnData.buttonTop + hlBtnData.buttonHeight * 1, hlBtnData.buttonHeight, this.storeButtons, this.helperButtonHandler);
+    
+    this.xFarmHelperButton = this.add.graphics(0, 0);    
+    this.xFarmHelperButton.data.price = this.xFarmPrice;
+    this.xFarmHelperButton.data.gain = this.xFarmGain;
+    this.createStoreButton(this.xFarmHelperButton, 0x45818E, hlBtnData.buttonTop + hlBtnData.buttonHeight * 2, hlBtnData.buttonHeight, this.storeButtons, this.helperButtonHandler);
+  
 
-    this.studentHelperButton = this.add.graphics(0, 0);                     
-    this.studentHelperButton.lineStyle(2, 0x000000, 1);            
-    this.studentHelperButton.beginFill(0x376772, 0.8);            
-    this.studentHelperButton.drawRect(800, hlBtnData.buttonTop + hlBtnData.buttonHeight * 1, 480, hlBtnData.buttonHeight);                      
-    this.studentHelperButton.endFill(); 
-    this.studentHelperButton.alpha = 1;
-    this.studentHelperButton.inputEnabled = true;           
-    this.studentHelperButton.events.onInputDown.add(this.helperButtonHandler, this);
-    this.studentHelperButton.events.onInputOver.add(function(){
-      this.studentHelperButton.tint = 0.5 * 0xffffff;
-    }, this)
-    this.studentHelperButton.events.onInputOut.add(function(){
-      this.studentHelperButton.tint = 0xffffff;
-    }, this)
-    this.storeButtons.add(this.studentHelperButton);
-
-    this.xFarmHelperButton = this.add.graphics(0, 0);                     
-    this.xFarmHelperButton.lineStyle(2, 0x000000, 1);            
-    this.xFarmHelperButton.beginFill(0x2C525B, 0.8);            
-    this.xFarmHelperButton.drawRect(800, hlBtnData.buttonTop + hlBtnData.buttonHeight * 2, 480, hlBtnData.buttonHeight);                      
-    this.xFarmHelperButton.endFill(); 
-    this.xFarmHelperButton.alpha = 1;
-    this.xFarmHelperButton.inputEnabled = true;           
-    this.xFarmHelperButton.events.onInputDown.add(this.helperButtonHandler, this);
-    this.xFarmHelperButton.events.onInputOver.add(function(){
-      this.xFarmHelperButton.tint = 0.5 * 0xffffff;
-    }, this)
-    this.xFarmHelperButton.events.onInputOut.add(function(){
-      this.xFarmHelperButton.tint = 0xffffff;
-    }, this)
-    this.storeButtons.add(this.xFarmHelperButton);
-
+    //TEXTS AND ICONS
     var taskTextStyle = {
       font: "20px Bungee",
       fill: "black"
     };
     var priceTextStyle = {
-      font: "20px Bungee",
-      fill: "yellow"
+      font: "22px Bungee",
+      fill: "black"
     };
-    this.easyTaskText = this.game.add.text(800 + 60, 175, "Easy", taskTextStyle);
-    this.easyTaskText.anchor.setTo(0.5);
-    this.storeTextGroup.add(this.easyTaskText);
+    this.storeTextGroup = this.game.add.group();
 
-    this.normalTaskText = this.game.add.text(800 + 60, 250, "Normal", taskTextStyle);
-    this.normalTaskText.anchor.setTo(0.5);
-    this.storeTextGroup.add(this.normalTaskText);
-
-    this.hardTaskText = this.game.add.text(800 + 60, 325, "Hard", taskTextStyle);
-    this.hardTaskText.anchor.setTo(0.5);
-    this.storeTextGroup.add(this.hardTaskText);
-
-    this.asianTaskText = this.game.add.text(800 + 60, 400, "Asian", taskTextStyle);
-    this.asianTaskText.anchor.setTo(0.5);
-    this.storeTextGroup.add(this.asianTaskText);
-
-
-
+    this.buyTaskText = this.game.add.text(1040, 110, "Buy Equations", buyTaskTextStyle);
+    this.buyTaskText.anchor.setTo(0.5);
+    this.storeTextGroup.add(this.buyTaskText);
 
     this.buyHelpersText = this.game.add.text(1040, 495, "Buy Helpers", buyTaskTextStyle);
     this.buyHelpersText.anchor.setTo(0.5);
     this.storeTextGroup.add(this.buyHelpersText);
 
-    this.buyStudentText = this.game.add.text(800 + 175, 550, "Student", taskTextStyle);
-    this.buyStudentText.anchor.setTo(0.5);
-    this.storeTextGroup.add(this.buyStudentText);
-    //price
-    this.studentPrice = this.game.add.text(940, 580, this.studentPrice, priceTextStyle);
-    this.studentPrice.anchor.setTo(0.5);
-    this.storeTextGroup.add(this.studentPrice);
+
+
+    //TASK TEXTS
+    this.easyTaskText = this.game.add.text();
+    this.easyTaskIcon = this.game.add.sprite();
+    this.easyTaskPriceText = this.game.add.text();
+    this.easyTaskPriceIcon = this.game.add.sprite();
+    this.easyTaskRewardText = this.game.add.text();
+    this.createTaskArea(this.easyTaskRewardText, this.easyTaskReward, this.easyTaskPrice, this.easyTaskText, this.easyTaskIcon, this.easyTaskPriceText, this.easyTaskPriceIcon, 945, 160, 850, 175, 980, "Easy", "easy");
+    
+    this.normalTaskText = this.game.add.text();
+    this.normalTaskIcon = this.game.add.sprite();
+    this.normalTaskPriceText = this.game.add.text();
+    this.normalTaskPriceIcon = this.game.add.sprite();
+    this.normalTaskRewardText = this.game.add.text();
+    this.createTaskArea(this.normalTaskRewardText, this.normalTaskReward, this.normalTaskPrice, this.normalTaskText, this.normalTaskIcon, this.normalTaskPriceText, this.normalTaskPriceIcon, 962, 240, 850, 255, 980, "Normal", "normal");
+    
+    this.hardTaskText = this.game.add.text();
+    this.hardTaskIcon = this.game.add.sprite();
+    this.hardTaskPriceText = this.game.add.text();
+    this.hardTaskPriceIcon = this.game.add.sprite();
+    this.hardTaskRewardText = this.game.add.text();
+    this.createTaskArea(this.hardTaskRewardText, this.hardTaskReward, this.hardTaskPrice, this.hardTaskText, this.hardTaskIcon, this.hardTaskPriceText, this.hardTaskPriceIcon, 945, 320, 850, 340, 980, "Hard", "hard");
+    
+    this.asianTaskText = this.game.add.text();
+    this.asianTaskIcon = this.game.add.sprite();
+    this.asianTaskPriceText = this.game.add.text();
+    this.asianTaskPriceIcon = this.game.add.sprite();
+    this.asianTaskRewardText = this.game.add.text();
+    this.createTaskArea(this.asianTaskRewardText, this.asianTaskReward, this.asianTaskPrice, this.asianTaskText, this.asianTaskIcon, this.asianTaskPriceText, this.asianTaskPriceIcon, 945, 400, 850, 420, 980, "Asian", "asian");
     
 
-    this.buyProfessorsText = this.game.add.text(800 + 185, 625, "Professor", taskTextStyle);
-    this.buyProfessorsText.anchor.setTo(0.5);
-    this.storeTextGroup.add(this.buyProfessorsText);
-
-    this.buyXfarmText = this.game.add.text(800 + 170, 690, "X - farm", taskTextStyle);
-    this.buyXfarmText.anchor.setTo(0.5);
-    this.storeTextGroup.add(this.buyXfarmText);
+    //HELPERS TEXT & ICONS
+    this.buyStudentText = this.game.add.text();
+    this.studentPriceText = this.game.add.text();
+    this.studentPriceIcon = this.game.add.sprite();
+    this.createHelperText(this.studentGain, this.buyStudentText, this.studentPriceText, this.studentPriceIcon, this.storeTextGroup, this.studentPrice, 800, 550 + 75 * 0, "Student", 1000, 580 + 74 * 0);
+    
+    this.buyProfessorText = this.game.add.text();
+    this.professorPriceText = this.game.add.text();
+    this.professorPriceIcon = this.game.add.sprite();
+    this.createHelperText(this.profGain, this.buyProfessorText, this.professorPriceText, this.professorPriceIcon, this.storeTextGroup, this.profPrice, 800 + 15, 550 + 75 * 1, "Professor", 1000, 580 + 74 * 1);
+    
+    this.buyXFarmText = this.game.add.text();
+    this.xFarmPriceText = this.game.add.text();
+    this.xFarmPriceIcon = this.game.add.sprite();
+    this.createHelperText(this.xFarmGain, this.buyXFarmText, this.xFarmPriceText, this.xFarmPriceIcon, this.storeTextGroup, this.xFarmPrice, 800 - 15, 550 + 75 * 2, "xFarm", 1000, 580 + 74 * 2);
 
     this.game.world.bringToTop(this.storeTextGroup);
 
   },
   openUpgrades: function(){
     //clear previous opener
-    this.storeTextGroup.kill(true);
-    this.storeButtons.kill(true);
+    this.storeTextGroup.destroy(true);
+    this.storeButtons.destroy(true);
 
     this.openStoreButton.alpha = 0.5;
     this.openUpgradeButton.alpha = 1;
 
     console.log("Upgrade section opened");
   },
-  taskButtonHandler: function(){
+  taskButtonHandler: function(button){
     console.log("TaskButton presssed");
+    console.log(button);
   },
 
-  helperButtonHandler: function(){
-    console.log("HelperButton pressed");
+  helperButtonHandler: function(button){
+    // console.log("HelperButton pressed");
+    console.log(button);
+    console.log(button.graphicsData[0].fillColor);
+
+    var price = button.data.price;
+    var gain = button.data.gain;
+
+    //if enough money, add gain to gainpersecond
+    if(price <= this.xNow){
+      this.xNow -= price;
+      this.xGainPerSecond += gain;
+    }
+    else{
+      var tween = this.game.add.tween(button).to({tint: 0xff0000}, 500, null, true);
+      tween.onComplete.add(function(){
+        button.tint = 0xffffff;
+      }, this);
+
+    }
+
+  },
+  createStoreButton: function(button, buttonColor, buttonTop, buttonHeight, group, buttonHandler){
+                        
+    button.lineStyle(2, 0x000000, 1);            
+    button.beginFill(buttonColor, 1);            
+    button.drawRect(800, buttonTop, 480, buttonHeight);                      
+    button.endFill(); 
+    button.alpha = 1;
+    button.inputEnabled = true;     
+
+    button.events.onInputDown.add(buttonHandler, this);
+    button.events.onInputOver.add(function(){
+      button.tint = 0.5 * 0xffffff;
+    }, this)
+    button.events.onInputOut.add(function(){
+      button.tint = 0xffffff;
+    }, this)
+
+    group.add(button);
+
+  },
+  createHelperText: function(gain, text, priceText, Icon, group, price, textX, textY, key, priceX, priceY){
+    var priceTextStyle = {
+      font: "22px Bungee",
+      fill: "black"
+    };
+      var taskTextStyle = {
+      font: "20px Bungee",
+      fill: "black"
+    };
+    var gainTextStyle = {
+      font: "20px Bungee",
+      fill: "black"
+    };
+
+    text = this.game.add.text(textX + 175, textY, key, taskTextStyle);
+    text.anchor.setTo(0.5);
+    this.storeTextGroup.add(text);
+    //price
+    priceText = this.game.add.text(priceX, priceY, price, priceTextStyle);
+    priceText.anchor.setTo(0.5);
+    this.storeTextGroup.add(priceText);
+    //icon
+    Icon = this.game.add.sprite(priceText.right + 20, priceText.y, "xIcon");
+    Icon.anchor.setTo(0.5);
+    Icon.scale.setTo(0.3);
+    group.add(Icon);
+
+    //X Gain
+    var gainText = this.game.add.text(1150, text.y, "XGAIN", gainTextStyle);
+    gainText.anchor.setTo(0.5);
+    var gainAmountText = this.game.add.text(gainText.x + 30, gainText.y + 30,"+"+ gain + "  X/second", gainTextStyle);
+    gainAmountText.anchor.setTo(0.5);
+    // var gainIcon = this.game.add.sprite(gainAmountText.right + 20, gainAmountText.y - 10, "xIcon");
+    // gainIcon.anchor.setTo(0.5);
+    // gainIcon.scale.setTo(0.3);
+
+    group.add(gainText);
+    group.add(gainAmountText);
+    // group.add(gainIcon);
+
+
+  },
+  createTaskArea: function(rewardAmountText, reward, amount, text, icon, priceText, priceIcon, textX, textY, IconX, IconY, priceX, textString, iconString){
+
+    var taskTextStyle = {
+      font: "20px Bungee",
+      fill: "black"
+    };
+    var priceTextStyle = {
+      font: "22px Bungee",
+      fill: "black"
+    };
+    var rewardTextStyle = {
+      font: "20px Bungee",
+      fill: "black"
+    };
+
+    text = this.game.add.text(textX, textY, textString, taskTextStyle);  
+    Icon = this.game.add.sprite(IconX, IconY, iconString);   
+    priceText = this.game.add.text(priceX, text.y + 30, amount, priceTextStyle);
+    priceIcon = this.game.add.sprite(priceText.right, priceText.y, "xIcon");
+
+    //reward text
+    var rewardText = this.game.add.text(1150, text.y, "Reward", rewardTextStyle);
+    rewardText.anchor.setTo(0.5);
+    rewardAmountText = this.game.add.text(rewardText.x + 20, rewardText.y + 30, reward, rewardTextStyle);
+    rewardAmountText.anchor.setTo(0.5);
+    var rewardIcon = this.game.add.sprite(rewardAmountText.right + 20, rewardAmountText.y, "xIcon");
+
+    priceIcon.anchor.setTo(0.5);
+    rewardIcon.anchor.setTo(0.5);
+    priceText.anchor.setTo(0.5);
+    text.anchor.setTo(0.5);
+    Icon.anchor.setTo(0.5);
+    Icon.scale.setTo(1.3);
+    rewardIcon.scale.setTo(0.3);
+    priceIcon.scale.setTo(0.3);
+    this.storeTextGroup.add(priceText);
+    this.storeTextGroup.add(priceIcon);
+    this.storeTextGroup.add(text);
+    this.storeTextGroup.add(Icon);
+    this.storeTextGroup.add(rewardText);
+    this.storeTextGroup.add(rewardAmountText);
+    this.storeTextGroup.add(rewardIcon);
+
+    //reward text
   }
 };
