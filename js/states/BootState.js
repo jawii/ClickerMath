@@ -25,5 +25,8 @@ ClickerMath.BootState = {
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
+
+        //keep running on background
+        this.game.stage.disableVisibilityChange = true;
     }
 };

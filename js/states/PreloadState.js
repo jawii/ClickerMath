@@ -8,6 +8,10 @@ ClickerMath.PreloadState = {
 
 	preload: function(){
 
+		//The X
+		this.load.image("X", "assets/images/X.png");
+		this.load.image("xIcon", "assets/images/xIcon.png");
+
 		//PROGRESS BAR
 		this.progress = this.game.add.text(this.game.world.centerX, this.game.world.width/2, '0%', {fill: 'white'});    
 		this.progress.anchor.setTo(0.5);           
