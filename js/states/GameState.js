@@ -9,8 +9,17 @@ ClickerMath.GameState = {
     this.totalX = 0;
     this.Xnow = 0;
 
-    this.clickGain = 0;
-    this.xGainPerSecond = 5203;
+    this.clickGain = 1;
+    this.xGainPerSecond = 0;
+
+    this.easyTaskPrice = 50;
+    this.easyTaskReward = 100;
+    this.easyTasksSolved = 0;
+
+    this.studentPrice = 20;
+    this.studentGain = 1;
+    this.studentPriceGrow = 20;
+
 
 
 
@@ -189,8 +198,6 @@ ClickerMath.GameState = {
       font: "35px Bungee",
       fill: "black"
     }
-
-    
     //STORE
     //create as graphics
     this.openStoreButton = this.add.graphics(0, 0);            
@@ -229,23 +236,216 @@ ClickerMath.GameState = {
     this.openUpgradeButton.alpha = 0.5;
     this.openStoreButton.alpha = 1;
 
-    console.log("Store - section ppened");
-
+    console.log("Store - section opened");
     var buyTaskTextStyle = {
-      font: "20px Bungee",
+      font: "30px Bungee",
       fill: "black"
+    };
+    this.storeTextGroup = this.game.add.group();
+
+    this.buyTaskText = this.game.add.text(1040, 110, "Buy Equations", buyTaskTextStyle);
+    this.buyTaskText.anchor.setTo(0.5);
+    this.storeTextGroup.add(this.buyTaskText);
+
+    //buttons for tasks
+    this.storeButtons = this.game.add.group();
+
+    var eqBtnData = {
+      buttonTop: 140,
+      buttonHeight: 80,
+      easyButtonColor: 0x93C47D,
+      normalButtonColor:0x769D64,
+      hardButtonColor:0x5E7E50,
+      asianButtonColor:0x4B6540
+    }
+    //taskbuttons
+    this.easyTaskButton = this.add.graphics(0, 0);                     
+    this.easyTaskButton.lineStyle(2, 0x000000, 1);            
+    this.easyTaskButton.beginFill(eqBtnData.easyButtonColor, 1);            
+    this.easyTaskButton.drawRect(800, eqBtnData.buttonTop, 480, eqBtnData.buttonHeight);                      
+    this.easyTaskButton.endFill(); 
+    this.easyTaskButton.alpha = 1;
+    this.easyTaskButton.inputEnabled = true;           
+    this.easyTaskButton.events.onInputDown.add(this.taskButtonHandler, this);
+    this.easyTaskButton.events.onInputOver.add(function(){
+      this.easyTaskButton.tint = 0.5 * 0xffffff;
+    }, this)
+    this.easyTaskButton.events.onInputOut.add(function(){
+      this.easyTaskButton.tint = 0xffffff;
+    }, this)
+    this.storeButtons.add(this.easyTaskButton);
+
+
+    this.normalTaskButton = this.add.graphics(0, 0);                     
+    this.normalTaskButton.lineStyle(2, 0x000000, 1);            
+    this.normalTaskButton.beginFill(eqBtnData.normalButtonColor, 0.8);            
+    this.normalTaskButton.drawRect(800, eqBtnData.buttonTop + eqBtnData.buttonHeight, 480, eqBtnData.buttonHeight);                      
+    this.normalTaskButton.endFill(); 
+    this.normalTaskButton.alpha = 1;
+    this.normalTaskButton.inputEnabled = true;           
+    this.normalTaskButton.events.onInputDown.add(this.taskButtonHandler, this);
+    this.normalTaskButton.events.onInputOver.add(function(){
+      this.normalTaskButton.tint = 0.5 * 0xffffff;
+    }, this)
+    this.normalTaskButton.events.onInputOut.add(function(){
+      this.normalTaskButton.tint = 0xffffff;
+    }, this)
+    this.storeButtons.add(this.normalTaskButton);
+
+    this.hardTaskButton = this.add.graphics(0, 0);                     
+    this.hardTaskButton.lineStyle(2, 0x000000, 1);            
+    this.hardTaskButton.beginFill(eqBtnData.hardButtonColor, 0.8);            
+    this.hardTaskButton.drawRect(800, eqBtnData.buttonTop + eqBtnData.buttonHeight * 2, 480, eqBtnData.buttonHeight);                      
+    this.hardTaskButton.endFill(); 
+    this.hardTaskButton.alpha = 1;
+    this.hardTaskButton.inputEnabled = true;           
+    this.hardTaskButton.events.onInputDown.add(this.taskButtonHandler, this);
+    this.hardTaskButton.events.onInputOver.add(function(){
+      this.hardTaskButton.tint = 0.5 * 0xffffff;
+    }, this)
+    this.hardTaskButton.events.onInputOut.add(function(){
+      this.hardTaskButton.tint = 0xffffff;
+    }, this)
+    this.storeButtons.add(this.hardTaskButton);
+
+    this.asianTaskButton = this.add.graphics(0, 0);                     
+    this.asianTaskButton.lineStyle(2, 0x000000, 1);            
+    this.asianTaskButton.beginFill(eqBtnData.asianButtonColor, 0.8);            
+    this.asianTaskButton.drawRect(800, eqBtnData.buttonTop + eqBtnData.buttonHeight * 3, 480, eqBtnData.buttonHeight);                      
+    this.asianTaskButton.endFill(); 
+    this.asianTaskButton.alpha = 1;
+    this.asianTaskButton.inputEnabled = true;           
+    this.asianTaskButton.events.onInputDown.add(this.taskButtonHandler, this);
+    this.asianTaskButton.events.onInputOver.add(function(){
+      this.asianTaskButton.tint = 0.5 * 0xffffff;
+    }, this)
+    this.asianTaskButton.events.onInputOut.add(function(){
+      this.asianTaskButton.tint = 0xffffff;
+    }, this)
+    this.storeButtons.add(this.asianTaskButton);
+    
+
+    //HELPER BUTTONS
+
+    var hlBtnData = {
+      buttonTop: 530,
+      buttonHeight: 70
     }
 
-    this.buyTaskText = this.game.add.text(1040, 110, "Buy Tasks", buyTaskTextStyle);
-    this.buyTaskText.anchor.setTo(0.5);4
+    this.profHelperButton = this.add.graphics(0, 0);                     
+    this.profHelperButton.lineStyle(2, 0x000000, 1);            
+    this.profHelperButton.beginFill(0x45818E, 0.8);            
+    this.profHelperButton.drawRect(800, hlBtnData.buttonTop + hlBtnData.buttonHeight * 0, 480, hlBtnData.buttonHeight);                      
+    this.profHelperButton.endFill(); 
+    this.profHelperButton.alpha = 1;
+    this.profHelperButton.inputEnabled = true;           
+    this.profHelperButton.events.onInputDown.add(this.helperButtonHandler, this);
+    this.profHelperButton.events.onInputOver.add(function(){
+      this.profHelperButton.tint = 0.5 * 0xffffff;
+    }, this)
+    this.profHelperButton.events.onInputOut.add(function(){
+      this.profHelperButton.tint = 0xffffff;
+    }, this)
+    this.storeButtons.add(this.profHelperButton);    
+
+    this.studentHelperButton = this.add.graphics(0, 0);                     
+    this.studentHelperButton.lineStyle(2, 0x000000, 1);            
+    this.studentHelperButton.beginFill(0x376772, 0.8);            
+    this.studentHelperButton.drawRect(800, hlBtnData.buttonTop + hlBtnData.buttonHeight * 1, 480, hlBtnData.buttonHeight);                      
+    this.studentHelperButton.endFill(); 
+    this.studentHelperButton.alpha = 1;
+    this.studentHelperButton.inputEnabled = true;           
+    this.studentHelperButton.events.onInputDown.add(this.helperButtonHandler, this);
+    this.studentHelperButton.events.onInputOver.add(function(){
+      this.studentHelperButton.tint = 0.5 * 0xffffff;
+    }, this)
+    this.studentHelperButton.events.onInputOut.add(function(){
+      this.studentHelperButton.tint = 0xffffff;
+    }, this)
+    this.storeButtons.add(this.studentHelperButton);
+
+    this.xFarmHelperButton = this.add.graphics(0, 0);                     
+    this.xFarmHelperButton.lineStyle(2, 0x000000, 1);            
+    this.xFarmHelperButton.beginFill(0x2C525B, 0.8);            
+    this.xFarmHelperButton.drawRect(800, hlBtnData.buttonTop + hlBtnData.buttonHeight * 2, 480, hlBtnData.buttonHeight);                      
+    this.xFarmHelperButton.endFill(); 
+    this.xFarmHelperButton.alpha = 1;
+    this.xFarmHelperButton.inputEnabled = true;           
+    this.xFarmHelperButton.events.onInputDown.add(this.helperButtonHandler, this);
+    this.xFarmHelperButton.events.onInputOver.add(function(){
+      this.xFarmHelperButton.tint = 0.5 * 0xffffff;
+    }, this)
+    this.xFarmHelperButton.events.onInputOut.add(function(){
+      this.xFarmHelperButton.tint = 0xffffff;
+    }, this)
+    this.storeButtons.add(this.xFarmHelperButton);
+
+    var taskTextStyle = {
+      font: "20px Bungee",
+      fill: "black"
+    };
+    var priceTextStyle = {
+      font: "20px Bungee",
+      fill: "yellow"
+    };
+    this.easyTaskText = this.game.add.text(800 + 60, 175, "Easy", taskTextStyle);
+    this.easyTaskText.anchor.setTo(0.5);
+    this.storeTextGroup.add(this.easyTaskText);
+
+    this.normalTaskText = this.game.add.text(800 + 60, 250, "Normal", taskTextStyle);
+    this.normalTaskText.anchor.setTo(0.5);
+    this.storeTextGroup.add(this.normalTaskText);
+
+    this.hardTaskText = this.game.add.text(800 + 60, 325, "Hard", taskTextStyle);
+    this.hardTaskText.anchor.setTo(0.5);
+    this.storeTextGroup.add(this.hardTaskText);
+
+    this.asianTaskText = this.game.add.text(800 + 60, 400, "Asian", taskTextStyle);
+    this.asianTaskText.anchor.setTo(0.5);
+    this.storeTextGroup.add(this.asianTaskText);
+
+
+
+
+    this.buyHelpersText = this.game.add.text(1040, 495, "Buy Helpers", buyTaskTextStyle);
+    this.buyHelpersText.anchor.setTo(0.5);
+    this.storeTextGroup.add(this.buyHelpersText);
+
+    this.buyStudentText = this.game.add.text(800 + 175, 550, "Student", taskTextStyle);
+    this.buyStudentText.anchor.setTo(0.5);
+    this.storeTextGroup.add(this.buyStudentText);
+    //price
+    this.studentPrice = this.game.add.text(940, 580, this.studentPrice, priceTextStyle);
+    this.studentPrice.anchor.setTo(0.5);
+    this.storeTextGroup.add(this.studentPrice);
+    
+
+    this.buyProfessorsText = this.game.add.text(800 + 185, 625, "Professor", taskTextStyle);
+    this.buyProfessorsText.anchor.setTo(0.5);
+    this.storeTextGroup.add(this.buyProfessorsText);
+
+    this.buyXfarmText = this.game.add.text(800 + 170, 690, "X - farm", taskTextStyle);
+    this.buyXfarmText.anchor.setTo(0.5);
+    this.storeTextGroup.add(this.buyXfarmText);
+
+    this.game.world.bringToTop(this.storeTextGroup);
 
   },
   openUpgrades: function(){
     //clear previous opener
+    this.storeTextGroup.kill(true);
+    this.storeButtons.kill(true);
+
     this.openStoreButton.alpha = 0.5;
     this.openUpgradeButton.alpha = 1;
 
+    console.log("Upgrade section opened");
+  },
+  taskButtonHandler: function(){
+    console.log("TaskButton presssed");
+  },
 
-    console.log("Upgrade section opened")
+  helperButtonHandler: function(){
+    console.log("HelperButton pressed");
   }
 };
