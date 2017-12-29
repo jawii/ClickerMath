@@ -6,11 +6,17 @@ ClickerMath.GameState = {
   //initiate game settings
   init: function() {
 
-    this.totalX = 0;
-    this.xNow = 0;
+    this.totalX = 100;
+    this.xNow = 100;
 
     this.clickGain = 1;
     this.xGainPerSecond = 0;
+
+    this.easyTaskData = {
+      price: 50,
+      reward: 100,
+      solved: 0
+    };
 
     this.easyTaskPrice = 50;
     this.easyTaskReward = 100;
@@ -28,17 +34,24 @@ ClickerMath.GameState = {
     this.asianTaskReward = 10000;
     this.asianTasksSolved = 0;
 
-    this.studentPrice = 20;
-    this.studentGain = 1;
-    this.studentPriceGrow = 20;
-
-    this.profPrice = 50;
-    this.profGain = 5;
-    this.profPriceGrow = 20;
-
-    this.xFarmPrice = 400;
-    this.xFarmGain = 10;
-    this.xFarmPriceGrow = 20;
+    this.studentData = {
+      price: 20,
+      gain: 0.5,
+      priceGrow: 20,
+      priceText: this.game.add.text()
+    }
+    this.profData = {
+      price: 50,
+      gain: 2,
+      priceGrow: 50,
+      priceText: this.game.add.text()
+    }
+    this.xFarmData = {
+      price: 400,
+      gain: 5,
+      priceGrow: 400,
+      priceText: this.game.add.text()
+    }
 
 
 
@@ -50,15 +63,17 @@ ClickerMath.GameState = {
     };
 
     this.xAmountStyle = {
-      font: "24px Bungee",
+      font: "40px aldrichregular",
       fill: "black"
     };
 
     this.xIconClickPointStyle = {
-      font: "20px Bungee",
+      font: "30px aldrichregular",
       fill: "green"
     }
 
+    //BOOLEANS
+    this.storeOpen = false;
 
 
 
@@ -215,7 +230,7 @@ ClickerMath.GameState = {
 
   loadStoreAndUpgradeArea: function(){
     var storeHeadLineStyle = {
-      font: "35px Bungee",
+      font: "35px aldrichregular",
       fill: "black"
     }
     //STORE
@@ -232,7 +247,12 @@ ClickerMath.GameState = {
     this.storeText.alpha = 0.9;    
     //input        
     this.openStoreButton.inputEnabled = true;           
-    this.openStoreButton.events.onInputDown.add(this.openStore, this);
+    this.openStoreButton.events.onInputDown.add(function(){
+      if(!this.storeOpen){
+        this.openStore();
+      }
+      
+    }, this);
 
     //STORE
     //create as graphics
@@ -247,18 +267,28 @@ ClickerMath.GameState = {
     this.UpgradeText.anchor.setTo(0.5);
     this.UpgradeText.alpha = 0.9;           
     //input        
-    this.openUpgradeButton.inputEnabled = true;           
-    this.openUpgradeButton.events.onInputDown.add(this.openUpgrades, this);
+    this.openUpgradeButton.inputEnabled = true;  
+
+    //open upgrade area if store is open         
+    this.openUpgradeButton.events.onInputDown.add(function(){
+
+      if(this.storeOpen){
+        this.openUpgrades();
+      }
+      
+    }, this);
   },
 
   openStore: function(){
+
+    this.storeOpen = true;
     //clear previous opener
     this.openUpgradeButton.alpha = 0.5;
     this.openStoreButton.alpha = 1;
 
     console.log("Store - section opened");
     var buyTaskTextStyle = {
-      font: "30px Bungee",
+      font: "30px aldrichregular",
       fill: "black"
     };
 
@@ -276,25 +306,15 @@ ClickerMath.GameState = {
     }
     //taskbuttons
     this.easyTaskButton = this.add.graphics(0, 0); 
-    this.easyTaskButton.data.price = this.easyTaskPrice;
-    this.easyTaskButton.data.reward = this.easyTaskReward;
-    this.easyTaskButton.data.solved = this.easyTasksSolved;
-
     this.createStoreButton(this.easyTaskButton, eqBtnData.easyButtonColor, eqBtnData.buttonTop, eqBtnData.buttonHeight, this.storeButtons, this.taskButtonHandler);
+    
     this.normalTaskButton = this.add.graphics(0, 0); 
-    this.normalTaskButton.data.price = this.normalTaskPrice;
-    this.normalTaskButton.data.reward = this.normalTaskReward;
-    this.normalTaskButton.data.solved = this.normalTasksSolved;
     this.createStoreButton(this.normalTaskButton, eqBtnData.normalButtonColor, eqBtnData.buttonTop + eqBtnData.buttonHeight * 1, eqBtnData.buttonHeight, this.storeButtons, this.taskButtonHandler);
-    this.hardTaskButton = this.add.graphics(0, 0); 
-    this.hardTaskButton.data.price = this.hardTaskPrice;
-    this.hardTaskButton.data.reward = this.hardTaskReward;
-    this.hardTaskButton.data.solved = this.hardTasksSolved;                    
+    
+    this.hardTaskButton = this.add.graphics(0, 0);                    
     this.createStoreButton(this.hardTaskButton, eqBtnData.hardButtonColor, eqBtnData.buttonTop + eqBtnData.buttonHeight * 2, eqBtnData.buttonHeight, this.storeButtons, this.taskButtonHandler);          
+    
     this.asianTaskButton = this.add.graphics(0, 0); 
-    this.asianTaskButton.data.price = this.asianTaskPrice;
-    this.asianTaskButton.data.reward = this.asianTaskReward;
-    this.asianTaskButton.data.solved = this.asianTasksSolved;
     this.createStoreButton(this.asianTaskButton, eqBtnData.asianButtonColor, eqBtnData.buttonTop + eqBtnData.buttonHeight * 3, eqBtnData.buttonHeight, this.storeButtons, this.taskButtonHandler);
 
 
@@ -305,28 +325,22 @@ ClickerMath.GameState = {
     };
 
     this.studentHelperButton = this.add.graphics(0, 0);   
-    this.studentHelperButton.data.price = this.studentPrice;
-    this.studentHelperButton.data.gain = this.studentGain;
     this.createStoreButton(this.studentHelperButton, 0xC2D5DA, hlBtnData.buttonTop + hlBtnData.buttonHeight * 0, hlBtnData.buttonHeight, this.storeButtons, this.helperButtonHandler);
     
     this.profHelperButton = this.add.graphics(0, 0); 
-    this.profHelperButton.data.price = this.profPrice;
-    this.profHelperButton.data.gain = this.profGain; 
     this.createStoreButton(this.profHelperButton, 0x88AEB7, hlBtnData.buttonTop + hlBtnData.buttonHeight * 1, hlBtnData.buttonHeight, this.storeButtons, this.helperButtonHandler);
     
     this.xFarmHelperButton = this.add.graphics(0, 0);    
-    this.xFarmHelperButton.data.price = this.xFarmPrice;
-    this.xFarmHelperButton.data.gain = this.xFarmGain;
     this.createStoreButton(this.xFarmHelperButton, 0x45818E, hlBtnData.buttonTop + hlBtnData.buttonHeight * 2, hlBtnData.buttonHeight, this.storeButtons, this.helperButtonHandler);
   
 
     //TEXTS AND ICONS
     var taskTextStyle = {
-      font: "20px Bungee",
+      font: "20px aldrichregular",
       fill: "black"
     };
     var priceTextStyle = {
-      font: "22px Bungee",
+      font: "22px aldrichregular",
       fill: "black"
     };
     this.storeTextGroup = this.game.add.group();
@@ -373,30 +387,32 @@ ClickerMath.GameState = {
 
     //HELPERS TEXT & ICONS
     this.buyStudentText = this.game.add.text();
-    this.studentPriceText = this.game.add.text();
     this.studentPriceIcon = this.game.add.sprite();
-    this.createHelperText(this.studentGain, this.buyStudentText, this.studentPriceText, this.studentPriceIcon, this.storeTextGroup, this.studentPrice, 800, 550 + 75 * 0, "Student", 1000, 580 + 74 * 0);
+    this.createHelperText(this.studentData, this.buyStudentText, this.studentPriceIcon, this.storeTextGroup, 800, 550 + 75 * 0, "Student", 1000, 580 + 74 * 0);
     
     this.buyProfessorText = this.game.add.text();
-    this.professorPriceText = this.game.add.text();
     this.professorPriceIcon = this.game.add.sprite();
-    this.createHelperText(this.profGain, this.buyProfessorText, this.professorPriceText, this.professorPriceIcon, this.storeTextGroup, this.profPrice, 800 + 15, 550 + 75 * 1, "Professor", 1000, 580 + 74 * 1);
+    this.createHelperText(this.profData, this.buyProfessorText, this.professorPriceIcon, this.storeTextGroup, 800 + 15, 550 + 75 * 1, "Professor", 1000, 580 + 74 * 1);
     
     this.buyXFarmText = this.game.add.text();
-    this.xFarmPriceText = this.game.add.text();
     this.xFarmPriceIcon = this.game.add.sprite();
-    this.createHelperText(this.xFarmGain, this.buyXFarmText, this.xFarmPriceText, this.xFarmPriceIcon, this.storeTextGroup, this.xFarmPrice, 800 - 15, 550 + 75 * 2, "xFarm", 1000, 580 + 74 * 2);
+    this.createHelperText(this.xFarmData, this.buyXFarmText, this.xFarmPriceIcon, this.storeTextGroup, 800 - 15, 550 + 75 * 2, "xFarm", 1000, 580 + 74 * 2);
 
     this.game.world.bringToTop(this.storeTextGroup);
 
   },
   openUpgrades: function(){
+    //store open false
+    this.storeOpen = false;
+
     //clear previous opener
-    this.storeTextGroup.destroy(true);
-    this.storeButtons.destroy(true);
+    this.storeTextGroup.kill(true);
+    this.storeButtons.kill(true);
 
     this.openStoreButton.alpha = 0.5;
     this.openUpgradeButton.alpha = 1;
+
+
 
     console.log("Upgrade section opened");
   },
@@ -406,23 +422,36 @@ ClickerMath.GameState = {
   },
 
   helperButtonHandler: function(button){
-    // console.log("HelperButton pressed");
-    console.log(button);
-    console.log(button.graphicsData[0].fillColor);
+    var helper;
 
-    var price = button.data.price;
-    var gain = button.data.gain;
+    var data;
+    if(button == this.studentHelperButton){
+      helper = this.studentData;
+    }
+    else if (button == this.profHelperButton){
+      helper = this.profData;
+    }
+    else if (button == this.xFarmHelperButton){
+      helper = this.xFarmData;
+    }
 
     //if enough money, add gain to gainpersecond
-    if(price <= this.xNow){
-      this.xNow -= price;
-      this.xGainPerSecond += gain;
+    if(helper.price <= this.xNow){
+      this.xNow -= helper.price;
+      this.xGainPerSecond += helper.gain;
+      //update price
+      helper.price += helper.priceGrow;
+      helper.priceText.setText(helper.price, true);
+
+      //update price text
     }
     else{
-      var tween = this.game.add.tween(button).to({tint: 0xff0000}, 500, null, true);
-      tween.onComplete.add(function(){
-        button.tint = 0xffffff;
-      }, this);
+      // var tween = this.game.add.tween(button).to({tint: 0xff0000}, 500, null, true);
+      // tween.onComplete.add(function(){
+      //   button.tint = 0xffffff;
+      // }, this);
+      this.tweenTint(button, button.graphicsData[0].fillColor, 0xff0000, 200);
+
 
     }
 
@@ -447,17 +476,17 @@ ClickerMath.GameState = {
     group.add(button);
 
   },
-  createHelperText: function(gain, text, priceText, Icon, group, price, textX, textY, key, priceX, priceY){
+  createHelperText: function(data, text, Icon, group, textX, textY, key, priceX, priceY){
     var priceTextStyle = {
-      font: "22px Bungee",
+      font: "22px aldrichregular",
       fill: "black"
     };
       var taskTextStyle = {
-      font: "20px Bungee",
+      font: "20px aldrichregular",
       fill: "black"
     };
     var gainTextStyle = {
-      font: "20px Bungee",
+      font: "20px aldrichregular",
       fill: "black"
     };
 
@@ -465,11 +494,15 @@ ClickerMath.GameState = {
     text.anchor.setTo(0.5);
     this.storeTextGroup.add(text);
     //price
-    priceText = this.game.add.text(priceX, priceY, price, priceTextStyle);
-    priceText.anchor.setTo(0.5);
-    this.storeTextGroup.add(priceText);
+    // this.game.add.text(priceX, priceY, data.price, priceTextStyle);
+    data.priceText.setStyle(priceTextStyle);
+    data.priceText.x = priceX; 
+    data.priceText.y = priceY;
+    data.priceText.setText(data.price);
+    data.priceText.anchor.setTo(0.5);
+    this.storeTextGroup.add(data.priceText, true);
     //icon
-    Icon = this.game.add.sprite(priceText.right + 20, priceText.y, "xIcon");
+    Icon = this.game.add.sprite(data.priceText.right + 20, data.priceText.y, "xIcon");
     Icon.anchor.setTo(0.5);
     Icon.scale.setTo(0.3);
     group.add(Icon);
@@ -477,7 +510,7 @@ ClickerMath.GameState = {
     //X Gain
     var gainText = this.game.add.text(1150, text.y, "XGAIN", gainTextStyle);
     gainText.anchor.setTo(0.5);
-    var gainAmountText = this.game.add.text(gainText.x + 30, gainText.y + 30,"+"+ gain + "  X/second", gainTextStyle);
+    var gainAmountText = this.game.add.text(gainText.x + 30, gainText.y + 30,"+"+ data.gain + "  X/second", gainTextStyle);
     gainAmountText.anchor.setTo(0.5);
     // var gainIcon = this.game.add.sprite(gainAmountText.right + 20, gainAmountText.y - 10, "xIcon");
     // gainIcon.anchor.setTo(0.5);
@@ -492,15 +525,15 @@ ClickerMath.GameState = {
   createTaskArea: function(rewardAmountText, reward, amount, text, icon, priceText, priceIcon, textX, textY, IconX, IconY, priceX, textString, iconString){
 
     var taskTextStyle = {
-      font: "20px Bungee",
+      font: "20px aldrichregular",
       fill: "black"
     };
     var priceTextStyle = {
-      font: "22px Bungee",
+      font: "22px aldrichregular",
       fill: "black"
     };
     var rewardTextStyle = {
-      font: "20px Bungee",
+      font: "20px aldrichregular",
       fill: "black"
     };
 
@@ -533,5 +566,25 @@ ClickerMath.GameState = {
     this.storeTextGroup.add(rewardIcon);
 
     //reward text
+  },
+  tweenTint: function(obj, startColor, endColor, time) {    
+    // create an object to tween with our step value at 0    
+    var colorBlend = {step: 0};    
+    // create the tween on this object and tween its step property to 100    
+    var colorTween = this.game.add.tween(colorBlend).to({step: 100}, time);        
+    // run the interpolateColor function every time the tween updates, feeding it the    
+    // updated value of our tween each time, and set the result as our tint    
+    colorTween.onUpdateCallback(function() {      
+      obj.tint = Phaser.Color.interpolateColor(startColor, endColor, 100, colorBlend.step);       
+      });        
+    // set the object to the start color straight away    
+    obj.tint = startColor;            
+    // start the tween    
+    colorTween.start();
+    colorTween.onComplete.add(function(){
+      obj.tint = 0xffffff;
+    }, this);
   }
+
+
 };

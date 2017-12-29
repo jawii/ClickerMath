@@ -26,12 +26,22 @@
     		font-style: normal;
 		}
 
+		@font-face {
+		    font-family: 'aldrichregular';
+		    src: url('assets/fonts/aldrich-regular-webfont.woff2') format('woff2'),
+		         url('assets/fonts/aldrich-regular-webfont.woff') format('woff');
+		    font-weight: normal;
+		    font-style: normal;
+
+		}
+
 		  </style>
 	</head>
 
 	<body>  
 		<div style="font-family:Bungee; position:absolute; left:-10000px">Font Loaded</div>
 		<div style="font-family:alegreyaregular; position:absolute; left:-10000px">Font Loaded</div>
+		<div style="font-family:aldrichregular; position:absolute; left:-10000px">Font Loaded</div>
 		<!-- include the main game file -->
 		<script src="js/states/GameState.js"></script>		
 		<script src="js/states/BootState.js"></script>		
