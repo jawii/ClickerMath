@@ -6,13 +6,16 @@ ClickerMath.GameState = {
   //initiate game settings
   init: function() {
 
-    this.totalX = 110;
-    this.xNow = 110;
+    this.totalX = 0;
+    this.xData = {
+      xNow: 0,
+    };
 
     this.clickGain = 1;
     this.xGainPerSecond = 0;
 
     this.easyTaskData = {
+      available: true,
       price: 50,
       reward: 500,
       solved: 0,
@@ -23,6 +26,7 @@ ClickerMath.GameState = {
     };
 
     this.normalTaskData = {
+      available: false,
       price: 200,
       reward: 2000,
       solved: 0,
@@ -33,6 +37,7 @@ ClickerMath.GameState = {
     };
 
     this.hardTaskData = {
+      available: false,
       price: 500,
       reward: 5000,
       solved: 0,
@@ -43,6 +48,7 @@ ClickerMath.GameState = {
     };
 
     this.asianTaskData = {
+      available: false,
       price: 1000,
       reward: 10000,
       solved: 0,
@@ -189,7 +195,7 @@ ClickerMath.GameState = {
 
 
     //x number now
-    this.xAmountText = this.game.add.text(400, 40, this.xNow, this.xAmountStyle);
+    this.xAmountText = this.game.add.text(400, 40, this.xData.xNow, this.xAmountStyle);
     this.xAmountText.anchor.setTo(0.5);
 
     this.xAmountIcon = this.game.add.sprite(this.xAmountText.right + 30, this.xAmountText.y, "xIcon");
@@ -220,8 +226,11 @@ ClickerMath.GameState = {
   update: function() {
 
     //update current x and total x
-    this.xAmountText.text = Math.floor(this.xNow);
-    this.xAmountIcon.x = this.xAmountText.right + 30;
+    //this.xAmountText.text = Math.floor(this.xData.xNow);
+    this.xAmountIcon.x = this.xAmountText.right + 30; 
+
+    this.xAmountText.text = parseInt(this.xData.xNow, 10);
+    
   },
   render: function(){
     //this.game.debug.spriteInfo(this.playerTwoTurret, 300, 32);
@@ -243,13 +252,15 @@ ClickerMath.GameState = {
     this.X.inputEnabled = true;
     this.X.input.pixelPerfectClick = true;
 
+    var xTween = this.game.add.tween(this.X).from({alpha: 0}, 500, null, true, 0, 0, false)
+
     //create event if x clickable
     this.X.events.onInputUp.add(this.xIconClicked, this);
   },
   updateXPerSecond: function(){
 
     this.totalX += this.xGainPerSecond/10;
-    this.xNow += this.xGainPerSecond/10;
+    this.xData.xNow += this.xGainPerSecond/10;
   },
 
   xIconClicked: function(sprite, pointer){
@@ -257,10 +268,10 @@ ClickerMath.GameState = {
 
     //update xamounts
     this.totalX += this.clickGain;
-    this.xNow += this.clickGain;
+    this.xData.xNow += this.clickGain;
 
     //update text
-    this.xAmountText.text = Math.floor(this.xNow);
+    this.xAmountText.text = Math.floor(this.xData.xNow);
     this.xAmountIcon.x = this.xAmountText.right + 30
 
     //tween x
@@ -397,15 +408,19 @@ ClickerMath.GameState = {
     }
     //taskbuttons
     this.easyTaskButton = this.add.graphics(0, 0); 
+    this.easyTaskButton.data.available = this.easyTaskData.available;
     this.createStoreButton(this.easyTaskButton, eqBtnData.easyButtonColor, eqBtnData.buttonTop, eqBtnData.buttonHeight, this.storeButtons, "taskButton");
     
     this.normalTaskButton = this.add.graphics(0, 0); 
+    this.normalTaskButton.data.available = this.normalTaskData.available;
     this.createStoreButton(this.normalTaskButton, eqBtnData.normalButtonColor, eqBtnData.buttonTop + eqBtnData.buttonHeight * 1, eqBtnData.buttonHeight, this.storeButtons, "taskButton");
     
-    this.hardTaskButton = this.add.graphics(0, 0);                    
+    this.hardTaskButton = this.add.graphics(0, 0);   
+    this.hardTaskButton.data.available = this.hardTaskData.available;                 
     this.createStoreButton(this.hardTaskButton, eqBtnData.hardButtonColor, eqBtnData.buttonTop + eqBtnData.buttonHeight * 2, eqBtnData.buttonHeight, this.storeButtons, "taskButton");          
     
     this.asianTaskButton = this.add.graphics(0, 0); 
+    this.asianTaskButton.data.available = this.asianTaskData.available;
     this.createStoreButton(this.asianTaskButton, eqBtnData.asianButtonColor, eqBtnData.buttonTop + eqBtnData.buttonHeight * 3, eqBtnData.buttonHeight, this.storeButtons, "taskButton");
 
 
@@ -523,7 +538,7 @@ ClickerMath.GameState = {
       taskData = this.asianTaskData;
     }  
     //check if enough money
-    if(taskData.price <= this.xNow){
+    if(taskData.price <= this.xData.xNow){
       //kill clickable x and dont take anymore button presses for tasks
       this.taskInitialized = true;
 
@@ -535,7 +550,7 @@ ClickerMath.GameState = {
       xTween.onComplete.add(function(){
         this.X.destroy();
         //reduce price
-        this.xNow -= taskData.price;
+        this.xData.xNow -= taskData.price;
         //init task
         this.initTaskToGame(task, taskData, taskGroup, taskTextGroup);
       }, this);   
@@ -558,8 +573,8 @@ ClickerMath.GameState = {
       helper = this.xFarmData;
     }
     //if enough money, add gain to gainpersecond
-    if(helper.price <= this.xNow){
-      this.xNow -= helper.price;
+    if(helper.price <= this.xData.xNow){
+      this.xData.xNow -= helper.price;
       this.xGainPerSecond += helper.gain;
       //update price and amount
       helper.price += helper.priceGrow;
@@ -581,7 +596,7 @@ ClickerMath.GameState = {
       tween.onComplete.add(function(){
         //change emitter rate
         //flow( [lifespan] [, frequency] [, quantity] [, total] [, immediate])
-        helper.emitter.flow(1000, 1000, helper.amount * helper.gain, -1);
+        helper.emitter.flow(2000, 2000, helper.amount * helper.gain, -1);
       }, this);
 
       
@@ -594,20 +609,22 @@ ClickerMath.GameState = {
 
   },
   createStoreButton: function(button, buttonColor, buttonTop, buttonHeight, group, buttonHandler){
-                        
+
+    var buttonFinalColor;
+    var buttonAlpha = 1;
+
     button.lineStyle(2, 0x000000, 1);            
-    button.beginFill(buttonColor, 1);            
+    button.beginFill(buttonColor, buttonAlpha);            
     button.drawRect(800, buttonTop, 480, buttonHeight);                      
     button.endFill(); 
-    button.alpha = 1;
-    button.inputEnabled = true;     
+    button.inputEnabled = true;  
 
     button.events.onInputDown.add(function(){
       
         if(buttonHandler === "taskButton"){
-            if(!this.taskInitialized){
+            if(!this.taskInitialized && button.data.available){
               this.taskButtonHandler(button);
-          }
+            }
         }
         else{
           this.helperButtonHandler(button)
@@ -618,7 +635,8 @@ ClickerMath.GameState = {
     button.events.onInputOver.add(function(){
       button.tint = 0.5 * 0xffffff;
     }, this)
-    button.events.onInputOut.add(function(){
+
+    button.events.onInputOut.add(function(){  
       button.tint = 0xffffff;
     }, this)
 
@@ -744,6 +762,41 @@ ClickerMath.GameState = {
     rewardIcon.anchor.setTo(0.5);    
     rewardIcon.scale.setTo(0.3);  
     this.storeTextGroup.add(rewardIcon);
+
+    //create this if button is not purchased
+    if(!data.available){
+        var availableTextStyle = {
+        font: "bold 35px aldrichregular",
+        fill: "red"
+        };
+
+      var notAvailableText = this.game.add.text(IconX + 200, IconY, "Not available!", availableTextStyle);
+      notAvailableText.anchor.setTo(0.5);
+      notAvailableText.angle = 5;
+      this.storeTextGroup.add(notAvailableText);
+
+      //set alphas
+      data.priceText.alpha = 0.2;
+      Icon.alpha = 0.2;
+      priceText.alpha = 0.2;
+      data.rewardText.alpha = 0.1;
+      data.solvedAmountText.alpha = 0.2;
+      rewardIcon.alpha = 0.2;
+      priceIcon.alpha = 0.2;
+      rewardText.alpha = 0.2;
+    }
+    else{
+      //set alphas
+      data.priceText.alpha = 1;
+      Icon.alpha = 1;
+      priceText.alpha = 1;
+      data.rewardText.alpha = 1;
+      data.solvedAmountText.alpha = 1;
+      rewardIcon.alpha = 1;
+      priceIcon.alpha = 1;
+      rewardText.alpha = 1;
+
+    }
   },
 
   tweenTint: function(obj, startColor, endColor, time) {    
@@ -771,6 +824,7 @@ ClickerMath.GameState = {
     helperData.emitter.centerY = (helperData.spawnArea.y1 + helperData.spawnArea.y2)/2;
     helperData.emitter.setScale(0.3, 0.3, 0.3, 0.3, 0, null, true);
     helperData.emitter.setAlpha(0.6, 1, 0, null, true);
+
     //helperData.emitter.gravity = -100;
   },
 
@@ -837,23 +891,34 @@ ClickerMath.GameState = {
 
   answerCheck: function(button, pointer, text, taskData, taskCorrectAnswer, taskGroup, textGroup){
     button.alpha = 0.5;
-
     var textStyle = {
-      font: "50px aldrichregular",
+      font: "60px aldrichregular",
       fill: "black"
     }
     var text; 
 
+    var answerCorrect;
+
     if(text.text === taskCorrectAnswer){
-      //add reward
-      this.xNow += taskData.reward;
-      this.totalX += taskData.reward;
+
+      answerCorrect = true;
+      
       taskData.solved += 1;
       taskData.solvedAmountText.setText("#" + taskData.solved, true);
       textStyle.fill = "green";
-      text = "Correct!";
+      text = "Correct!";   
+      var emitter = this.game.add.emitter(400, 250, taskData.reward)
+      emitter.makeParticles('xIcon');
+      emitter.setScale(0.3, 0.3, 0.3, 0.3, 0, null, true);
+      emitter.setAlpha(0.2, 1, 0, null, true);
+      emitter.setXSpeed(-20, 20);
+      emitter.setYSpeed(-400, -200);
+      emitter.width = 140;
+
     }
     else{
+
+      answerCorrect = false;
       textStyle.fill = "red";
       text = "Wrong!"
     }
@@ -861,12 +926,27 @@ ClickerMath.GameState = {
     var text = this.game.add.text(400, 300, text, textStyle);
     text.anchor.setTo(0.5);
 
-    var textTween = this.game.add.tween(text).from({alpha: 0}, 1500, null, true, 0, 0, false);
-    var textTweenRotate = this.game.add.tween(text).from({angle: 360}, 500, null, true, 0, 0, false)
+    var textTween = this.game.add.tween(text).from({alpha: 0}, 2800, null, true, 0, 0, false);
+    var textTweenRotate = this.game.add.tween(text).from({angle: 360}, 750, null, true, 0, 0, false)
+    textTweenRotate.onComplete.add(function(){
+      //create rewards tweening towards xIconAmount
+      
+      //flow( [lifespan] [, frequency] [, quantity] [, total] [, immediate])
+      if(answerCorrect){
+        emitter.flow(750, 100, 5, 100, false);
+        //add reward
+        this.xRizeTween(taskData.reward, 1200)
+        //this.xData.xNow += taskData.reward;
+        this.totalX += taskData.reward;
+      }
+      
+    }, this);
 
     //destroy taskgroups
     taskGroup.destroy();
     textGroup.destroy();
+
+    
 
     //after compliments, clear all
     textTween.onComplete.add(function(){
@@ -874,11 +954,14 @@ ClickerMath.GameState = {
       text.destroy();
       //create coords again
       this.answerCoords = this.createAnswerCoordinates()
-      //can buy now more tasks and creates the X again
-      this.taskInitialized = false;
-      this.createClickableX();
     }, this);
 
+    //wait a second
+    this.game.time.events.add(Phaser.Timer.SECOND * 4, function(){
+      //can buy now more tasks and creates the X again
+      this.createClickableX();
+      this.taskInitialized = false;
+    }, this);
     
   },
 
@@ -926,6 +1009,13 @@ ClickerMath.GameState = {
 
     var groupTween = this.game.add.tween(textGroup).from({alpha: 0}, 500, null, true, 0, 0, false);
 
+  },
+
+  xRizeTween: function(reward, time){
+    //create object score for tweening
+    
+    var tween = this.game.add.tween(this.xData).to( { xNow: this.xData.xNow + reward }, time, Phaser.Easing.Linear.None);
+    tween.start()
   }
 
 };
