@@ -6,8 +6,8 @@ ClickerMath.GameState = {
   //initiate game settings
   init: function() {
 
-    this.totalX = 1000;
-    this.xNow = 1000;
+    this.totalX = 110;
+    this.xNow = 110;
 
     this.clickGain = 1;
     this.xGainPerSecond = 0;
@@ -17,6 +17,7 @@ ClickerMath.GameState = {
       reward: 500,
       solved: 0,
       priceText: this.game.add.text(),
+      solvedAmountText: this.game.add.text(),
       rewardText: this.game.add.text(),
       icon: this.game.add.sprite(null, null, "easy"),
     };
@@ -27,6 +28,7 @@ ClickerMath.GameState = {
       solved: 0,
       priceText: this.game.add.text(),
       rewardText: this.game.add.text(),
+      solvedAmountText: this.game.add.text(),
       icon: this.game.add.sprite(null, null, "normal"),
     };
 
@@ -36,6 +38,7 @@ ClickerMath.GameState = {
       solved: 0,
       priceText: this.game.add.text(),
       rewardText: this.game.add.text(),
+      solvedAmountText: this.game.add.text(),
       icon: this.game.add.sprite(null, null, "hard"),
     };
 
@@ -45,6 +48,7 @@ ClickerMath.GameState = {
       solved: 0,
       priceText: this.game.add.text(),
       rewardText: this.game.add.text(),
+      solvedAmountText: this.game.add.text(),
       icon: this.game.add.sprite(null, null, "asian")
     };
 
@@ -138,7 +142,7 @@ ClickerMath.GameState = {
       fill: "black"
     }
     this.taskAnswerBtn = {
-      fillColor: 0xD7DDDF
+      fillColor: 0x3D85C6
     }
 
     //BOOLEANS
@@ -183,6 +187,7 @@ ClickerMath.GameState = {
     // this.backgroundSprite.alpha = 0.5;
     // this.game.world.sendToBack(this.backgroundSprite);
 
+
     //x number now
     this.xAmountText = this.game.add.text(400, 40, this.xNow, this.xAmountStyle);
     this.xAmountText.anchor.setTo(0.5);
@@ -191,20 +196,13 @@ ClickerMath.GameState = {
     this.xAmountIcon.anchor.setTo(0.5);
     this.xAmountIcon.scale.setTo(0.5);
 
-    //clickable x
-    this.X = this.game.add.sprite(400, 400, "X");
-    this.X.anchor.setTo(0.5);
-    this.X.scale.setTo(0.5);
-    this.X.inputEnabled = true;
-    this.X.input.pixelPerfectClick = true;
-
-    //create event if x clickable
-    this.X.events.onInputUp.add(this.xIconClicked, this);
-
     //set emitters
     this.setHelperEmitters(this.studentData);
     this.setHelperEmitters(this.profData);
     this.setHelperEmitters(this.xFarmData);
+
+    //create the X
+    this.createClickableX();
 
     //create answer coordinates
     this.answerCoords = this.createAnswerCoordinates();
@@ -236,6 +234,17 @@ ClickerMath.GameState = {
     //this.game.debug.geom(point, 'rgb(0,255,0)');    
     //this.game.debug.text('Anchor X: ' + this.playerTwoTurret.anchor.x.toFixed(1) + ' Y: ' + this.playerTwoTurret.anchor.y.toFixed(1), 32, 32);
     this.game.debug.text("Time: " + this.game.time.events.duration.toFixed(0), 32, 90,{fill: "red"});
+  },
+  createClickableX: function(){
+    //clickable x
+    this.X = this.game.add.sprite(400, 350, "X");
+    this.X.anchor.setTo(0.5);
+    this.X.scale.setTo(0.5);
+    this.X.inputEnabled = true;
+    this.X.input.pixelPerfectClick = true;
+
+    //create event if x clickable
+    this.X.events.onInputUp.add(this.xIconClicked, this);
   },
   updateXPerSecond: function(){
 
@@ -375,7 +384,6 @@ ClickerMath.GameState = {
       fill: "black"
     };
 
-
     //buttons for tasks
     this.storeButtons = this.game.add.group();
 
@@ -489,13 +497,12 @@ ClickerMath.GameState = {
   },
 
   taskButtonHandler: function(button){
-    //kill clickable x and dont take anymore button pressed
-    this.X.visible = false;
-    this.taskInitialized = true;
 
     //detect which button is pressed and get the task
     var task;
     var taskData;
+    //groups for text to bring them top
+    var taskTextGroup = this.game.add.group();
     var taskGroup = this.game.add.group();
 
     if(button == this.easyTaskButton){
@@ -515,56 +522,27 @@ ClickerMath.GameState = {
       task = this.asianTasks.pop();
       taskData = this.asianTaskData;
     }  
+    //check if enough money
+    if(taskData.price <= this.xNow){
+      //kill clickable x and dont take anymore button presses for tasks
+      this.taskInitialized = true;
 
+      //tween task icon alpha
+      var iconTween = this.game.add.tween(taskData.icon.scale).to({x: 1.5, y: 1.5}, 350, null, true, 0, 0, true);
 
-    //create task text 
-    var taskText = this.game.add.text(400, 200, task["task"], this.taskTextStyle);;
-    taskText.anchor.setTo(0.5);
-    taskGroup.add(taskText);
-    //create task answers
-    var answers = [];
-    answers.push(task["answer"]);
-    for(var i = 1; i <= 8 ; i++){
-      answers.push(task["wrongAnswer" + i]);
+      //tween x out
+      var xTween = this.game.add.tween(this.X).to({alpha: 0.0}, 1000, null, true, 0, 0, false);
+      xTween.onComplete.add(function(){
+        this.X.destroy();
+        //reduce price
+        this.xNow -= taskData.price;
+        //init task
+        this.initTaskToGame(task, taskData, taskGroup, taskTextGroup);
+      }, this);   
     }
-    console.log(answers);
-
-    for(var j = 1; j <= 9 ; j ++){
-      //set the task coords and text
-      var coords = this.answerCoords.pop();
-      var answerText = answers.pop();
-      var text = this.game.add.text(coords[0], coords[1], answerText);
-      text.anchor.setTo(0.5);
-      taskGroup.add(text);
-
-      //task answers input
-      answerButton = this.add.graphics(0, 0); 
-      answerButton.lineStyle(2, 0x000000, 1);            
-      answerButton.beginFill(this.taskAnswerBtn.fillColor, 1);            
-      answerButton.drawRect(coords[0] - text.width, coords[1] - text.height, text.width * 2, text.height + 20);                      
-      answerButton.endFill(); 
-      answerButton.alpha = 1;
-      answerButton.inputEnabled = true;     
-
-      answerButton.events.onInputDown.add(function(){     
-      }, this);
-
-      answerButton.events.onInputOver.add(function(){
-        answerButton.tint = 0.5 * 0xffffff;
-      }, this)
-      answerButton.events.onInputOut.add(function(){
-        answerButton.tint = 0xffffff;
-      }, this)
-
-      taskGroup.add(answerButton);
-      this.game.world.sendToBack(answerButton);
-    }
-
-    console.log(taskGroup);
-
-    //TASK INITIALIZED SET TO FALSE
-
-
+    else{
+      this.tweenTint(button, button.graphicsData[0].fillColor, 0xff0000, 100);
+    }    
   },
 
   helperButtonHandler: function(button){
@@ -597,13 +575,21 @@ ClickerMath.GameState = {
       sprite.anchor.setTo(0.5);
       sprite.scale.setTo(helper.iconScale.x * 0.5, helper.iconScale.y * 0.5);
 
-      //change emitter rate
-      //flow( [lifespan] [, frequency] [, quantity] [, total] [, immediate])
-      helper.emitter.flow(1000, 1000, helper.amount * helper.gain, -1);
+      //tween sprite to own area
+      var tween = this.game.add.tween(sprite).from({y: 800, x: x}, 2000, null, true);
+
+      tween.onComplete.add(function(){
+        //change emitter rate
+        //flow( [lifespan] [, frequency] [, quantity] [, total] [, immediate])
+        helper.emitter.flow(1000, 1000, helper.amount * helper.gain, -1);
+      }, this);
+
+      
+      
 
     }
     else{
-      this.tweenTint(button, button.graphicsData[0].fillColor, 0xff0000, 200);
+      this.tweenTint(button, button.graphicsData[0].fillColor, 0xff0000, 100);
     }
 
   },
@@ -745,12 +731,21 @@ ClickerMath.GameState = {
     data.rewardText.anchor.setTo(0.5);
     this.storeTextGroup.add(data.rewardText);  
 
+    //solved amount text
+    data.solvedAmountText.x = Icon.x + 50;
+    data.solvedAmountText.y = Icon.y + 20;
+    data.solvedAmountText.setText("#" + data.solved, true);
+    data.solvedAmountText.anchor.setTo(0.5);
+    data.solvedAmountText.setStyle(rewardTextStyle);
+    this.storeTextGroup.add(data.solvedAmountText);
+
     //reward icon
     var rewardIcon = this.game.add.sprite(data.rewardText.right + 20, data.rewardText.y, "xIcon");
     rewardIcon.anchor.setTo(0.5);    
     rewardIcon.scale.setTo(0.3);  
     this.storeTextGroup.add(rewardIcon);
   },
+
   tweenTint: function(obj, startColor, endColor, time) {    
     // create an object to tween with our step value at 0    
     var colorBlend = {step: 0};    
@@ -769,12 +764,13 @@ ClickerMath.GameState = {
       obj.tint = 0xffffff;
     }, this);
   },
+
   setHelperEmitters: function(helperData){
     helperData.emitter.makeParticles('xIcon');
     helperData.emitter.centerX = (helperData.spawnArea.x1 + helperData.spawnArea.x2)/2;
     helperData.emitter.centerY = (helperData.spawnArea.y1 + helperData.spawnArea.y2)/2;
     helperData.emitter.setScale(0.3, 0.3, 0.3, 0.3, 0, null, true);
-    helperData.emitter.setAlpha(0.2, 0.1, 0, null, true);
+    helperData.emitter.setAlpha(0.6, 1, 0, null, true);
     //helperData.emitter.gravity = -100;
   },
 
@@ -789,7 +785,6 @@ ClickerMath.GameState = {
 
     //randomize tasks
     return this.randomizeArray(tasks)
-
   },
 
   randomizeArray: function(array){
@@ -828,6 +823,109 @@ ClickerMath.GameState = {
     coords = this.randomizeArray(coords);
 
     return coords;
+  },
+
+  answerButtonHover: function(button){
+    button.tint = 0.5 * 0xffffff;
+    // console.log(arguments);
+  },
+
+  answerButtonOut: function(button){
+
+    button.tint = 0xffffff;
+  },
+
+  answerCheck: function(button, pointer, text, taskData, taskCorrectAnswer, taskGroup, textGroup){
+    button.alpha = 0.5;
+
+    var textStyle = {
+      font: "50px aldrichregular",
+      fill: "black"
+    }
+    var text; 
+
+    if(text.text === taskCorrectAnswer){
+      //add reward
+      this.xNow += taskData.reward;
+      this.totalX += taskData.reward;
+      taskData.solved += 1;
+      taskData.solvedAmountText.setText("#" + taskData.solved, true);
+      textStyle.fill = "green";
+      text = "Correct!";
+    }
+    else{
+      textStyle.fill = "red";
+      text = "Wrong!"
+    }
+    //tweening tweening tweening
+    var text = this.game.add.text(400, 300, text, textStyle);
+    text.anchor.setTo(0.5);
+
+    var textTween = this.game.add.tween(text).from({alpha: 0}, 1500, null, true, 0, 0, false);
+    var textTweenRotate = this.game.add.tween(text).from({angle: 360}, 500, null, true, 0, 0, false)
+
+    //destroy taskgroups
+    taskGroup.destroy();
+    textGroup.destroy();
+
+    //after compliments, clear all
+    textTween.onComplete.add(function(){
+      //destroy text
+      text.destroy();
+      //create coords again
+      this.answerCoords = this.createAnswerCoordinates()
+      //can buy now more tasks and creates the X again
+      this.taskInitialized = false;
+      this.createClickableX();
+    }, this);
+
+    
+  },
+
+  initTaskToGame: function(task, taskData, taskGroup, textGroup){
+
+    //create task text 
+    var taskText = this.game.add.text(400, 200, task["task"], this.taskTextStyle);;
+    taskText.anchor.setTo(0.5);
+    textGroup.add(taskText);
+    //create task answers
+    var answers = [];
+    taskCorrectAnswer = task["answer"]
+    answers.push(taskCorrectAnswer);
+    for(var i = 1; i <= 8 ; i++){
+      answers.push(task["wrongAnswer" + i]);
+    }
+
+    for(var j = 1; j <= 9 ; j ++){
+      //set the task coords and text
+      var coords = this.answerCoords.pop();
+      var answerText = answers.pop();
+      var text = this.game.add.text(coords[0], coords[1], answerText, this.taskAnswerTextStyle);
+      text.anchor.setTo(0.5);
+      textGroup.add(text);
+
+      //task answers input
+      var answerButton = this.add.graphics(0, 0); 
+      taskGroup.add(answerButton);
+      answerButton.lineStyle(1.5, 0x000000, 0.5);            
+      answerButton.beginFill(this.taskAnswerBtn.fillColor, 1);            
+      answerButton.drawRect(coords[0] - 80, coords[1] - 20, 180, 40);                      
+      answerButton.endFill(); 
+      answerButton.alpha = 1;
+      answerButton.inputEnabled = true;     
+
+      answerButton.events.onInputDown.add(this.answerCheck, this, 0, text, taskData, taskCorrectAnswer, taskGroup, textGroup);
+
+      answerButton.events.onInputOver.add(this.answerButtonHover, this);
+
+      answerButton.events.onInputOut.add(this.answerButtonOut, this);
+
+      
+    }
+    this.game.world.bringToTop(textGroup);
+
+    var groupTween = this.game.add.tween(textGroup).from({alpha: 0}, 500, null, true, 0, 0, false);
+
   }
 
 };
