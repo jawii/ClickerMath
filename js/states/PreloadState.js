@@ -16,6 +16,17 @@ ClickerMath.PreloadState = {
 		this.load.image("hard", "assets/images/hard.png");
 		this.load.image("asian", "assets/images/asian.png");
 
+		//helper icons
+		this.load.image("student", "assets/images/student.png");
+		this.load.image("professor", "assets/images/professor.png");
+		this.load.image("xFarm", "assets/images/xFarm.png");
+
+		//load equations
+		this.load.text('easyTasks', 'assets/data/easyTasks.json');
+		this.load.text('normalTasks', 'assets/data/normalTasks.json');
+		this.load.text('hardTasks', 'assets/data/hardTasks.json');
+		this.load.text('asianTasks', 'assets/data/asianTasks.json');
+
 		//PROGRESS BAR
 		this.progress = this.game.add.text(this.game.world.centerX, this.game.world.width/2, '0%', {fill: 'white'});    
 		this.progress.anchor.setTo(0.5);           

@@ -1,0 +1,27 @@
+{
+	"a":{
+		"task": "2x = 4",
+		"answer": "x = 2",
+		"wrongAnswer1": "x = 0",
+		"wrongAnswer2": "x = 1",
+		"wrongAnswer3": "x = -1",
+		"wrongAnswer4": "x = -2",
+		"wrongAnswer5": "x = 3",
+		"wrongAnswer6": "x = -3",
+		"wrongAnswer7": "x = -4",
+		"wrongAnswer8": "x = 4"
+	},
+	"b":{
+		"task": "3x = 9",
+		"answer": "x = 3",
+		"wrongAnswer1": "x = 2",
+		"wrongAnswer2": "x = 1",
+		"wrongAnswer3": "x = -1",
+		"wrongAnswer4": "x = -2",
+		"wrongAnswer5": "x = 0",
+		"wrongAnswer6": "x = -3",
+		"wrongAnswer7": "x = -4",
+		"wrongAnswer8": "x = 4",
+		"wrongAnswer9": "x = 6"
+	}
+}

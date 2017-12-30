@@ -1,0 +1,26 @@
+{
+	"a":{
+		"task": "x^2 = 9/81",
+		"answer": "x = 0.7",
+		"wrongAnswer1": "x = -0.7",
+		"wrongAnswer2": "x = 0.49",
+		"wrongAnswer3": "x = 0.06",
+		"wrongAnswer4": "x = -1",
+		"wrongAnswer5": "x = 2",
+		"wrongAnswer6": "x = 3",
+		"wrongAnswer7": "x = -1/2",
+		"wrongAnswer8": "x = 2.1"
+	},
+	"c":{
+		"task": "x^2 + 2 = 6",
+		"answer": "x = 2 or x = -2"
+	},
+	"d":{
+		"task": "2x = 3x + 2",
+		"answer": "2"
+	},
+	"e":{
+		"task": "6/x = 2",
+		"answer": "3"
+	}
+}
