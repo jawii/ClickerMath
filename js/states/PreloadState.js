@@ -21,6 +21,11 @@ ClickerMath.PreloadState = {
 		this.load.image("professor", "assets/images/professor.png");
 		this.load.image("xFarm", "assets/images/xFarm.png");
 
+		//upgradeicons
+		this.load.image("studentUpgrade", "assets/images/studentUpgrade.png");
+		this.load.image("professorUpgrade", "assets/images/professorUpgrade.png");
+		this.load.image("xFarmUpgrade", "assets/images/xFarmUpgrade.png");
+
 		//load equations
 		this.load.text('easyTasks', 'assets/data/easyTasks.json');
 		this.load.text('normalTasks', 'assets/data/normalTasks.json');

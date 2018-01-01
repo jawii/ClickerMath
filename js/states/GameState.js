@@ -6,9 +6,9 @@ ClickerMath.GameState = {
   //initiate game settings
   init: function() {
 
-    this.totalX = 0;
+    this.totalX = 1000;
     this.xData = {
-      xNow: 0,
+      xNow: 1000,
     };
 
     this.clickGain = 1;
@@ -26,7 +26,7 @@ ClickerMath.GameState = {
     };
 
     this.normalTaskData = {
-      available: false,
+      available: true,
       price: 200,
       reward: 2000,
       solved: 0,
@@ -37,7 +37,7 @@ ClickerMath.GameState = {
     };
 
     this.hardTaskData = {
-      available: false,
+      available: true,
       price: 500,
       reward: 5000,
       solved: 0,
@@ -48,7 +48,7 @@ ClickerMath.GameState = {
     };
 
     this.asianTaskData = {
-      available: false,
+      available: true,
       price: 1000,
       reward: 10000,
       solved: 0,
@@ -123,10 +123,56 @@ ClickerMath.GameState = {
       emitter: this.game.add.emitter(0, 0, 0)
     };
 
+    this.upgradeDatas = {
+      unlockEasyLevelData : {
+        price: 200,
+        keyGroup: "task",
+        key: "easy",
+        guideText: this.game.add.text(),
+        guideGraphics: this.game.add.graphics(0, 0),
+        requirements: ["this.studentData.amount >= 1"],
+        reward: ["this.easyTaskData.available = true"]
+      },
+
+      studentGainPlus: {
+        price: 100,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        guideText: this.game.add.text(),
+        guideGraphics: this.game.add.graphics(0, 0),
+        requirements: ["this.studentData.amount >= 1"],
+        reward: ["this.studentData.gain += 0.2"]
+      },
+
+      unlockNormalLevelData : {
+        price: 500,
+        keyGroup: "task",
+        key: "normal",
+        guideText: this.game.add.text(),
+        guideGraphics: this.game.add.graphics(0, 0),
+        requirements: ["this.studentData.amount >= 2"],
+        reward: ["this.normalTaskData.available = true"]
+      },
+
+      unlockHardLevelData : {
+        price: 1000,
+        keyGroup: "task",
+        key: "hard",
+        guideText: this.game.add.text(),
+        guideGraphics: this.game.add.graphics(0, 0),
+        requirements: ["this.studentData.amount >= 3"],
+        reward: ["this.hardTaskData.available = true"]
+      }
+
+      
+    };
+    
+
+
     this.guiLineData = {
       lineWidth: 2,
       lineColor: 0x000000,
-      lineAlpha: 0.8
+      lineAlpha: 0.6
     };
 
     this.xAmountStyle = {
@@ -157,6 +203,15 @@ ClickerMath.GameState = {
 
     //groups
     this.helperGroup = this.game.add.group();
+
+
+    //create upgrades group
+    this.upgradesGroup = this.game.add.group();
+    this.upgradesGroup.name = "All upgrades"
+    this.createUpgrades();
+    //create group for upgrades to destroy when store button is pressed
+    this.upgradeArea = this.game.add.group();
+    this.upgradeArea.name = "Upgrades in upgrades area";
   },
 
   //load the game assets before the game starts
@@ -174,6 +229,8 @@ ClickerMath.GameState = {
     // console.log(this.normalTasks[0]);
     // console.log(this.hardTasks[0]);
     // console.log(this.asianTasks[0]);
+
+
   },
   //executed after everything is loaded
   create: function() {
@@ -181,7 +238,6 @@ ClickerMath.GameState = {
     //physics for emitters
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.stage.backgroundColor = "#E5EEF7";
-
     // //create background
     // var myBitmap = this.game.add.bitmapData(1280, 800);
     // var grd = myBitmap.context.createLinearGradient(0,400, 800, 400);
@@ -192,7 +248,6 @@ ClickerMath.GameState = {
     // this.backgroundSprite = this.game.add.sprite(0, 0, myBitmap);
     // this.backgroundSprite.alpha = 0.5;
     // this.game.world.sendToBack(this.backgroundSprite);
-
 
     //x number now
     this.xAmountText = this.game.add.text(400, 40, this.xData.xNow, this.xAmountStyle);
@@ -209,6 +264,7 @@ ClickerMath.GameState = {
 
     //create the X
     this.createClickableX();
+    
 
     //create answer coordinates
     this.answerCoords = this.createAnswerCoordinates();
@@ -389,6 +445,20 @@ ClickerMath.GameState = {
     this.openUpgradeButton.alpha = 0.5;
     this.openStoreButton.alpha = 1;
 
+    //clear upgrade group
+    this.upgradeArea.forEach(function(upgrade){
+      console.log("Removing upgradeArea");
+      //add upgrade to upgradesgroup again
+      this.upgradeArea.remove(upgrade);
+      this.upgradesGroup.add(upgrade);
+    });
+    console.log("UpgradeGroup in Store")
+    console.log(this.upgradesGroup);
+    console.log("Upgrades in upgrade area (store)");
+    console.log(this.upgradeArea);
+    //this.upgradesGroup.visible = false;
+
+
     // console.log("Store - section opened");
     var buyTaskTextStyle = {
       font: "30px aldrichregular",
@@ -506,9 +576,56 @@ ClickerMath.GameState = {
     this.openStoreButton.alpha = 0.5;
     this.openUpgradeButton.alpha = 1;
 
+    //get the upgrade coordinates
+    var coords = this.createUpgradePositions();
+    // console.log(coords);
+    // this.upgradesGroup.visible = true;
 
+    //check which upgrades fills the requirements and then draw them 
+    console.log(this.upgradesGroup);
+    // console.log(this.upgradesGroup.children);
 
-    console.log("Upgrade section opened");
+    //check what upgrades will be removed
+    var indexes = [];
+
+    //for (var i = 0, len = group.children.length; i < len; i++) {  console.log(group.children[i]);}
+    this.upgradesGroup.forEach(function(upgrade){
+      var available = true;
+      var requirementsArr = upgrade.data.requirements;
+      var len = requirementsArr.length;
+      for (var i = 0; i < len; i++) {
+          // console.log(requirementsArr[i])
+          //if all true then add upgrade to on the list
+          if(!eval(requirementsArr[i])){
+            available = false;
+          }
+      }
+      if(available){
+          indexes.push(upgrade.z);
+      }
+    }, this);
+    
+    // console.log(indexes);
+
+    //remove those from upgradesgroup and add to upgrade area
+    for(var j = 0 ; j < indexes.length ; j++){
+      var child = this.upgradesGroup.getAt(indexes[j]);
+      // console.log(child);
+      this.upgradesGroup.remove(child);
+      this.upgradeArea.add(child);
+    }
+
+    // console.log(this.upgradeArea);
+  
+    //draw them
+    var length = this.upgradeArea.children.length;
+    for (var j = 0; j < length ; j ++){    
+      var pos = coords.shift();
+      // console.log(pos);
+      //get the coordinate and draw the upgrade on the map
+      this.upgradeArea.children[j].drawUpgrade(pos[0], pos[1]);    
+    } 
+
   },
 
   taskButtonHandler: function(button){
@@ -634,11 +751,11 @@ ClickerMath.GameState = {
 
     button.events.onInputOver.add(function(){
       button.tint = 0.5 * 0xffffff;
-    }, this)
+    }, this);
 
     button.events.onInputOut.add(function(){  
       button.tint = 0xffffff;
-    }, this)
+    }, this);
 
     group.add(button);
 
@@ -1016,6 +1133,37 @@ ClickerMath.GameState = {
     
     var tween = this.game.add.tween(this.xData).to( { xNow: this.xData.xNow + reward }, time, Phaser.Easing.Linear.None);
     tween.start()
+  },
+
+  createUpgrades: function(){
+
+    for (const key of Object.keys(this.upgradeDatas)) {
+      var task = new ClickerMath.Upgrade(this, this.upgradeDatas[key]);
+      this.upgradesGroup.add(task);
+      // console.log(task.data);
+    }
+    this.game.world.bringToTop(this.upgradesGroup);
+
+    // console.log(this.upgradesGroup);
+
+    
+  },
+
+  createUpgradePositions: function(){
+
+    var coords = [];
+    var xWidth = 110;
+    var yWidth = 150;
+    var xTopLeft = 900;
+    var yTopLeft = 175;
+
+    for (var i = 0; i <=2 ; i++){  
+      for(var j = 0; j <=3 ; j ++){ 
+        coords.push([xTopLeft + i * xWidth, yTopLeft + j * yWidth]);
+      }
+    }
+    return coords;
+
   }
 
 };
