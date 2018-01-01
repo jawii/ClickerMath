@@ -1,20 +1,22 @@
 var ClickerMath = ClickerMath || {};
 
-ClickerMath.Upgrade = function(state, data){
+ClickerMath.Upgrade = function(state, x, y, data){
 
 	//nulls: x, y, key
-	Phaser.Sprite.call(this, state.game, null, null, data.key);
+	Phaser.Sprite.call(this, state.game, -10, -10, data.key);
 
 	this.data = data;
-	this.game = state;
-	//console.log(data);
+	this.game = state.game;
 
-	this.width = 80;
-	this.height = 80;
+	//console.log(data);
+	this.guideText = this.game.add.text();
+    this.graphics = this.game.add.graphics(0, 0);
+	
 
 	//set visibily zero at start
 	this.anchor.setTo(0.5);
-	this.visible = false;
+
+    this.reset();
 
 };
 
@@ -25,20 +27,14 @@ ClickerMath.Upgrade.prototype.constructor = ClickerMath.Upgrade;
 ClickerMath.Upgrade.prototype.reset = function(x, y, data) {
 
 	//null is max health
-	Phaser.Sprite.prototype.reset.call(this, x, y, this.data.key);
-	this.graphics.revive();
-	this.priceText.revive();
-	this.priceIcon.revive();
-	console.log("Reset!");
-	// console.log(this);
-};
-
-ClickerMath.Upgrade.prototype.revive = function() {
-
-	//null is max health
-	Phaser.Sprite.prototype.revive.call();
+	Phaser.Sprite.prototype.reset.call(this, x, y, null);
+	this.visible = false;
+	this.alive = false;
+	this.width = 80;
+	this.height = 80;
 
 };
+
 
 ClickerMath.Upgrade.prototype.drawUpgrade = function(x, y) {
 
@@ -48,7 +44,6 @@ ClickerMath.Upgrade.prototype.drawUpgrade = function(x, y) {
 	//console.log(this.data);
 
 	//graphics
-	this.graphics = this.data.guideGraphics;
 	this.graphics.lineStyle(2, 0x000000, 0.4);            
     this.graphics.beginFill(0x83B1DA, 1);            
     this.graphics.drawRect(this.left - 20, this.top - 10, this.width + 40, 100);                      
@@ -78,13 +73,17 @@ ClickerMath.Upgrade.prototype.drawUpgrade = function(x, y) {
 	this.priceIcon = this.game.add.sprite(this.priceText.right + 15, this.priceText.y, "xIcon");
 	this.priceIcon.anchor.setTo(0.5);
 	this.priceIcon.scale.setTo(0.35);	
+
+	//load texture
+	this.loadTexture(this.data.key);
 };
 
 ClickerMath.Upgrade.prototype.kill = function(){
-	this.graphics.kill();
+	this.graphics.clear();
 	this.priceText.kill();
 	this.priceIcon.kill();
 	Phaser.Sprite.prototype.kill.call(this);
+	Phaser.Sprite.prototype.reset.call(this);
 	// console.log(this);
 }
 
