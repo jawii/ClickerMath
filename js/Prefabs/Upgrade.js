@@ -109,10 +109,20 @@ ClickerMath.Upgrade.prototype.buttonPress = function(button) {
 
 	//update gain per secons
 	ClickerMath.GameState.updateGainPerSeconds();
+
+	this.destroy();
 	
 };
 ClickerMath.Upgrade.prototype.buttonHover = function(button) {
 	button.tint = 0.5 * 0xffffff;
+
+	this.infoTextStyle = {
+		font: "16px aldrichregular",
+      	fill: "black",
+      	align: "center",
+      	wordWrap: "true",
+      	wordWrapWidth: this.width + 80
+	}
 
 	//add the info screen about the upgrade
 	this.alpha = 0.1;
@@ -128,7 +138,7 @@ ClickerMath.Upgrade.prototype.buttonHover = function(button) {
     this.infoScreen.alpha = 0.5;
 
     //create infotext
-    this.infoText = this.game.add.text(this.centerX, this.centerY, this.data.infoText);
+    this.infoText = this.game.add.text(this.centerX, this.centerY + 15, this.data.infoText, this.infoTextStyle);
     this.infoText.anchor.setTo(0.5);
 };
 ClickerMath.Upgrade.prototype.buttonOver = function(button) {
@@ -139,6 +149,16 @@ ClickerMath.Upgrade.prototype.buttonOver = function(button) {
 	this.graphics.alpha = 1.0;
 	this.priceText.alpha = 1.0;
 	this.priceIcon.alpha = 1.0;
+};
+
+ClickerMath.Upgrade.prototype.destroy = function(button) {
+
+	Phaser.Sprite.prototype.destroy.call(this);
+	this.infoScreen.destroy();
+	this.infoText.destroy();
+	this.graphics.destroy();
+	this.priceText.destroy();
+	this.priceIcon.destroy();
 };
 
 
