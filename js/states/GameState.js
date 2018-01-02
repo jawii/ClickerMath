@@ -6,16 +6,16 @@ ClickerMath.GameState = {
   //initiate game settings
   init: function() {
 
-    this.totalX = 1000;
+    this.totalX = 100000;
     this.xData = {
-      xNow: 1000,
+      xNow: 100000,
     };
 
     this.clickGain = 1;
     this.xGainPerSecond = 0;
 
     this.easyTaskData = {
-      available: true,
+      available: false,
       price: 50,
       reward: 500,
       solved: 0,
@@ -26,7 +26,7 @@ ClickerMath.GameState = {
     };
 
     this.normalTaskData = {
-      available: true,
+      available: false,
       price: 200,
       reward: 2000,
       solved: 0,
@@ -37,7 +37,7 @@ ClickerMath.GameState = {
     };
 
     this.hardTaskData = {
-      available: true,
+      available: false,
       price: 500,
       reward: 5000,
       solved: 0,
@@ -48,7 +48,7 @@ ClickerMath.GameState = {
     };
 
     this.asianTaskData = {
-      available: true,
+      available: false,
       price: 1000,
       reward: 10000,
       solved: 0,
@@ -64,7 +64,7 @@ ClickerMath.GameState = {
       amountText: this.game.add.text(),
       amount: 0,
       price: 20,
-      gain: 0.2,
+      gain: 0.5,
       priceGrow: 20,
       priceText: this.game.add.text(),
       iconKey: "student",
@@ -129,15 +129,17 @@ ClickerMath.GameState = {
         keyGroup: "task",
         key: "easy",
         requirements: ["this.profData.amount >= 1"],
-        reward: ["this.easyTaskData.available = true"]
+        reward: ["ClickerMath.GameState.easyTaskData.available = true"],
+        infoText: "This is my infoText. This unlocks the easy tasks!"
       },
 
       studentGainPlus: {
-        price: 100,
+        price: 100000,
         keyGroup: "helper",
         key: "studentUpgrade",
         requirements: ["this.profData.amount >= 1"],
-        reward: ["this.studentData.gain += 0.2"]
+        reward: ["ClickerMath.GameState.studentData.gain += 0.2"],
+        infoText: "This is my infoText. This unlocks the easy tasks!"
       },
 
       unlockNormalLevelData : {
@@ -145,7 +147,8 @@ ClickerMath.GameState = {
         keyGroup: "task",
         key: "normal",
         requirements: ["this.profData.amount >= 2"],
-        reward: ["this.normalTaskData.available = true"]
+        reward: ["ClickerMath.GameState.normalTaskData.available = true"],
+        infoText: "This unlocks the normal level tasks!"
       },
 
       unlockHardLevelData : {
@@ -153,7 +156,8 @@ ClickerMath.GameState = {
         keyGroup: "task",
         key: "hard",
         requirements: ["this.studentData.amount >= 3"],
-        reward: ["this.hardTaskData.available = true"]
+        reward: ["ClickerMath.GameState.hardTaskData.available = true"],
+        infoText: "Unlocks the hard tasks!"
       },
 
       profGainPlus: {
@@ -161,7 +165,8 @@ ClickerMath.GameState = {
         keyGroup: "helper",
         key: "professorUpgrade",
         requirements: ["this.profData.amount >= 1"],
-        reward: ["this.studentData.gain += 0.2"]
+        reward: ["ClickerMath.GameState.studentData.gain += 0.2"],
+        infoText: "Professors make more x (+0.2) per second!"
       },
 
       xFarmGainPlus: {
@@ -169,7 +174,8 @@ ClickerMath.GameState = {
         keyGroup: "helper",
         key: "xFarmUpgrade",
         requirements: ["this.profData.amount >= 1"],
-        reward: ["this.studentData.gain += 0.2"]
+        reward: ["ClickerMath.GameState.studentData.gain += 0.2"],
+        infoText: "xFarms gais + 1"
       }
       
     };
@@ -669,10 +675,10 @@ ClickerMath.GameState = {
     //if enough money, add gain to gainpersecond
     if(helper.price <= this.xData.xNow){
       this.xData.xNow -= helper.price;
-      this.xGainPerSecond += helper.gain;
       //update price and amount
       helper.price += helper.priceGrow;
       helper.amount += 1;
+      this.updateGainPerSeconds();
       helper.priceText.setText(helper.price, true);
       helper.amountText.setText("#" + helper.amount, true);
 
@@ -696,6 +702,13 @@ ClickerMath.GameState = {
     else{
       this.tweenTint(button, button.graphicsData[0].fillColor, 0xff0000, 100);
     }
+
+  },
+
+  updateGainPerSeconds: function(){
+    this.xGainPerSecond = this.studentData.amount * this.studentData.gain;
+    this.xGainPerSecond += this.profData.amount * this.profData.gain;
+    this.xGainPerSecond += this.xFarmData.amount * this.xFarmData.gain;
 
   },
   createStoreButton: function(button, buttonColor, buttonTop, buttonHeight, group, buttonHandler){
@@ -770,7 +783,7 @@ ClickerMath.GameState = {
     //X Gain
     var gainText = this.game.add.text(1150, text.y, "XGAIN", gainTextStyle);
     gainText.anchor.setTo(0.5);
-    var gainAmountText = this.game.add.text(gainText.x + 30, gainText.y + 30,"+"+ data.gain + "  X/second", gainTextStyle);
+    var gainAmountText = this.game.add.text(gainText.x + 30, gainText.y + 30,"+"+ Math.round(data.gain * 100)/100 + "  X/second", gainTextStyle);
     gainAmountText.anchor.setTo(0.5);
     group.add(gainText);
     group.add(gainAmountText);
@@ -1002,8 +1015,8 @@ ClickerMath.GameState = {
       emitter.setScale(0.3, 0.3, 0.3, 0.3, 0, null, true);
       emitter.setAlpha(0.2, 1, 0, null, true);
       emitter.setXSpeed(-20, 20);
-      emitter.setYSpeed(-400, -200);
-      emitter.width = 140;
+      emitter.setYSpeed(-250, -100);
+      emitter.width = 150;
 
     }
     else{
@@ -1023,7 +1036,7 @@ ClickerMath.GameState = {
       
       //flow( [lifespan] [, frequency] [, quantity] [, total] [, immediate])
       if(answerCorrect){
-        emitter.flow(750, 100, 5, 100, false);
+        emitter.flow(750, 100, 5, 80, false);
         //add reward
         this.xRizeTween(taskData.reward, 1200)
         //this.xData.xNow += taskData.reward;
@@ -1123,8 +1136,8 @@ ClickerMath.GameState = {
   createUpgradePositions: function(){
 
     var coords = [];
-    var xWidth = 110;
-    var yWidth = 150;
+    var xWidth = 150;
+    var yWidth = 175;
     var xTopLeft = 900;
     var yTopLeft = 175;
 
