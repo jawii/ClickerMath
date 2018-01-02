@@ -51,9 +51,9 @@ ClickerMath.GameState = {
     //HELPERS
     this.studentData = {
       amount: 0,
-      price: 20,
-      gain: 0.5,
-      priceGrow: 20,
+      price: 10,
+      gain: 1,
+      priceGrow: 5,
       iconKey: "student",
       iconScale: {
         x: 0.2,
@@ -70,9 +70,9 @@ ClickerMath.GameState = {
 
     this.profData = {
       amount: 0,
-      price: 50,
-      gain: 1,
-      priceGrow: 50,
+      price: 20,
+      gain: 2,
+      priceGrow: 10,
       iconKey: "professor",
       iconScale: {
         x: 0.2,
@@ -89,9 +89,9 @@ ClickerMath.GameState = {
 
     this.xFarmData = {
       amount: 0,
-      price: 400,
-      gain: 2,
-      priceGrow: 400,
+      price: 100,
+      gain: 5,
+      priceGrow: 100,
       iconKey: "xFarm",
       iconScale: {
         x: 0.6,
@@ -117,8 +117,62 @@ ClickerMath.GameState = {
         infoText: "Click gain +1"
       },
 
-      unlockEasyLevelData : {
+      clickGain2 : {
         price: 200,
+        keyGroup: "click",
+        key: "easy",
+        requirements: ["ClickerMath.GameState.clickGain >= 2"],
+        reward: ["ClickerMath.GameState.clickGain += 1"],
+        infoText: "Click gain +1"
+      },
+
+      clickGain3 : {
+        price: 1000,
+        keyGroup: "click",
+        key: "easy",
+        requirements: ["ClickerMath.GameState.clickGain >= 3"],
+        reward: ["ClickerMath.GameState.clickGain += 1"],
+        infoText: "Click gain +1"
+      },
+
+      clickGain4 : {
+        price: 5000,
+        keyGroup: "click",
+        key: "easy",
+        requirements: ["ClickerMath.GameState.clickGain >= 4"],
+        reward: ["ClickerMath.GameState.clickGain += 1"],
+        infoText: "Click gain +1"
+      },
+
+      clickGain5 : {
+        price: 5000,
+        keyGroup: "click",
+        key: "easy",
+        requirements: ["ClickerMath.GameState.clickGain >= 5"],
+        reward: ["ClickerMath.GameState.clickGain += 1"],
+        infoText: "Click gain +1"
+      },
+
+      clickGain6 : {
+        price: 5000,
+        keyGroup: "click",
+        key: "easy",
+        requirements: ["ClickerMath.GameState.clickGain >= 6"],
+        reward: ["ClickerMath.GameState.clickGain += 1"],
+        infoText: "Click gain +1"
+      },
+
+      clickGain7 : {
+        price: 10000,
+        keyGroup: "click",
+        key: "easy",
+        requirements: ["ClickerMath.GameState.clickGain >= 7"],
+        reward: ["ClickerMath.GameState.clickGain += 1"],
+        infoText: "Click gain +1"
+      },
+
+      unlockEasyLevelData : {
+        price: 50,
         keyGroup: "task",
         key: "easy",
         requirements: ["this.studentData.amount >= 1"],
@@ -150,41 +204,113 @@ ClickerMath.GameState = {
         key: "asian",
         requirements: ["this.xFarmData.amount >= 10", "this.hardTaskData.solved > 5"],
         reward: ["ClickerMath.GameState.asianTaskData.available = true"],
-        infoText: "Unlocks the hard tasks!"
+        infoText: "Unlocks the asian level tasks!"
       },
 
       easyTaskRewardRize : {
+        price: 2000,
+        keyGroup: "task",
+        key: "easy",
+        requirements: ["this.easyTaskData.solved >= 2"],
+        reward: ["ClickerMath.GameState.easyTaskData.reward *= 2"],
+        infoText: "Doubles Easy tasks rewards"
+      },
+
+      easyTaskRewardRize2 : {
         price: 4000,
         keyGroup: "task",
         key: "easy",
-        requirements: ["this.easyTaskData.solved >= 10"],
+        requirements: ["this.easyTaskData.solved >= 5"],
+        reward: ["ClickerMath.GameState.easyTaskData.reward *= 2"],
+        infoText: "Doubles Easy tasks rewards"
+      },
+
+      easyTaskRewardRize3 : {
+        price: 8000,
+        keyGroup: "task",
+        key: "easy",
+        requirements: ["this.easyTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.easyTaskData.reward *= 2"],
         infoText: "Doubles Easy tasks rewards"
       },
 
       normalTaskRewardRize : {
+        price: 4000,
+        keyGroup: "task",
+        key: "normal",
+        requirements: ["this.normalTaskData.solved >= 2"],
+        reward: ["ClickerMath.GameState.normalTaskData.reward *= 2"],
+        infoText: "Doubles normal tasks rewards"
+      },
+
+      normalTaskRewardRize2 : {
         price: 8000,
         keyGroup: "task",
         key: "normal",
-        requirements: ["this.normalTaskData.solved >= 10"],
+        requirements: ["this.normalTaskData.solved >= 5"],
+        reward: ["ClickerMath.GameState.normalTaskData.reward *= 2"],
+        infoText: "Doubles normal tasks rewards"
+      },
+
+      normalTaskRewardRize3 : {
+        price: 16000,
+        keyGroup: "task",
+        key: "normal",
+        requirements: ["this.normalTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.normalTaskData.reward *= 2"],
         infoText: "Doubles normal tasks rewards"
       },
 
       hardTaskRewardRize : {
+        price: 7500,
+        keyGroup: "task",
+        key: "hard",
+        requirements: ["this.hardTaskData.solved >= 2"],
+        reward: ["ClickerMath.GameState.hardTaskData.reward *= 2"],
+        infoText: "Doubles hard tasks rewards"
+      },
+
+      hardTaskRewardRize2 : {
         price: 15000,
         keyGroup: "task",
         key: "hard",
-        requirements: ["this.hardTaskData.solved >= 10"],
+        requirements: ["this.hardTaskData.solved >= 5"],
+        reward: ["ClickerMath.GameState.hardTaskData.reward *= 2"],
+        infoText: "Doubles hard tasks rewards"
+      },
+
+      hardTaskRewardRize3 : {
+        price: 30000,
+        keyGroup: "task",
+        key: "hard",
+        requirements: ["this.hardTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.hardTaskData.reward *= 2"],
         infoText: "Doubles hard tasks rewards"
       },
 
       asianTaskRewardRize : {
+        price: 5000,
+        keyGroup: "task",
+        key: "asian",
+        requirements: ["this.asianTaskData.solved >= 2"],
+        reward: ["ClickerMath.GameState.asianTaskData.reward *= 2"],
+        infoText: "Doubles asian tasks rewards"
+      },
+
+      asianTaskRewardRize2 : {
         price: 10000,
         keyGroup: "task",
         key: "asian",
-        requirements: ["this.asianTaskData.solved >= 10"],
+        requirements: ["this.asianTaskData.solved >= 5"],
+        reward: ["ClickerMath.GameState.asianTaskData.reward *= 2"],
+        infoText: "Doubles asian tasks rewards"
+      },
+
+      asianTaskRewardRize3 : {
+        price: 10000,
+        keyGroup: "task",
+        key: "asian",
+        requirements: ["this.asianTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.asianTaskData.reward *= 2"],
         infoText: "Doubles asian tasks rewards"
       },
@@ -194,9 +320,36 @@ ClickerMath.GameState = {
         price: 100,
         keyGroup: "helper",
         key: "studentUpgrade",
-        requirements: ["this.profData.amount >= 1"],
-        reward: ["ClickerMath.GameState.studentData.gain += 0.2"],
-        infoText: "Each students gain 0.2 more X in second"
+        requirements: ["this.profData.amount >= 1", "this.easyTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.studentData.gain += 1"],
+        infoText: "Each students gain 1 more X in second"
+      },
+
+      studentGainPlus2: {
+        price: 200,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        requirements: ["this.xFarmData.amount >= 5", "this.normalTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.studentData.gain += 1"],
+        infoText: "Each students gain one more X in second"
+      },
+
+      studentGainPlus3: {
+        price: 1000,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        requirements: ["this.profData.amount >= 10", "this.hardTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.studentData.gain += 1"],
+        infoText: "Each students gain one more X in second"
+      },
+
+      studentGainPlus4: {
+        price: 5000,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        requirements: ["this.profData.amount >= 15", "this.asianTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.studentData.gain += 1"],
+        infoText: "Each students gain one more X in second"
       },
 
 
@@ -204,19 +357,73 @@ ClickerMath.GameState = {
         price: 500,
         keyGroup: "helper",
         key: "professorUpgrade",
-        requirements: ["this.xFarmData.amount >= 1"],
-        reward: ["ClickerMath.GameState.profData.gain += 1"],
-        infoText: "Professors make one more X per second!"
+        requirements: ["this.xFarmData.amount >= 1", "this.easyTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.profData.gain += 2"],
+        infoText: "Professors make 2 more X per second!"
+      },
+
+      profGainPlus2: {
+        price: 500,
+        keyGroup: "helper",
+        key: "professorUpgrade",
+        requirements: ["this.xFarmData.amount >= 5", "this.normalTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.profData.gain += 2"],
+        infoText: "Professors make one 2 X per second!"
+      },
+
+      profGainPlus3: {
+        price: 5000,
+        keyGroup: "helper",
+        key: "professorUpgrade",
+        requirements: ["this.xFarmData.amount >= 10", "this.hardTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.profData.gain += 2"],
+        infoText: "Professors make 2 more X per second!"
+      },
+
+      profGainPlus4: {
+        price: 10000,
+        keyGroup: "helper",
+        key: "professorUpgrade",
+        requirements: ["this.xFarmData.amount >= 15", "this.asianTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.profData.gain += 2"],
+        infoText: "Professors make 2 more X per second!"
       },
 
       xFarmGainPlus: {
         price: 1000,
         keyGroup: "helper",
         key: "xFarmUpgrade",
-        requirements: ["this.xFarmData.amount >= 2"],
-        reward: ["ClickerMath.GameState.xFarmData.gain += 2"],
-        infoText: "xFarms makes +2 more X in second"
-      }     
+        requirements: ["this.easyTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
+        infoText: "xFarms makes 5 more X in second"
+      },   
+
+      xFarmGainPlus1: {
+        price: 5000,
+        keyGroup: "helper",
+        key: "xFarmUpgrade",
+        requirements: ["this.normalTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
+        infoText: "xFarms makes 5 more X in second"
+      },
+
+      xFarmGainPlus2: {
+        price: 10000,
+        keyGroup: "helper",
+        key: "xFarmUpgrade",
+        requirements: ["this.hardTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
+        infoText: "xFarms makes 5 more X in second"
+      },  
+
+      xFarmGainPlus3: {
+        price: 15000,
+        keyGroup: "helper",
+        key: "xFarmUpgrade",
+        requirements: ["this.asianTaskData.solved >= 1"],
+        reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
+        infoText: "xFarms makes 5 more X in second"
+      },       
     };
     
     this.guiLineData = {
@@ -307,9 +514,9 @@ ClickerMath.GameState = {
     this.xAmountText.name = "xAmount Icon"
 
     //set emitters
-    // this.setHelperEmitters(this.studentData);
-    // this.setHelperEmitters(this.profData);
-    // this.setHelperEmitters(this.xFarmData);
+    this.setHelperEmitters(this.studentData);
+    this.setHelperEmitters(this.profData);
+    this.setHelperEmitters(this.xFarmData);
 
     //create the X
     this.createClickableX();
@@ -595,7 +802,7 @@ ClickerMath.GameState = {
     this.buyXFarmText;
     this.xFarmPriceIcon;
     if(!this.xFarmData.amountText){this.xFarmData.amountText = this.game.add.text();}
-    if(!this.xFarmData.priceText){console.log("Im here"); this.xFarmData.priceText = this.game.add.text();}
+    if(!this.xFarmData.priceText){this.xFarmData.priceText = this.game.add.text();}
     this.xFarmData.amountText.visible = true;
     this.xFarmData.priceText.visible = true;
     this.createHelperText(this.xFarmData, this.buyXFarmText, this.xFarmPriceIcon, this.storeAreaGroup, 800 - 15, 550 + 75 * 2, "xFarm", 1000, 580 + 74 * 2, 850, 705);
@@ -891,7 +1098,8 @@ ClickerMath.GameState = {
       tween.onComplete.add(function(){
         //change emitter rate
         //flow( [lifespan] [, frequency] [, quantity] [, total] [, immediate])
-        // helper.emitter.flow(2000, 2000, helper.amount * helper.gain, -1);
+        helper.emitter.flow(2000, 2000, helper.amount * helper.gain /10, -1);
+        sprite.cacheAsBitmap = true;
       }, this);
     }
     else{
@@ -1188,6 +1396,7 @@ ClickerMath.GameState = {
     var text; 
 
     var answerCorrect;
+    var emitter;
 
     if(text.text === taskCorrectAnswer){
 
@@ -1197,7 +1406,8 @@ ClickerMath.GameState = {
       taskData.solvedAmountText.setText("#" + taskData.solved, true);
       textStyle.fill = "green";
       text = "Correct!";   
-      var emitter = this.game.add.emitter(400, 250, taskData.reward)
+      emitter = this.game.add.emitter(400, 250, 100)
+      emitter.name = "Correct Answer Emitter";
       emitter.makeParticles('xIcon');
       emitter.setScale(0.3, 0.3, 0.3, 0.3, 0, null, true);
       emitter.setAlpha(0.2, 1, 0, null, true);
@@ -1207,10 +1417,9 @@ ClickerMath.GameState = {
 
     }
     else{
-
       answerCorrect = false;
       textStyle.fill = "red";
-      text = "Wrong!"
+      text = "Wrong!";
     }
     //tweening tweening tweening
     var text = this.game.add.text(400, 300, text, textStyle);
@@ -1235,9 +1444,6 @@ ClickerMath.GameState = {
     //destroy taskgroups
     taskGroup.destroy();
     textGroup.destroy();
-
-    
-
     //after compliments, clear all
     textTween.onComplete.add(function(){
       //destroy text
@@ -1247,10 +1453,11 @@ ClickerMath.GameState = {
     }, this);
 
     //wait a second
-    this.game.time.events.add(Phaser.Timer.SECOND * 4, function(){
+    this.game.time.events.add(Phaser.Timer.SECOND * 3, function(){
       //can buy now more tasks and creates the X again
       this.createClickableX();
       this.taskInitialized = false;
+      if(emitter){emitter.destroy();}
     }, this); 
   },
   initTaskToGame: function(task, taskData, taskGroup, textGroup){
@@ -1302,6 +1509,7 @@ ClickerMath.GameState = {
     
     var tween = this.game.add.tween(this.xData).to( { xNow: this.xData.xNow + reward }, time, Phaser.Easing.Linear.None);
     tween.start()
+
   },
   createUpgrades: function(){
 

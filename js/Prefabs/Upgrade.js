@@ -13,11 +13,21 @@ ClickerMath.Upgrade = function(state, x, y, data){
     this.graphics = this.game.add.graphics(0, 0);
     this.infoScreen = this.game.add.graphics(0, 0);
     this.infoText = this.game.add.text();
-	
+    this.priceText = this.game.add.text();
+    this.priceIcon = this.game.add.sprite();
 
+	
 	//set visibily zero at start
 	this.width = 60;
 	this.height = 60;
+
+	this.infoTextStyle = {
+		font: "16px aldrichregular",
+      	fill: "black",
+      	align: "center",
+      	wordWrap: "true",
+      	wordWrapWidth: this.width + 80
+	}
 
     this.reset();
 
@@ -70,10 +80,15 @@ ClickerMath.Upgrade.prototype.drawUpgrade = function(x, y) {
 		font: "14px aldrichregular",
       	fill: "black"
 	}
-	this.priceText = this.game.add.text(this.x - 10, this.bottom + 25, this.data.price);
+	this.priceText.x = this.x - 10;
+	this.priceText.y = this.bottom + 25;
+	this.priceText.text = this.data.price;
 	this.priceText.anchor.setTo(0.5);
-	this.priceText.width = Math.min(this.priceText.width, 55)
-	this.priceIcon = this.game.add.sprite(this.priceText.right + 15, this.priceText.y - 2, "xIcon");
+	this.priceText.width = Math.min(this.priceText.width, 55);
+
+	this.priceIcon.x = this.priceText.right + 15;
+	this.priceIcon.y = this.priceText.y - 2;
+	this.priceIcon.loadTexture("xIcon");
 	this.priceIcon.anchor.setTo(0.5);
 	this.priceIcon.scale.setTo(0.35);	
 	this.priceIcon.visible = true;
@@ -109,29 +124,21 @@ ClickerMath.Upgrade.prototype.buttonPress = function(button) {
 		ClickerMath.GameState.updateGainPerSeconds();
 
 		this.destroy();
-	}
-
-	
-	
+	}	
 };
 ClickerMath.Upgrade.prototype.buttonHover = function(button) {
 	button.tint = 0.5 * 0xffffff;
 
-	this.infoTextStyle = {
-		font: "16px aldrichregular",
-      	fill: "black",
-      	align: "center",
-      	wordWrap: "true",
-      	wordWrapWidth: this.width + 80
-	}
+	
 
 	//add the info screen about the upgrade
 	this.alpha = 0.1;
 	this.graphics.alpha = 0.1;
 	this.priceText.alpha = 0.1;
 	this.priceIcon.alpha = 0.1;
-	this.infoScreen = this.game.add.graphics(0, 0);
 
+	// this.infoText.visible = true;
+	this.infoScreen.reset(0, 0);
 	this.infoScreen.lineStyle(2, 0x000000, 0.4);            
     this.infoScreen.beginFill(0x83B1DA, 1);            
     this.infoScreen.drawRect(this.left - 50, this.top - 10, this.width + 100, 120);                      
@@ -139,19 +146,22 @@ ClickerMath.Upgrade.prototype.buttonHover = function(button) {
     this.infoScreen.alpha = 0.5;
 
     //create infotext
-    this.infoText = this.game.add.text(this.centerX, this.centerY + 15, this.data.infoText, this.infoTextStyle);
+    this.infoText.reset();
+    this.infoText.x = this.centerX;
+    this.infoText.y = this.centerY + 15;
+    this.infoText.text =this.data.infoText;
+    this.infoText.setStyle(this.infoTextStyle);
     this.infoText.anchor.setTo(0.5);
 };
 ClickerMath.Upgrade.prototype.buttonOver = function(button) {
 	button.tint = 0xffffff;
-	this.infoScreen.destroy();
-	this.infoText.destroy();
+	this.infoScreen.kill();
+	this.infoText.kill();
 	this.alpha = 1.0;
 	this.graphics.alpha = 1.0;
 	this.priceText.alpha = 1.0;
 	this.priceIcon.alpha = 1.0;
 };
-
 ClickerMath.Upgrade.prototype.destroy = function(button) {
 
 	Phaser.Sprite.prototype.destroy.call(this);
