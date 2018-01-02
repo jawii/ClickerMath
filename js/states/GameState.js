@@ -6,76 +6,54 @@ ClickerMath.GameState = {
   //initiate game settings
   init: function() {
 
-    this.totalX = 100000;
+    this.totalX = 0;
     this.xData = {
-      xNow: 100000,
+      xNow: 0,
     };
 
     this.clickGain = 1;
     this.xGainPerSecond = 0;
 
     this.easyTaskData = {
-      available: true,
+      available: false,
       price: 50,
       reward: 500,
+      priceGrow: 10,
       solved: 0,
     };
 
 
     this.normalTaskData = {
       available: false,
+      priceGrow: 20,
       price: 200,
       reward: 2000,
       solved: 0,
-      priceText: this.game.add.text(),
-      rewardText: this.game.add.text(),
-      solvedAmountText: this.game.add.text(),
-      icon: this.game.add.sprite(null, null, "normal"),
     };
-    this.normalTaskData.priceText.name = "normaltasks price text"
-    this.normalTaskData.solvedAmountText.name = "normaltasks solved text"
-    this.normalTaskData.rewardText.name = "normaltasks reward text"
-    this.normalTaskData.icon.name = "normaltasks icon sprite"
 
     this.hardTaskData = {
       available: false,
+      priceGrow: 100,
       price: 500,
       reward: 5000,
       solved: 0,
-      priceText: this.game.add.text(),
-      rewardText: this.game.add.text(),
-      solvedAmountText: this.game.add.text(),
-      icon: this.game.add.sprite(null, null, "hard"),
     };
-    this.hardTaskData.priceText.name = "hardtasks price text"
-    this.hardTaskData.solvedAmountText.name = "hardtasks solved text"
-    this.hardTaskData.rewardText.name = "hardtasks reward text"
-    this.hardTaskData.icon.name = "hardtasks icon sprite"
 
     this.asianTaskData = {
       available: false,
+      priceGrow: 500,
       price: 1000,
       reward: 10000,
       solved: 0,
-      priceText: this.game.add.text(),
-      rewardText: this.game.add.text(),
-      solvedAmountText: this.game.add.text(),
-      icon: this.game.add.sprite(null, null, "asian")
     };
-    this.asianTaskData.priceText.name = "asiantasks price text"
-    this.asianTaskData.solvedAmountText.name = "asiantasks solved text"
-    this.asianTaskData.rewardText.name = "asiantasks reward text"
-    this.asianTaskData.icon.name = "asiantasks icon sprite"
 
 
     //HELPERS
     this.studentData = {
-      amountText: this.game.add.text(),
       amount: 0,
       price: 20,
       gain: 0.5,
       priceGrow: 20,
-      priceText: this.game.add.text(),
       iconKey: "student",
       iconScale: {
         x: 0.2,
@@ -89,17 +67,12 @@ ClickerMath.GameState = {
       },
       emitter: this.game.add.emitter(0, 0, 0)
     };
-    this.studentData.amountText.name = "student amount text";
-    this.studentData.priceText.name = "student price text";
-    this.studentData.emitter.name = "student emitter";
 
     this.profData = {
-      amountText: this.game.add.text(),
       amount: 0,
       price: 50,
       gain: 1,
       priceGrow: 50,
-      priceText: this.game.add.text(),
       iconKey: "professor",
       iconScale: {
         x: 0.2,
@@ -114,17 +87,11 @@ ClickerMath.GameState = {
       emitter: this.game.add.emitter(0, 0, 0)
     };
 
-    this.profData.amountText.name = "Prof amount text";
-    this.profData.priceText.name = "Prof price text";
-    this.profData.emitter.name = "Prof emitter";
-
     this.xFarmData = {
-      amountText: this.game.add.text(),
       amount: 0,
       price: 400,
       gain: 2,
       priceGrow: 400,
-      priceText: this.game.add.text(),
       iconKey: "xFarm",
       iconScale: {
         x: 0.6,
@@ -138,11 +105,18 @@ ClickerMath.GameState = {
       },
       emitter: this.game.add.emitter(0, 0, 0)
     };
-    this.xFarmData.amountText.name = "xFarm amount text";
-    this.xFarmData.priceText.name = "xFarm price text";
-    this.xFarmData.emitter.name = "xFarm emitter";
+
 
     this.upgradeDatas = {
+      clickGain : {
+        price: 50,
+        keyGroup: "click",
+        key: "easy",
+        requirements: ["true"],
+        reward: ["ClickerMath.GameState.clickGain += 1"],
+        infoText: "Click gain +1"
+      },
+
       unlockEasyLevelData : {
         price: 200,
         keyGroup: "task",
@@ -153,10 +127,10 @@ ClickerMath.GameState = {
       },
 
       unlockNormalLevelData : {
-        price: 1000,
+        price: 500,
         keyGroup: "task",
         key: "normal",
-        requirements: ["this.profData.amount >= 2", "this.easyTaskData.solved > 0"],
+        requirements: ["this.profData.amount >= 2", "this.easyTaskData.solved > 5"],
         reward: ["ClickerMath.GameState.normalTaskData.available = true"],
         infoText: "Unlocks the normal level tasks!"
       },
@@ -165,7 +139,7 @@ ClickerMath.GameState = {
         price: 5000,
         keyGroup: "task",
         key: "hard",
-        requirements: ["this.profData.amount >= 5", "this.normalTaskData.solved > 0"],
+        requirements: ["this.profData.amount >= 5", "this.normalTaskData.solved > 5"],
         reward: ["ClickerMath.GameState.hardTaskData.available = true"],
         infoText: "Unlocks the hard tasks!"
       },
@@ -174,47 +148,81 @@ ClickerMath.GameState = {
         price: 10000,
         keyGroup: "task",
         key: "asian",
-        requirements: ["this.xFarmData.amount >= 5", "this.hardTaskData.solved > 0"],
+        requirements: ["this.xFarmData.amount >= 10", "this.hardTaskData.solved > 5"],
         reward: ["ClickerMath.GameState.asianTaskData.available = true"],
         infoText: "Unlocks the hard tasks!"
       },
 
+      easyTaskRewardRize : {
+        price: 4000,
+        keyGroup: "task",
+        key: "easy",
+        requirements: ["this.easyTaskData.solved >= 10"],
+        reward: ["ClickerMath.GameState.easyTaskData.reward *= 2"],
+        infoText: "Doubles Easy tasks rewards"
+      },
+
+      normalTaskRewardRize : {
+        price: 8000,
+        keyGroup: "task",
+        key: "normal",
+        requirements: ["this.normalTaskData.solved >= 10"],
+        reward: ["ClickerMath.GameState.normalTaskData.reward *= 2"],
+        infoText: "Doubles normal tasks rewards"
+      },
+
+      hardTaskRewardRize : {
+        price: 15000,
+        keyGroup: "task",
+        key: "hard",
+        requirements: ["this.hardTaskData.solved >= 10"],
+        reward: ["ClickerMath.GameState.hardTaskData.reward *= 2"],
+        infoText: "Doubles hard tasks rewards"
+      },
+
+      asianTaskRewardRize : {
+        price: 10000,
+        keyGroup: "task",
+        key: "asian",
+        requirements: ["this.asianTaskData.solved >= 10"],
+        reward: ["ClickerMath.GameState.asianTaskData.reward *= 2"],
+        infoText: "Doubles asian tasks rewards"
+      },
+
+
       studentGainPlus: {
-        price: 100000,
+        price: 100,
         keyGroup: "helper",
         key: "studentUpgrade",
         requirements: ["this.profData.amount >= 1"],
         reward: ["ClickerMath.GameState.studentData.gain += 0.2"],
-        infoText: "This is my infoText. This unlocks the easy tasks!"
+        infoText: "Each students gain 0.2 more X in second"
       },
 
 
       profGainPlus: {
-        price: 100,
+        price: 500,
         keyGroup: "helper",
         key: "professorUpgrade",
-        requirements: ["this.profData.amount >= 1"],
-        reward: ["ClickerMath.GameState.studentData.gain += 0.2"],
-        infoText: "Professors make more x (+0.2) per second!"
+        requirements: ["this.xFarmData.amount >= 1"],
+        reward: ["ClickerMath.GameState.profData.gain += 1"],
+        infoText: "Professors make one more X per second!"
       },
 
       xFarmGainPlus: {
-        price: 1090,
+        price: 1000,
         keyGroup: "helper",
         key: "xFarmUpgrade",
-        requirements: ["this.profData.amount >= 1"],
-        reward: ["ClickerMath.GameState.studentData.gain += 0.2"],
-        infoText: "xFarms gais + 1"
-      }
-      
+        requirements: ["this.xFarmData.amount >= 2"],
+        reward: ["ClickerMath.GameState.xFarmData.gain += 2"],
+        infoText: "xFarms makes +2 more X in second"
+      }     
     };
     
-
-
     this.guiLineData = {
       lineWidth: 2,
       lineColor: 0x000000,
-      lineAlpha: 0.6
+      lineAlpha: 0.4
     };
 
     this.xAmountStyle = {
@@ -252,6 +260,9 @@ ClickerMath.GameState = {
     this.upgradesGroup = this.game.add.group();
     this.upgradesGroup.name = "All upgrades"
     this.createUpgrades();
+
+    //performance
+    this.cacheButtonsAsBitMaps = false; 
 
   },
 
@@ -296,9 +307,9 @@ ClickerMath.GameState = {
     this.xAmountText.name = "xAmount Icon"
 
     //set emitters
-    this.setHelperEmitters(this.studentData);
-    this.setHelperEmitters(this.profData);
-    this.setHelperEmitters(this.xFarmData);
+    // this.setHelperEmitters(this.studentData);
+    // this.setHelperEmitters(this.profData);
+    // this.setHelperEmitters(this.xFarmData);
 
     //create the X
     this.createClickableX();
@@ -364,8 +375,8 @@ ClickerMath.GameState = {
     this.xData.xNow += this.clickGain;
 
     //update text
-    this.xAmountText.text = Math.floor(this.xData.xNow);
-    this.xAmountIcon.x = this.xAmountText.right + 30
+    // this.xAmountText.text = Math.floor(this.xData.xNow);
+    // this.xAmountIcon.x = this.xAmountText.right + 30
 
     //tween x
     var tween = this.game.add.tween(this.X.scale).to({x: 0.49, y: 0.49}, 50, null, true, 0, 0, false);
@@ -514,27 +525,13 @@ ClickerMath.GameState = {
       asianButtonColor:0x649DD1
     }
 
-
-
-    this.buyTaskText = this.game.add.text(1040, 110, "Buy Equations", buyTaskTextStyle);
-    this.buyTaskText.name = "Buy Equations - text";
-    this.buyTaskText.anchor.setTo(0.5);
-    this.storeAreaGroup.add(this.buyTaskText);
-
-    this.buyHelpersText = this.game.add.text(1040, 495, "Buy Helpers", buyTaskTextStyle);
-    this.buyHelpersText.anchor.setTo(0.5);
-    this.buyHelpersText.name = "Buy Helpers - text";
-    this.storeAreaGroup.add(this.buyHelpersText);
-
-
-
     //TASK TEXTS
-    this.easyTaskText = this.game.add.text();
-    this.easyTaskPriceIcon = this.game.add.sprite();
-    this.easyTaskData.priceText = this.game.add.text();
-    this.easyTaskData.solvedAmountText = this.game.add.text();
-    this.easyTaskData.rewardText = this.game.add.text();
-    this.easyTaskData.icon = this.game.add.sprite(null, null, "easy")
+    // this.easyTaskText = this.game.add.text();
+    this.easyTaskPriceIcon;
+    if(!this.easyTaskData.priceText){this.easyTaskData.priceText = this.game.add.text()}
+    if(!this.easyTaskData.solvedAmountText){this.easyTaskData.solvedAmountText = this.game.add.text()}
+    if(!this.easyTaskData.rewardText){this.easyTaskData.rewardText = this.game.add.text()}
+    if(!this.easyTaskData.icon){this.easyTaskData.icon = this.game.add.sprite(null, null, "easy")}
     this.easyTaskData.priceText.visible = true;
     this.easyTaskData.solvedAmountText.visible = true;
     this.easyTaskData.rewardText.visible = true;
@@ -542,32 +539,65 @@ ClickerMath.GameState = {
     this.createTaskArea(this.easyTaskData, this.easyTaskPriceIcon, 945, 160, 850, 175, 980, "Easy");
     
 
-    this.normalTaskText = this.game.add.text();
-    this.normalTaskPriceIcon = this.game.add.sprite();
+    this.normalTaskPriceIcon;
+    if(!this.normalTaskData.priceText){this.normalTaskData.priceText = this.game.add.text()}
+    if(!this.normalTaskData.solvedAmountText){this.normalTaskData.solvedAmountText = this.game.add.text()}
+    if(!this.normalTaskData.rewardText){this.normalTaskData.rewardText = this.game.add.text()}
+    if(!this.normalTaskData.icon){this.normalTaskData.icon = this.game.add.sprite(null, null, "normal")}
+    this.normalTaskData.priceText.visible = true;
+    this.normalTaskData.solvedAmountText.visible = true;
+    this.normalTaskData.rewardText.visible = true;
+    this.normalTaskData.icon.visible = true;
     this.createTaskArea(this.normalTaskData, this.normalTaskPriceIcon, 962, 240, 850, 255, 980, "Normal");
     
 
-    this.hardTaskText = this.game.add.text();
-    this.hardTaskPriceIcon = this.game.add.sprite();
+    this.hardTaskPriceIcon;
+    if(!this.hardTaskData.priceText){this.hardTaskData.priceText = this.game.add.text()}
+    if(!this.hardTaskData.solvedAmountText){this.hardTaskData.solvedAmountText = this.game.add.text()}
+    if(!this.hardTaskData.rewardText){this.hardTaskData.rewardText = this.game.add.text()}
+    if(!this.hardTaskData.icon){this.hardTaskData.icon = this.game.add.sprite(null, null, "hard")}
+    this.hardTaskData.priceText.visible = true;
+    this.hardTaskData.solvedAmountText.visible = true;
+    this.hardTaskData.rewardText.visible = true;
+    this.hardTaskData.icon.visible = true;
     this.createTaskArea(this.hardTaskData, this.hardTaskPriceIcon, 945, 320, 850, 340, 980, "Hard");
     
     
-    this.asianTaskText = this.game.add.text();
-    this.asianTaskPriceIcon = this.game.add.sprite();
+    this.asianTaskPriceIcon;
+    if(!this.asianTaskData.priceText){this.asianTaskData.priceText = this.game.add.text()}
+    if(!this.asianTaskData.solvedAmountText){this.asianTaskData.solvedAmountText = this.game.add.text()}
+    if(!this.asianTaskData.rewardText){this.asianTaskData.rewardText = this.game.add.text()}
+    if(!this.asianTaskData.icon){this.asianTaskData.icon = this.game.add.sprite(null, null, "asian")}
+    this.asianTaskData.priceText.visible = true;
+    this.asianTaskData.solvedAmountText.visible = true;
+    this.asianTaskData.rewardText.visible = true;
+    this.asianTaskData.icon.visible = true;
     this.createTaskArea(this.asianTaskData, this.asianTaskPriceIcon, 945, 400, 850, 420, 980, "Asian");
     
 
     //HELPERS TEXT & ICONS
-    this.buyStudentText = this.game.add.text();
-    this.studentPriceIcon = this.game.add.sprite();
+    this.buyStudentText;
+    this.studentPriceIcon;
+    if(!this.studentData.amountText){this.studentData.amountText = this.game.add.text();}
+    if(!this.studentData.priceText){this.studentData.priceText = this.game.add.text();}
+    this.studentData.amountText.visible = true;
+    this.studentData.priceText.visible = true;
     this.createHelperText(this.studentData, this.buyStudentText, this.studentPriceIcon, this.storeAreaGroup, 800, 550 + 75 * 0, "Student", 1000, 580 + 74 * 0, 850, 565);
     
-    this.buyProfessorText = this.game.add.text();
-    this.professorPriceIcon = this.game.add.sprite();
+    this.buyProfessorText;
+    this.professorPriceIcon;
+    if(!this.profData.amountText){this.profData.amountText = this.game.add.text();}
+    if(!this.profData.priceText){this.profData.priceText = this.game.add.text();}
+    this.profData.amountText.visible = true;
+    this.profData.priceText.visible = true;
     this.createHelperText(this.profData, this.buyProfessorText, this.professorPriceIcon, this.storeAreaGroup, 800 + 15, 550 + 75 * 1, "Professor", 1000, 580 + 74 * 1, 850, 635);
     
-    this.buyXFarmText = this.game.add.text();
-    this.xFarmPriceIcon = this.game.add.sprite();
+    this.buyXFarmText;
+    this.xFarmPriceIcon;
+    if(!this.xFarmData.amountText){this.xFarmData.amountText = this.game.add.text();}
+    if(!this.xFarmData.priceText){console.log("Im here"); this.xFarmData.priceText = this.game.add.text();}
+    this.xFarmData.amountText.visible = true;
+    this.xFarmData.priceText.visible = true;
     this.createHelperText(this.xFarmData, this.buyXFarmText, this.xFarmPriceIcon, this.storeAreaGroup, 800 - 15, 550 + 75 * 2, "xFarm", 1000, 580 + 74 * 2, 850, 705);
 
     //
@@ -580,6 +610,7 @@ ClickerMath.GameState = {
 
     // this.storeAreaGroup.add(this.easyTaskButton);
     this.createStoreButton(this.easyTaskButton, eqBtnData.easyButtonColor, eqBtnData.buttonTop, eqBtnData.buttonHeight, "taskButton");
+    // this.easyTaskButton.cacheAsBitmap = true;
     
     this.normalTaskButton = this.game.add.graphics(0, 0);
     this.normalTaskButton.data.available = this.normalTaskData.available;
@@ -607,17 +638,14 @@ ClickerMath.GameState = {
     };
 
     this.studentHelperButton = this.game.add.graphics(0, 0);
-    this.studentHelperButton.name = "student Button";
     // this.storeAreaGroup.add(this.studentHelperButton);
     this.createStoreButton(this.studentHelperButton, 0xD7E5F3, hlBtnData.buttonTop + hlBtnData.buttonHeight * 0, hlBtnData.buttonHeight, "helperButton");
     
     this.profHelperButton = this.game.add.graphics(0, 0);
-    this.profHelperButton.name = "prof Button";
     // this.storeAreaGroup.add(this.profHelperButton);
     this.createStoreButton(this.profHelperButton, 0x9CC1E1, hlBtnData.buttonTop + hlBtnData.buttonHeight * 1, hlBtnData.buttonHeight, "helperButton");
     
     this.xFarmHelperButton = this.game.add.graphics(0, 0);
-    this.xFarmHelperButton.name = "xFarm Button";
     // this.storeAreaGroup.add(this.xFarmHelperButton);
     this.createStoreButton(this.xFarmHelperButton, 0x649DD1, hlBtnData.buttonTop + hlBtnData.buttonHeight * 2, hlBtnData.buttonHeight, "helperButton");
   
@@ -632,8 +660,65 @@ ClickerMath.GameState = {
       fill: "black"
     }; 
 
-    this.game.world.bringToTop(this.storeAreaGroup);
+    //INFOTEXTS
+    this.buyTaskText = this.game.add.text(1040, 110, "Buy Equations", buyTaskTextStyle);
+    this.buyTaskText.name = "Buy Equations - text";
+    this.buyTaskText.anchor.setTo(0.5);
+    this.storeAreaGroup.add(this.buyTaskText);
 
+    this.buyHelpersText = this.game.add.text(1040, 495, "Buy Helpers", buyTaskTextStyle);
+    this.buyHelpersText.anchor.setTo(0.5);
+    this.buyHelpersText.name = "Buy Helpers - text";
+    this.storeAreaGroup.add(this.buyHelpersText);
+
+    
+    this.game.world.bringToTop(this.easyTaskData.icon);
+    this.game.world.bringToTop(this.easyTaskData.priceText);
+    this.game.world.bringToTop(this.easyTaskData.rewardText);
+    this.game.world.bringToTop(this.easyTaskData.rewardText);
+    this.game.world.bringToTop(this.easyTaskData.solvedAmountText);
+
+    this.game.world.bringToTop(this.normalTaskData.icon);
+    this.game.world.bringToTop(this.normalTaskData.priceText);
+    this.game.world.bringToTop(this.normalTaskData.rewardText);
+    this.game.world.bringToTop(this.normalTaskData.rewardText);
+    this.game.world.bringToTop(this.normalTaskData.solvedAmountText);
+
+    this.game.world.bringToTop(this.hardTaskData.icon);
+    this.game.world.bringToTop(this.hardTaskData.priceText);
+    this.game.world.bringToTop(this.hardTaskData.rewardText);
+    this.game.world.bringToTop(this.hardTaskData.rewardText);
+    this.game.world.bringToTop(this.hardTaskData.solvedAmountText);
+
+    this.game.world.bringToTop(this.asianTaskData.icon);
+    this.game.world.bringToTop(this.asianTaskData.priceText);
+    this.game.world.bringToTop(this.asianTaskData.rewardText);
+    this.game.world.bringToTop(this.asianTaskData.rewardText);
+    this.game.world.bringToTop(this.asianTaskData.solvedAmountText);
+
+
+    this.game.world.bringToTop(this.studentData.amountText);
+    this.game.world.bringToTop(this.studentData.priceText);
+
+    this.game.world.bringToTop(this.profData.amountText);
+    this.game.world.bringToTop(this.profData.priceText);
+
+    this.game.world.bringToTop(this.xFarmData.amountText);
+    this.game.world.bringToTop(this.xFarmData.priceText);
+
+    // this.game.world.bringToTop();
+
+    if(this.cacheButtonsAsBitMaps){
+      this.easyTaskButton.cacheAsBitmap = true;
+      this.normalTaskButton.cacheAsBitmap = true;
+      this.hardTaskButton.cacheAsBitmap = true;
+      this.asianTaskButton.cacheAsBitmap = true;
+      this.studentHelperButton.cacheAsBitmap = true;
+      this.profHelperButton.cacheAsBitmap = true;
+      this.xFarmHelperButton.cacheAsBitmap = true;
+    }
+
+    this.game.world.bringToTop(this.storeAreaGroup);
   },
   openUpgrades: function(){
     
@@ -657,6 +742,27 @@ ClickerMath.GameState = {
     this.easyTaskData.rewardText.visible = false;
     this.easyTaskData.icon.visible = false;
 
+    this.normalTaskData.priceText.visible = false;
+    this.normalTaskData.solvedAmountText.visible = false;
+    this.normalTaskData.rewardText.visible = false;
+    this.normalTaskData.icon.visible = false;
+
+    this.hardTaskData.priceText.visible = false;
+    this.hardTaskData.solvedAmountText.visible = false;
+    this.hardTaskData.rewardText.visible = false;
+    this.hardTaskData.icon.visible = false;
+
+    this.asianTaskData.priceText.visible = false;
+    this.asianTaskData.solvedAmountText.visible = false;
+    this.asianTaskData.rewardText.visible = false;
+    this.asianTaskData.icon.visible = false;
+
+    this.studentData.amountText.visible = false;
+    this.studentData.priceText.visible = false;
+    this.profData.amountText.visible = false;
+    this.profData.priceText.visible = false;
+    this.xFarmData.amountText.visible = false;
+    this.xFarmData.priceText.visible = false;
 
     this.openStoreButton.alpha = 0.5;
     this.openUpgradeButton.alpha = 1;
@@ -676,6 +782,7 @@ ClickerMath.GameState = {
       for (var i = 0; i < len; i++) {
           // console.log(requirementsArr[i])
           //if all true then add upgrade to on the list
+          // console.log(requirementsArr[i]);
           if(!eval(requirementsArr[i])){
             available = false;
           }
@@ -725,6 +832,8 @@ ClickerMath.GameState = {
     }  
     //check if enough money
     if(taskData.price <= this.xData.xNow){
+      //reward rize
+      // taskData.price += taskData.priceGrow;
       //kill clickable x and dont take anymore button presses for tasks
       this.taskInitialized = true;
 
@@ -745,7 +854,6 @@ ClickerMath.GameState = {
       this.tweenTint(button, button.graphicsData[0].fillColor, 0xff0000, 100);
     }    
   },
-
   helperButtonHandler: function(button){
     var helper;
     var data;
@@ -783,14 +891,13 @@ ClickerMath.GameState = {
       tween.onComplete.add(function(){
         //change emitter rate
         //flow( [lifespan] [, frequency] [, quantity] [, total] [, immediate])
-        helper.emitter.flow(2000, 2000, helper.amount * helper.gain, -1);
+        // helper.emitter.flow(2000, 2000, helper.amount * helper.gain, -1);
       }, this);
     }
     else{
       this.tweenTint(button, button.graphicsData[0].fillColor, 0xff0000, 100);
     }
   },
-
   updateGainPerSeconds: function(){
     this.xGainPerSecond = this.studentData.amount * this.studentData.gain;
     this.xGainPerSecond += this.profData.amount * this.profData.gain;
@@ -847,34 +954,34 @@ ClickerMath.GameState = {
 
     //create icon
     var iconSprite = this.game.add.sprite(iconX, iconY, data.iconKey);
-    iconSprite.name = "helper icon sprite";
     iconSprite.anchor.setTo(0.5);
     iconSprite.scale.setTo(data.iconScale.x, data.iconScale.y);
     this.storeAreaGroup.add(iconSprite);
+
     text = this.game.add.text(textX + 175, textY, key, taskTextStyle);
-    text.name = "helper text"
     text.anchor.setTo(0.5);
     this.storeAreaGroup.add(text);
+
     //price
     data.priceText.setStyle(priceTextStyle);
     data.priceText.x = priceX; 
     data.priceText.y = priceY;
     data.priceText.setText(data.price);
     data.priceText.anchor.setTo(0.5);
-    this.storeAreaGroup.add(data.priceText);
+
     //icon
     Icon = this.game.add.sprite(data.priceText.right + 20, data.priceText.y, "xIcon");
     Icon.anchor.setTo(0.5);
     Icon.scale.setTo(0.3);
     this.storeAreaGroup.add(Icon);
+
     //X Gain
     var gainText = this.game.add.text(1150, text.y, "XGAIN", gainTextStyle);
-    gainText.name = "helper gain text";
     gainText.anchor.setTo(0.5);
     this.storeAreaGroup.add(gainText);
+
     var gainAmountText = this.game.add.text(gainText.x + 30, gainText.y + 30,"+"+ Math.round(data.gain * 100)/100 + "  X/second", gainTextStyle);
     gainAmountText.anchor.setTo(0.5);
-    gainAmountText.text = "helper amount text";
     this.storeAreaGroup.add(gainAmountText);
 
     //amount text
@@ -883,7 +990,6 @@ ClickerMath.GameState = {
     data.amountText.setText("#" + data.amount, true);
     data.amountText.anchor.setTo(0.5);
     data.amountText.setStyle(gainTextStyle);
-    this.storeAreaGroup.add(data.amountText);
   },
   createTaskArea: function(data, priceIcon, textX, textY, IconX, IconY, priceX, textString){
 
@@ -909,13 +1015,12 @@ ClickerMath.GameState = {
     // this.storeAreaGroup.add(data.priceText);
 
     //icon
-    Icon = this.game.add.sprite(IconX, IconY, data.iconKey);
+    // Icon = this.game.add.sprite(IconX, IconY, data.iconKey);
     data.icon.x = IconX;
     data.icon.y = IconY;
     data.icon.anchor.setTo(0.5);
     data.icon.scale.setTo(1.3);
-    this.storeAreaGroup.add(Icon);
-    // this.storeAreaGroup.add(data.icon);
+    // this.storeAreaGroup.add(Icon);
 
 
     //task price
@@ -937,14 +1042,14 @@ ClickerMath.GameState = {
     //rewardAMount
     data.rewardText.x = rewardText.x + 20;
     data.rewardText.y = rewardText.y + 30;
-    data.rewardText.setText(data.reward, true);
+    data.rewardText.setText(data.reward);
     data.rewardText.setStyle(rewardTextStyle);
     data.rewardText.anchor.setTo(0.5);
     // this.storeAreaGroup.add(data.rewardText);
 
     //solved amount text
-    data.solvedAmountText.x = Icon.x + 50;
-    data.solvedAmountText.y = Icon.y + 20;
+    data.solvedAmountText.x = IconX + 50;
+    data.solvedAmountText.y = IconY + 20;
     data.solvedAmountText.setText("#" + data.solved, true);
     data.solvedAmountText.anchor.setTo(0.5);
     data.solvedAmountText.setStyle(rewardTextStyle);
@@ -970,7 +1075,7 @@ ClickerMath.GameState = {
 
       //set alphas
       data.priceText.alpha = 0.2;
-      Icon.alpha = 0.2;
+      // Icon.alpha = 0.2;
       priceText.alpha = 0.2;
       data.rewardText.alpha = 0.1;
       data.solvedAmountText.alpha = 0.2;
@@ -981,7 +1086,7 @@ ClickerMath.GameState = {
     else{
       //set alphas
       data.priceText.alpha = 1;
-      Icon.alpha = 1;
+      // Icon.alpha = 1;
       priceText.alpha = 1;
       data.rewardText.alpha = 1;
       data.solvedAmountText.alpha = 1;
@@ -1118,7 +1223,7 @@ ClickerMath.GameState = {
       
       //flow( [lifespan] [, frequency] [, quantity] [, total] [, immediate])
       if(answerCorrect){
-        emitter.flow(750, 100, 5, 80, false);
+        emitter.flow(750, 150, 5, 50, false);
         //add reward
         this.xRizeTween(taskData.reward, 1200)
         //this.xData.xNow += taskData.reward;
@@ -1229,6 +1334,16 @@ ClickerMath.GameState = {
     for(var i = 0 ; i < len ; i ++){
       console.log(this.game.world.children[i].name);
     }
+  },
+  cacheButtonsAsBitMap: function(){
+    this.cacheButtonsAsBitMaps = !this.cacheButtonsAsBitMaps
+    this.easyTaskButton.cacheAsBitmap = true;
+    this.normalTaskButton.cacheAsBitmap = true;
+    this.hardTaskButton.cacheAsBitmap = true;
+    this.asianTaskButton.cacheAsBitmap = true;
+    this.studentHelperButton.cacheAsBitmap = true;
+    this.profHelperButton.cacheAsBitmap = true;
+    this.xFarmHelperButton.cacheAsBitmap = true;
   }
 
 };

@@ -105,12 +105,13 @@ ClickerMath.Upgrade.prototype.buttonPress = function(button) {
 		for(var i = 0 ; i < len  ; i ++){
 			eval(this.data.reward[i]);
 		}
+		//update gain per secons
+		ClickerMath.GameState.updateGainPerSeconds();
+
+		this.destroy();
 	}
 
-	//update gain per secons
-	ClickerMath.GameState.updateGainPerSeconds();
-
-	this.destroy();
+	
 	
 };
 ClickerMath.Upgrade.prototype.buttonHover = function(button) {
