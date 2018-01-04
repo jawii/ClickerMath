@@ -111,64 +111,64 @@ ClickerMath.GameState = {
       clickGain : {
         price: 50,
         keyGroup: "click",
-        key: "easy",
+        key: "xUpgrade",
         requirements: ["true"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1"
+        infoText: "Click gain +1."
       },
 
       clickGain2 : {
         price: 200,
         keyGroup: "click",
-        key: "easy",
+        key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 2"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1"
+        infoText: "Click gain +1."
       },
 
       clickGain3 : {
         price: 1000,
         keyGroup: "click",
-        key: "easy",
+        key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 3"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1"
+        infoText: "Click gain +1."
       },
 
       clickGain4 : {
         price: 5000,
         keyGroup: "click",
-        key: "easy",
+        key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 4"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1"
+        infoText: "Click gain +1."
       },
 
       clickGain5 : {
         price: 5000,
         keyGroup: "click",
-        key: "easy",
+        key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 5"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1"
+        infoText: "Click gain +1."
       },
 
       clickGain6 : {
         price: 5000,
         keyGroup: "click",
-        key: "easy",
+        key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 6"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1"
+        infoText: "Click gain +1."
       },
 
       clickGain7 : {
         price: 10000,
         keyGroup: "click",
-        key: "easy",
+        key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 7"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1"
+        infoText: "Click gain +1."
       },
 
       unlockEasyLevelData : {
@@ -184,7 +184,7 @@ ClickerMath.GameState = {
         price: 500,
         keyGroup: "task",
         key: "normal",
-        requirements: ["this.profData.amount >= 2", "this.easyTaskData.solved > 5"],
+        requirements: ["this.profData.amount >= 2", "this.easyTaskData.solved > 4"],
         reward: ["ClickerMath.GameState.normalTaskData.available = true"],
         infoText: "Unlocks the normal level tasks!"
       },
@@ -193,7 +193,7 @@ ClickerMath.GameState = {
         price: 5000,
         keyGroup: "task",
         key: "hard",
-        requirements: ["this.profData.amount >= 5", "this.normalTaskData.solved > 5"],
+        requirements: ["this.profData.amount >= 5", "this.normalTaskData.solved > 4"],
         reward: ["ClickerMath.GameState.hardTaskData.available = true"],
         infoText: "Unlocks the hard tasks!"
       },
@@ -202,7 +202,7 @@ ClickerMath.GameState = {
         price: 10000,
         keyGroup: "task",
         key: "asian",
-        requirements: ["this.xFarmData.amount >= 10", "this.hardTaskData.solved > 5"],
+        requirements: ["this.xFarmData.amount >= 10", "this.hardTaskData.solved > 4"],
         reward: ["ClickerMath.GameState.asianTaskData.available = true"],
         infoText: "Unlocks the asian level tasks!"
       },
@@ -240,7 +240,7 @@ ClickerMath.GameState = {
         key: "normal",
         requirements: ["this.normalTaskData.solved >= 2"],
         reward: ["ClickerMath.GameState.normalTaskData.reward *= 2"],
-        infoText: "Doubles normal tasks rewards"
+        infoText: "Doubles normal tasks reward."
       },
 
       normalTaskRewardRize2 : {
@@ -249,7 +249,7 @@ ClickerMath.GameState = {
         key: "normal",
         requirements: ["this.normalTaskData.solved >= 5"],
         reward: ["ClickerMath.GameState.normalTaskData.reward *= 2"],
-        infoText: "Doubles normal tasks rewards"
+        infoText: "Doubles normal tasks reward."
       },
 
       normalTaskRewardRize3 : {
@@ -258,7 +258,7 @@ ClickerMath.GameState = {
         key: "normal",
         requirements: ["this.normalTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.normalTaskData.reward *= 2"],
-        infoText: "Doubles normal tasks rewards"
+        infoText: "Doubles normal tasks reward."
       },
 
       hardTaskRewardRize : {
@@ -267,7 +267,7 @@ ClickerMath.GameState = {
         key: "hard",
         requirements: ["this.hardTaskData.solved >= 2"],
         reward: ["ClickerMath.GameState.hardTaskData.reward *= 2"],
-        infoText: "Doubles hard tasks rewards"
+        infoText: "Doubles hard tasks reward."
       },
 
       hardTaskRewardRize2 : {
@@ -276,7 +276,7 @@ ClickerMath.GameState = {
         key: "hard",
         requirements: ["this.hardTaskData.solved >= 5"],
         reward: ["ClickerMath.GameState.hardTaskData.reward *= 2"],
-        infoText: "Doubles hard tasks rewards"
+        infoText: "Doubles hard tasks reward."
       },
 
       hardTaskRewardRize3 : {
@@ -285,7 +285,7 @@ ClickerMath.GameState = {
         key: "hard",
         requirements: ["this.hardTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.hardTaskData.reward *= 2"],
-        infoText: "Doubles hard tasks rewards"
+        infoText: "Doubles hard tasks reward."
       },
 
       asianTaskRewardRize : {
@@ -294,7 +294,7 @@ ClickerMath.GameState = {
         key: "asian",
         requirements: ["this.asianTaskData.solved >= 2"],
         reward: ["ClickerMath.GameState.asianTaskData.reward *= 2"],
-        infoText: "Doubles asian tasks rewards"
+        infoText: "Doubles asian tasks reward."
       },
 
       asianTaskRewardRize2 : {
@@ -303,7 +303,7 @@ ClickerMath.GameState = {
         key: "asian",
         requirements: ["this.asianTaskData.solved >= 5"],
         reward: ["ClickerMath.GameState.asianTaskData.reward *= 2"],
-        infoText: "Doubles asian tasks rewards"
+        infoText: "Doubles asian tasks reward."
       },
 
       asianTaskRewardRize3 : {
@@ -312,7 +312,7 @@ ClickerMath.GameState = {
         key: "asian",
         requirements: ["this.asianTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.asianTaskData.reward *= 2"],
-        infoText: "Doubles asian tasks rewards"
+        infoText: "Doubles asian tasks reward."
       },
 
 
@@ -322,7 +322,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.profData.amount >= 1", "this.easyTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.studentData.gain += 1"],
-        infoText: "Each students gain 1 more X in second"
+        infoText: "Each student gains one more X per second."
       },
 
       studentGainPlus2: {
@@ -331,7 +331,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.xFarmData.amount >= 5", "this.normalTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.studentData.gain += 1"],
-        infoText: "Each students gain one more X in second"
+        infoText: "Each student gains one more X per second."
       },
 
       studentGainPlus3: {
@@ -340,7 +340,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.profData.amount >= 10", "this.hardTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.studentData.gain += 1"],
-        infoText: "Each students gain one more X in second"
+        infoText: "Each student gains one more X per second."
       },
 
       studentGainPlus4: {
@@ -349,7 +349,79 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.profData.amount >= 15", "this.asianTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.studentData.gain += 1"],
-        infoText: "Each students gain one more X in second"
+        infoText: "Each student gains one more X per second."
+      },
+
+      studentGainPlus5: {
+        price: 5000,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        requirements: ["this.easyTaskData.solved >= 10"],
+        reward: ["ClickerMath.GameState.studentData.gain += 5"],
+        infoText: "Each student gains five more X in second."
+      },
+
+      studentGainPlus6: {
+        price: 5000,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        requirements: ["this.easyTaskData.solved >= 15"],
+        reward: ["ClickerMath.GameState.studentData.gain += 5"],
+        infoText: "Each student gains five more X per second."
+      },
+
+      studentGainPlus7: {
+        price: 5000,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        requirements: ["this.easyTaskData.solved >= 20"],
+        reward: ["ClickerMath.GameState.studentData.gain += 5"],
+        infoText: "Each student gains five more X per second."
+      },
+
+      studentGainPlus9: {
+        price: 7500,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        requirements: ["this.easyTaskData.solved >= 25"],
+        reward: ["ClickerMath.GameState.studentData.gain *= 2"],
+        infoText: "Doubles students gain!"
+      },
+
+      studentGainPlus10: {
+        price: 10000,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        requirements: ["this.easyTaskData.solved >= 30"],
+        reward: ["ClickerMath.GameState.studentData.gain *= 2"],
+        infoText: "Doubles students gain!"
+      },
+
+      studentGainPlus11: {
+        price: 12500,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        requirements: ["this.easyTaskData.solved >= 50"],
+        reward: ["ClickerMath.GameState.studentData.gain *= 2"],
+        infoText: "Doubles students gain!"
+      },
+
+      studentGainPlus12: {
+        price: 15000,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        requirements: ["this.easyTaskData.solved >= 60"],
+        reward: ["ClickerMath.GameState.studentData.gain *= 2"],
+        infoText: "Doubles students gain!"
+      },
+
+      studentGainPlus13: {
+        price: 7500,
+        keyGroup: "helper",
+        key: "studentUpgrade",
+        requirements: ["this.easyTaskData.solved >= 80"],
+        reward: ["ClickerMath.GameState.studentData.gain *= 2"],
+        infoText: "Doubles students gain!"
       },
 
 
@@ -359,7 +431,7 @@ ClickerMath.GameState = {
         key: "professorUpgrade",
         requirements: ["this.xFarmData.amount >= 1", "this.easyTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.profData.gain += 2"],
-        infoText: "Professors make 2 more X per second!"
+        infoText: "Professor makes two more X per second."
       },
 
       profGainPlus2: {
@@ -368,7 +440,7 @@ ClickerMath.GameState = {
         key: "professorUpgrade",
         requirements: ["this.xFarmData.amount >= 5", "this.normalTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.profData.gain += 2"],
-        infoText: "Professors make one 2 X per second!"
+        infoText: "Professor makes two more X per second!"
       },
 
       profGainPlus3: {
@@ -377,7 +449,7 @@ ClickerMath.GameState = {
         key: "professorUpgrade",
         requirements: ["this.xFarmData.amount >= 10", "this.hardTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.profData.gain += 2"],
-        infoText: "Professors make 2 more X per second!"
+        infoText: "Professor makes two more X per second!"
       },
 
       profGainPlus4: {
@@ -386,7 +458,34 @@ ClickerMath.GameState = {
         key: "professorUpgrade",
         requirements: ["this.xFarmData.amount >= 15", "this.asianTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.profData.gain += 2"],
-        infoText: "Professors make 2 more X per second!"
+        infoText: "Professor makes two more X per second!"
+      },
+
+      profGainPlus5: {
+        price: 10000,
+        keyGroup: "helper",
+        key: "professorUpgrade",
+        requirements: ["this.normalTaskData.solved >= 10"],
+        reward: ["ClickerMath.GameState.profData.gain += 5"],
+        infoText: "Professor makes five more X per second!"
+      },
+
+      profGainPlus6: {
+        price: 10000,
+        keyGroup: "helper",
+        key: "professorUpgrade",
+        requirements: ["this.normalTaskData.solved >= 15"],
+        reward: ["ClickerMath.GameState.profData.gain += 5"],
+        infoText: "Professor makes five more X per second!"
+      },
+
+      profGainPlus7: {
+        price: 10000,
+        keyGroup: "helper",
+        key: "professorUpgrade",
+        requirements: ["this.normalTaskData.solved >= 17"],
+        reward: ["ClickerMath.GameState.profData.gain += 5"],
+        infoText: "Each professor makes five more X per second!"
       },
 
       xFarmGainPlus: {
@@ -395,7 +494,7 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.easyTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
-        infoText: "xFarms makes 5 more X in second"
+        infoText: "xFarm makes five more X per second."
       },   
 
       xFarmGainPlus1: {
@@ -404,7 +503,7 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.normalTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
-        infoText: "xFarms makes 5 more X in second"
+        infoText: "xFarm makes five more X per second."
       },
 
       xFarmGainPlus2: {
@@ -413,7 +512,7 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.hardTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
-        infoText: "xFarms makes 5 more X in second"
+        infoText: "xFarm makes five more X per second."
       },  
 
       xFarmGainPlus3: {
@@ -422,32 +521,68 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.asianTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
-        infoText: "xFarms makes 5 more X in second"
-      },       
+        infoText: "xFarm makes five more X per second."
+      },   
+
+      xFarmGainPlus4: {
+        price: 15000,
+        keyGroup: "helper",
+        key: "xFarmUpgrade",
+        requirements: ["this.asianTaskData.solved >= 5"],
+        reward: ["ClickerMath.GameState.xFarmData.gain *= 2"],
+        infoText: "Doubles xFarm Gain."
+      },  
+
+      xFarmGainPlus5: {
+        price: 15000,
+        keyGroup: "helper",
+        key: "xFarmUpgrade",
+        requirements: ["this.asianTaskData.solved >= 7"],
+        reward: ["ClickerMath.GameState.xFarmData.gain *= 2"],
+        infoText: "Doubles xFarm Gain."
+      },    
+
+      xFarmGainPlus6: {
+        price: 15000,
+        keyGroup: "helper",
+        key: "xFarmUpgrade",
+        requirements: ["this.asianTaskData.solved >= 10"],
+        reward: ["ClickerMath.GameState.xFarmData.gain *= 2"],
+        infoText: "Doubles xFarm Gain."
+      },    
+
+      xFarmGainPlus7: {
+        price: 15000,
+        keyGroup: "helper",
+        key: "xFarmUpgrade",
+        requirements: ["this.asianTaskData.solved >= 15"],
+        reward: ["ClickerMath.GameState.xFarmData.gain *= 2"],
+        infoText: "Doubles xFarm Gain."
+      },      
     };
     
     this.guiLineData = {
       lineWidth: 2,
       lineColor: 0x000000,
-      lineAlpha: 0.4
+      lineAlpha: 0.6
     };
 
     this.xAmountStyle = {
-      font: "40px aldrichregular",
+      font: "50px aldrichregular",
       fill: "black"
     };
 
     this.xIconClickPointStyle = {
-      font: "30px aldrichregular",
+      font: "36px aldrichregular",
       fill: "green"
     };
 
     this.taskTextStyle = {
-      font: "60px aldrichregular",
+      font: "40px aldrichregular",
       fill: "black"
     };
     this.taskAnswerTextStyle = {
-      font: "30px aldrichregular",
+      font: "26px aldrichregular",
       fill: "black"
     }
     this.taskAnswerBtn = {
@@ -462,7 +597,6 @@ ClickerMath.GameState = {
     this.helperGroup = this.game.add.group();
     this.helperGroup.name = "Helpers group"
 
-
     //create upgrades group
     this.upgradesGroup = this.game.add.group();
     this.upgradesGroup.name = "All upgrades"
@@ -470,9 +604,7 @@ ClickerMath.GameState = {
 
     //performance
     this.cacheButtonsAsBitMaps = false; 
-
   },
-
   //load the game assets before the game starts
   preload: function() {
 
@@ -485,6 +617,9 @@ ClickerMath.GameState = {
     this.normalTasks = this.initTasks("normalTasks");
     this.hardTasks = this.initTasks("hardTasks");
     this.asianTasks = this.initTasks("asianTasks");
+
+    //gameOn for GameComplete function
+    this.gameOn = true;
   },
   //executed after everything is loaded
   create: function() {
@@ -493,25 +628,30 @@ ClickerMath.GameState = {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.stage.backgroundColor = "#E5EEF7";
     // //create background
-    // var myBitmap = this.game.add.bitmapData(1280, 800);
-    // var grd = myBitmap.context.createLinearGradient(0,400, 800, 400);
-    // grd.addColorStop(0,"gray");
-    // grd.addColorStop(1,"blue");
-    // myBitmap.context.fillStyle = grd;
-    // myBitmap.context.fillRect(0, 0, 1280, 800);
-    // this.backgroundSprite = this.game.add.sprite(0, 0, myBitmap);
-    // this.backgroundSprite.alpha = 0.5;
-    // this.game.world.sendToBack(this.backgroundSprite);
+    var myBitmap = this.game.add.bitmapData(1280, 800);
+    var grd = myBitmap.context.createLinearGradient(0,400, 1280, 400);
+    grd.addColorStop(0,"#6AC1D4");
+    grd.addColorStop(0.3125,"#D8EEF4");
+    grd.addColorStop(0.625,"#6AC1D4");
+    grd.addColorStop(0.8125, "#D8EEF4");
+    grd.addColorStop(1, "#6AC1D4");
+    myBitmap.context.fillStyle = grd;
+    myBitmap.context.fillRect(0, 0, 1280, 800);
+    this.backgroundSprite = this.game.add.sprite(0, 0, myBitmap);
+    this.backgroundSprite.alpha = 0.5;
+    this.game.world.sendToBack(this.backgroundSprite);
 
     //x number now
-    this.xAmountText = this.game.add.text(400, 40, this.xData.xNow, this.xAmountStyle);
+    this.xAmountText = this.game.add.text(400, 60, this.xData.xNow, this.xAmountStyle);
     this.xAmountText.anchor.setTo(0.5);
-    this.xAmountText.name = "xAmount Text";
 
     this.xAmountIcon = this.game.add.sprite(this.xAmountText.right + 30, this.xAmountText.y, "xIcon");
     this.xAmountIcon.anchor.setTo(0.5);
     this.xAmountIcon.scale.setTo(0.5);
-    this.xAmountText.name = "xAmount Icon"
+
+    //gain number
+    this.gainNumberSecondText = this.game.add.text(400, 620, "Gain: " + this.xGainPerSecond + " X/second", this.xIconClickPointStyle);
+    this.gainNumberSecondText.anchor.setTo(0.5);
 
     //set emitters
     this.setHelperEmitters(this.studentData);
@@ -534,26 +674,44 @@ ClickerMath.GameState = {
 
     //open store at start
     this.openStore();
+
+    //infoTexts
+    this.createInfoTexts();
+
+    //copyright text
+    var copyRigthTextStyle = {
+      font: "20px aldrichregular",
+      fill: "black"
+    }
+    var text = this.game.add.text(this.game.world.width - 200, 775, '\u00A9' + "Jaakko Kenttä", copyRigthTextStyle);
+
+    
+
   },
   update: function() {
-
     //update current x and total x
     //this.xAmountText.text = Math.floor(this.xData.xNow);
     this.xAmountIcon.x = this.xAmountText.right + 30; 
-
     this.xAmountText.text = parseInt(this.xData.xNow, 10);
+    this.gainNumberSecondText.text = "+" + this.xGainPerSecond + " X/sec"
+
+    if(this.xData.xNow >= 1000000 && this.gameOn){
+      this.gameOn = false;
+      this.xGainPerSecond = 0;
+      this.gameComplete();
+    }
   },
   render: function(){
     //this.game.debug.spriteInfo(this.playerTwoTurret, 300, 32);
     //this.game.debug.spriteCoords(this.playerTwoTurret, 300, 150);
     //this.game.debug.spriteBounds(this.playerTwoTurret);
     //this.game.debug.text('Anchor X: ' + this.playerTwoTurret.anchor.x.toFixed(1) + ' Y: ' + this.playerTwoTurret.anchor.y.toFixed(1), 32, 32);
-    this.game.debug.text('Total X: ' + Math.floor(this.totalX), 32, 32, {fill: "red"});
-    this.game.debug.text('Gain Per Second: ' + this.xGainPerSecond, 32, 64, {fill: "red"});
+    // this.game.debug.text('Total X: ' + Math.floor(this.totalX), 32, 32, {fill: "red"});
+    // this.game.debug.text('Gain Per Second: ' + this.xGainPerSecond, 32, 64, {fill: "red"});
     //var point = new Phaser.Point(x, y);
     //this.game.debug.geom(point, 'rgb(0,255,0)');    
     //this.game.debug.text('Anchor X: ' + this.playerTwoTurret.anchor.x.toFixed(1) + ' Y: ' + this.playerTwoTurret.anchor.y.toFixed(1), 32, 32);
-    this.game.debug.text("Time: " + this.game.time.events.duration.toFixed(0), 32, 90,{fill: "red"});
+    // this.game.debug.text("Time: " + this.game.time.events.duration.toFixed(0), 32, 90,{fill: "red"});
   },
   createClickableX: function(){
     //clickable x
@@ -581,10 +739,6 @@ ClickerMath.GameState = {
     this.totalX += this.clickGain;
     this.xData.xNow += this.clickGain;
 
-    //update text
-    // this.xAmountText.text = Math.floor(this.xData.xNow);
-    // this.xAmountIcon.x = this.xAmountText.right + 30
-
     //tween x
     var tween = this.game.add.tween(this.X.scale).to({x: 0.49, y: 0.49}, 50, null, true, 0, 0, false);
     tween.name = "xIcon clicked tween";
@@ -595,16 +749,16 @@ ClickerMath.GameState = {
     //tween score to pointer
     var xPoint = pointer.x;
     var yPoint = pointer.y;
-    var scoreText = this.game.add.text(xPoint, yPoint, "+ " + this.clickGain, this.xIconClickPointStyle);
+    var scoreText = this.game.add.text(xPoint, yPoint, "+ " + Math.ceil(this.clickGain), this.xIconClickPointStyle);
     scoreText.name = "xIcon clicked + amount";
     scoreText.anchor.setTo(0.5);
-    var tween2 = this.game.add.tween(scoreText).to({alpha: 0},500, null, true);
+    var tween2 = this.game.add.tween(scoreText).to({alpha: 0},2000, null, true);
     tween2.name = "xIcon clickamount tween from alpha";
 
     //tween score to somewhere
-    var randDirectionX = this.game.rnd.integerInRange(-10, 10);
-    var randDirectionY = this.game.rnd.integerInRange(-10, 10);  
-    var tween3 = this.game.add.tween(scoreText).to({x: scoreText.x + randDirectionX, y: scoreText.y + randDirectionY }, 500, Phaser.Easing.Circular.Out, true);
+    var randDirectionX = this.game.rnd.integerInRange(-20, 20);
+    var randDirectionY = this.game.rnd.integerInRange(-20, 20);  
+    var tween3 = this.game.add.tween(scoreText).to({x: scoreText.x + randDirectionX, y: scoreText.y + randDirectionY }, 2000, Phaser.Easing.Circular.Out, true);
     tween3.onComplete.add(function(){
         scoreText.destroy();
       }, this);
@@ -615,31 +769,31 @@ ClickerMath.GameState = {
     this.graphics.beginFill();
     this.graphics.lineStyle(this.guiLineData.lineWidth, this.guiLineData.lineColor, this.guiLineData.lineAlpha);
 
-    //divide the game area and store and upgrade
-    this.graphics.moveTo(800,0);
-    this.graphics.lineTo(800, 800);
-    //store line vertical line
-    this.graphics.moveTo(1040,0);
-    this.graphics.lineTo(1040, 80);
-    //store horizontal line
-    this.graphics.moveTo(800, 80);
-    this.graphics.lineTo(1280, 80);
+    // //divide the game area and store and upgrade
+    // this.graphics.moveTo(800,0);
+    // this.graphics.lineTo(800, 800);
+    // //store line vertical line
+    // this.graphics.moveTo(1040,0);
+    // this.graphics.lineTo(1040, 80);
+    // //store horizontal line
+    // this.graphics.moveTo(800, 80);
+    // this.graphics.lineTo(1280, 80);
 
-    //outherright line
-    this.graphics.moveTo(1280, 0);
-    this.graphics.lineTo(1280, 800);
+    // //outherright line
+    // this.graphics.moveTo(1280, 0);
+    // this.graphics.lineTo(1280, 800);
 
-    //bottomline
-    this.graphics.moveTo(1280, 800);
-    this.graphics.lineTo(0, 800);
+    // //bottomline
+    // this.graphics.moveTo(1280, 800);
+    // this.graphics.lineTo(0, 800);
 
-    //left line
-    this.graphics.moveTo(0, 800);
-    this.graphics.lineTo(0, 0);
+    // //left line
+    // this.graphics.moveTo(0, 800);
+    // this.graphics.lineTo(0, 0);
 
-    //upline
-    this.graphics.moveTo(0, 0);
-    this.graphics.lineTo(1280, 0);
+    // //upline
+    // this.graphics.moveTo(0, 0);
+    // this.graphics.lineTo(1280, 0);
 
 
     this.graphics.endFill();
@@ -653,15 +807,15 @@ ClickerMath.GameState = {
     //create as graphics
     this.openStoreButton = this.add.graphics(0, 0);            
     // draw a rectangle            
-    this.openStoreButton.lineStyle(2, 0x000000, 1);            
+    this.openStoreButton.lineStyle(2, 0x000000, 0.6);            
     this.openStoreButton.beginFill(0x00FF00, 0.8);            
-    this.openStoreButton.drawRect(800, 0, 240, 80);                      
+    this.openStoreButton.drawRoundedRect(800, 0, 240, 80, 5);                      
     this.openStoreButton.endFill();   
     //store Text
     this.storeText = this.game.add.text(920, 40, "Store", storeHeadLineStyle);
     this.storeText.name = "STORE text";
     this.storeText.anchor.setTo(0.5);     
-    this.storeText.alpha = 0.9;    
+    this.storeText.alpha = 1;    
     //input        
     this.openStoreButton.inputEnabled = true;           
     this.openStoreButton.events.onInputDown.add(function(){
@@ -677,13 +831,13 @@ ClickerMath.GameState = {
     // draw a rectangle            
     this.openUpgradeButton.lineStyle(2, 0x000000, 1);            
     this.openUpgradeButton.beginFill(0x00FF00, 0.8);            
-    this.openUpgradeButton.drawRect(1040, 0, 240, 80);                      
+    this.openUpgradeButton.drawRoundedRect(1040, 0, 240, 80, 5);                      
     this.openUpgradeButton.endFill();   
     //upgradetext Text
     this.UpgradeText = this.game.add.text(1160, 40, "Upgrades", storeHeadLineStyle);
     this.UpgradeText.name = "UPGRADE - text";
     this.UpgradeText.anchor.setTo(0.5);
-    this.UpgradeText.alpha = 0.9;           
+    this.UpgradeText.alpha = 1;           
     //input        
     this.openUpgradeButton.inputEnabled = true;  
 
@@ -714,10 +868,7 @@ ClickerMath.GameState = {
       }
     }, this)
 
-    var buyTaskTextStyle = {
-      font: "30px aldrichregular",
-      fill: "black"
-    };
+
 
     //buttons for tasks
     this.storeAreaGroup = this.game.add.group();
@@ -867,15 +1018,23 @@ ClickerMath.GameState = {
       fill: "black"
     }; 
 
+    var buyTaskTextStyle = {
+      font: "bold 34px aldrichregular",
+      fill: "black"
+      
+    };
+
     //INFOTEXTS
     this.buyTaskText = this.game.add.text(1040, 110, "Buy Equations", buyTaskTextStyle);
     this.buyTaskText.name = "Buy Equations - text";
     this.buyTaskText.anchor.setTo(0.5);
+    this.buyTaskText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
     this.storeAreaGroup.add(this.buyTaskText);
 
     this.buyHelpersText = this.game.add.text(1040, 495, "Buy Helpers", buyTaskTextStyle);
     this.buyHelpersText.anchor.setTo(0.5);
     this.buyHelpersText.name = "Buy Helpers - text";
+    this.buyHelpersText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
     this.storeAreaGroup.add(this.buyHelpersText);
 
     
@@ -1005,12 +1164,16 @@ ClickerMath.GameState = {
     for(var j = 0 ; j < indexes.length ; j++){
       var child = this.upgradesGroup.getAt(indexes[j]);
       // console.log(child);
-      var pos = coords.shift();
-      child.drawUpgrade(pos[0], pos[1]);
-      child.alive = true;
+      if(coords.length > 0){
+        var pos = coords.shift();
+        child.drawUpgrade(pos[0], pos[1]);
+        child.alive = true;
+      }
+      else{
+        break;
+      }
     }
   },
-
   taskButtonHandler: function(button){
 
     //detect which button is pressed and get the task
@@ -1040,7 +1203,6 @@ ClickerMath.GameState = {
     //check if enough money
     if(taskData.price <= this.xData.xNow){
       //reward rize
-      // taskData.price += taskData.priceGrow;
       //kill clickable x and dont take anymore button presses for tasks
       this.taskInitialized = true;
 
@@ -1088,6 +1250,7 @@ ClickerMath.GameState = {
       var x = this.game.rnd.integerInRange(helper.spawnArea.x1, helper.spawnArea.x2);
       var y = this.game.rnd.integerInRange(helper.spawnArea.y1, helper.spawnArea.y2);
       var sprite = this.game.add.sprite(x, y, helper.iconKey);
+      this.helperGroup.add(sprite);
       sprite.name = "Helper on board";
       sprite.anchor.setTo(0.5);
       sprite.scale.setTo(helper.iconScale.x * 0.5, helper.iconScale.y * 0.5);
@@ -1107,17 +1270,19 @@ ClickerMath.GameState = {
     }
   },
   updateGainPerSeconds: function(){
-    this.xGainPerSecond = this.studentData.amount * this.studentData.gain;
-    this.xGainPerSecond += this.profData.amount * this.profData.gain;
-    this.xGainPerSecond += this.xFarmData.amount * this.xFarmData.gain;
+    if(this.gameOn){
+      this.xGainPerSecond = this.studentData.amount * this.studentData.gain;
+      this.xGainPerSecond += this.profData.amount * this.profData.gain;
+      this.xGainPerSecond += this.xFarmData.amount * this.xFarmData.gain;
+    }
   },
   createStoreButton: function(button, buttonColor, buttonTop, buttonHeight, buttonHandler){
     var buttonFinalColor;
     var buttonAlpha = 1;
 
-    button.lineStyle(2, 0x000000, 1);            
+    button.lineStyle(2, 0x000000, 0.6);            
     button.beginFill(buttonColor, buttonAlpha);            
-    button.drawRect(800, buttonTop, 480, buttonHeight);                      
+    button.drawRoundedRect(800, buttonTop, 480, buttonHeight, 10);                      
     button.endFill(); 
     button.inputEnabled = true;  
 
@@ -1365,13 +1530,13 @@ ClickerMath.GameState = {
   },
   createAnswerCoordinates: function(){
     var coords = [];
-    var xWidth = 200;
+    var xWidth = 220;
     var yWidth = 100;
-    var xTopLeft = 0;
-    var yTopLeft = 200;
+    var xTopLeft = 170;
+    var yTopLeft = 300;
 
-    for (var i = 1; i <=3 ; i++){  
-      for(var j = 1; j <=3 ; j ++){ 
+    for (var i = 0; i <=2 ; i++){  
+      for(var j = 0; j <=2 ; j ++){ 
         coords.push([xTopLeft + i * xWidth, yTopLeft + j * yWidth]);
       }
     }
@@ -1426,7 +1591,7 @@ ClickerMath.GameState = {
     text.anchor.setTo(0.5);
 
     var textTween = this.game.add.tween(text).from({alpha: 0}, 2800, null, true, 0, 0, false);
-    var textTweenRotate = this.game.add.tween(text).from({angle: 360}, 750, null, true, 0, 0, false)
+    var textTweenRotate = this.game.add.tween(text).from({angle: 980}, 750, null, true, 0, 0, false)
     textTweenRotate.onComplete.add(function(){
       //create rewards tweening towards xIconAmount
       
@@ -1435,7 +1600,6 @@ ClickerMath.GameState = {
         emitter.flow(750, 150, 5, 50, false);
         //add reward
         this.xRizeTween(taskData.reward, 1200)
-        //this.xData.xNow += taskData.reward;
         this.totalX += taskData.reward;
       }
       
@@ -1455,30 +1619,33 @@ ClickerMath.GameState = {
     //wait a second
     this.game.time.events.add(Phaser.Timer.SECOND * 3, function(){
       //can buy now more tasks and creates the X again
-      this.createClickableX();
-      this.taskInitialized = false;
-      if(emitter){emitter.destroy();}
+      if(this.gameOn){
+        this.createClickableX();
+        this.taskInitialized = false;
+        if(emitter){emitter.destroy();}
+      }
     }, this); 
   },
   initTaskToGame: function(task, taskData, taskGroup, textGroup){
 
     //create task text 
-    var taskText = this.game.add.text(400, 200, task["task"], this.taskTextStyle);;
+    var parsedTaskText = this.parseText(task["task"]);
+    var taskText = this.game.add.text(400, 200, parsedTaskText, this.taskTextStyle);
     taskText.anchor.setTo(0.5);
     textGroup.add(taskText);
     //create task answers
     var answers = [];
-    taskCorrectAnswer = task["answer"]
+    var taskCorrectAnswer = this.parseText(task["answer"]);
     answers.push(taskCorrectAnswer);
     for(var i = 1; i <= 8 ; i++){
-      answers.push(task["wrongAnswer" + i]);
+      answers.push(this.parseText(task["wrongAnswer" + i]));
     }
 
     for(var j = 1; j <= 9 ; j ++){
       //set the task coords and text
       var coords = this.answerCoords.pop();
       var answerText = answers.pop();
-      var text = this.game.add.text(coords[0], coords[1], answerText, this.taskAnswerTextStyle);
+      var text = this.game.add.text(coords[0] + 15, coords[1] + 5, answerText, this.taskAnswerTextStyle);
       text.anchor.setTo(0.5);
       textGroup.add(text);
 
@@ -1487,7 +1654,7 @@ ClickerMath.GameState = {
       taskGroup.add(answerButton);
       answerButton.lineStyle(1.5, 0x000000, 0.5);            
       answerButton.beginFill(this.taskAnswerBtn.fillColor, 1);            
-      answerButton.drawRect(coords[0] - 80, coords[1] - 20, 180, 40);                      
+      answerButton.drawRect(coords[0] - 80, coords[1] - 20, 190, 50);                      
       answerButton.endFill(); 
       answerButton.alpha = 1;
       answerButton.inputEnabled = true;     
@@ -1509,7 +1676,6 @@ ClickerMath.GameState = {
     
     var tween = this.game.add.tween(this.xData).to( { xNow: this.xData.xNow + reward }, time, Phaser.Easing.Linear.None);
     tween.start()
-
   },
   createUpgrades: function(){
 
@@ -1552,6 +1718,207 @@ ClickerMath.GameState = {
     this.studentHelperButton.cacheAsBitmap = true;
     this.profHelperButton.cacheAsBitmap = true;
     this.xFarmHelperButton.cacheAsBitmap = true;
+  },
+  gameComplete: function(){
+    console.log("Game Complete");
+
+    //remove storearea
+    this.helperGroup.destroy();
+    this.storeAreaGroup.destroy();
+    this.graphics.destroy();
+    this.gainNumberSecondText.destroy();
+    this.X.destroy();
+    this.openStoreButton.destroy();
+    this.openUpgradeButton.destroy();
+    this.studentData.emitter.destroy();
+    this.profData.emitter.destroy();
+    this.xFarmData.emitter.destroy();
+    this.storeText.destroy();
+    this.UpgradeText.destroy();
+    this.easyTaskButton.destroy();
+    this.normalTaskButton.destroy();
+    this.hardTaskButton.destroy();
+    this.asianTaskButton.destroy();
+    this.studentHelperButton.destroy();
+    this.profHelperButton.destroy();
+    this.xFarmHelperButton.destroy();
+    this.easyTaskData.priceText.destroy();
+    this.easyTaskData.solvedAmountText.destroy();
+    this.easyTaskData.rewardText.destroy();
+    this.easyTaskData.icon.destroy();
+    this.normalTaskData.priceText.destroy();
+    this.normalTaskData.solvedAmountText.destroy();
+    this.normalTaskData.rewardText.destroy();
+    this.normalTaskData.icon.destroy();
+    this.hardTaskData.priceText.destroy();
+    this.hardTaskData.solvedAmountText.destroy();
+    this.hardTaskData.rewardText.destroy();
+    this.hardTaskData.icon.destroy();
+    this.asianTaskData.priceText.destroy();
+    this.asianTaskData.solvedAmountText.destroy();
+    this.asianTaskData.rewardText.destroy();
+    this.asianTaskData.icon.destroy();
+    this.studentData.amountText.destroy();
+    this.studentData.priceText.destroy();
+    this.profData.amountText.destroy();
+    this.profData.priceText.destroy();
+    this.xFarmData.amountText.destroy();
+    this.xFarmData.priceText.destroy();
+    this.xAmountIcon.destroy();
+
+    var complimentTextStyle = {
+      font: "50px aldrichregular",
+      fill: "black"
+    }
+
+    var complimentText = this.game.add.text(640, 250, "", complimentTextStyle);
+    complimentText.anchor.setTo(0.5);
+    var timeText = this.game.add.text(640, 350, "", complimentTextStyle);
+    timeText.anchor.setTo(0.5);
+    var totalX = this.game.add.text(640, 450, "", complimentTextStyle);
+    totalX.anchor.setTo(0.5);
+    //powered by autoclicker text if solved tasks amount are all under 3
+    if(this.easyTaskData.solved > 4){
+      complimentText.text = "You made it!"
+      var timeSeconds = this.game.time.totalElapsedSeconds();
+      var minutes = Math.floor(timeSeconds/60);
+      var seconds = Math.round(timeSeconds - minutes * 60);
+      timeText.text = "Time " + minutes + " minutes and " + seconds + " seconds";
+      totalX.text = "Collected total " + Math.round(this.totalX);
+    }
+    else{
+      
+      complimentText.text = "<3 Powered by AutoClicker <3";
+
+    }
+
+    //create stats screen
+    var statsScreen = this.game.add.graphics(0, 0);
+    statsScreen.lineStyle(2, 0x000000, 0.4);            
+    statsScreen.beginFill(0x83B1DA, 1);            
+    statsScreen.drawRoundedRect(100, 100, 1080, 600, 20);                      
+    statsScreen.endFill(); 
+    statsScreen.alpha = 0.8;
+
+    this.game.world.bringToTop(complimentText);
+    this.game.world.bringToTop(timeText);
+    this.game.world.bringToTop(totalX);
+
+    //create emitter flow for x points
+    //tween text to down first
+    //to(properties [, duration] [, ease] [, autoStart] [, delay] [, repeat] [, yoyo])
+    var tween = this.game.add.tween(this.xAmountText).to({x: 1280/2, y: 60}, 1000, null, true, 0);
+
+    tween.onComplete.add(function(){
+      this.xRizeTween(-1000000, 10000000);
+      var emitter = this.game.add.emitter(640, 100, 1000);
+      emitter.makeParticles('xIcon');
+      emitter.setScale(0.2, 0.4, 0.2, 0.4, 0, null, true);
+      emitter.setAlpha(0.1, 0.3, 0, null, true);
+      emitter.setXSpeed(-100, 100);
+      emitter.setYSpeed(80, 200);
+      emitter.width = 200;
+      //flow( [lifespan] [, frequency] [, quantity] [, total] [, immediate])
+      emitter.flow(4000, 100, 2, 1000000, false);
+    }, this);
+  },
+  createInfoTexts: function(){
+    var infoTextGroup = this.game.add.group();
+    //infotext
+    var infoTextStyle = {
+      font: "40px aldrichregular",
+      fill: "black",
+      align: "center"
+    };
+    var infoText = this.game.add.text(400, 700, "Collect 1 000 000 points. \n Please.", infoTextStyle);
+    infoText.anchor.setTo(0.5);
+    infoTextGroup.add(infoText);
+
+    // var clickMeText = this.game.add.text(400, 330, "Click Me!", infoTextStyle);
+    // clickMeText.anchor.setTo(0.5);
+    // clickMeText.fill = "red";
+    // infoTextGroup.add(clickMeText);
+
+    var tween = this.game.add.tween(infoText).to({alpha: 0}, 8000, Phaser.Easing.Quadratic.In, true, 0, 0, false);
+    tween.onComplete.add(function(){
+      infoTextGroup.destroy();
+    }, this);
+  },
+  parseText: function(text){
+
+    while(text.includes("+-") ||text.includes(">=") || text.includes("1/4") || text.includes("2/3") || text.includes("1/5") || text.includes("1/3") ||text.includes("^2") || text.includes("*") || text.includes("^0") || text.includes("^3") || text.includes("^1") || text.includes("^5") || text.includes("^4") || text.includes("^6") || text.includes("1/2")){
+      //change ^2- sign to corresponding unicode character \u{00B2}
+        if(text.includes("^2")){
+          var index = text.indexOf("^2");
+          text = text.slice(0, index) + '\u{00B2}' + text.slice(index + 2)
+        }
+        //convert * marks to \u{22C5}
+        if(text.includes("*")){
+          var index = text.indexOf("*");
+          text = text.slice(0, index) + '\u{22C5}' + text.slice(index + 1);
+        }
+        //converts ^0 - marks to \u{2070}
+        if(text.includes("^0")){
+          var index = text.indexOf("^0");
+          text = text.slice(0, index) + '\u{2070}' + text.slice(index + 2)
+        }
+        //converts ^0 - marks to \u{00B3}
+        if(text.includes("^3")){
+          var index = text.indexOf("^3");
+          text = text.slice(0, index) + '\u{00B3}' + text.slice(index + 2)
+        }
+        //converts ^4 marks to \u{2074}
+        if(text.includes("^4")){
+          var index = text.indexOf("^4");
+          text = text.slice(0, index) + '\u{2074}' + text.slice(index + 2)
+        }
+        //converts ^4 marks to \u{2074}
+        if(text.includes("^6")){
+          var index = text.indexOf("^6");
+          text = text.slice(0, index) + '\u{2076}' + text.slice(index + 2)
+        }
+        //converts ^1 marks to \u{2081}
+        if(text.includes("^1")){
+          var index = text.indexOf("^1");
+          text = text.slice(0, index) + '\u{00B9}' + text.slice(index + 2)
+        }
+        //converts ^5 marks to \u{2085}
+        if(text.includes("^5")){
+          var index = text.indexOf("^5");
+          text = text.slice(0, index) + '\u{2075}' + text.slice(index + 2)
+        }  
+
+        if(text.includes("1/2")){
+          var index = text.indexOf("1/2");
+          text = text.slice(0, index) + '\u{00BD}' + text.slice(index + 3)
+        }   
+        if(text.includes("1/3")){
+          var index = text.indexOf("1/3");
+          text = text.slice(0, index) + '\u{2153}' + text.slice(index + 3)
+        }    
+        if(text.includes("1/5")){
+          var index = text.indexOf("1/5");
+          text = text.slice(0, index) + '\u{2155}' + text.slice(index + 3)
+        }      
+        if(text.includes("2/3")){
+          var index = text.indexOf("2/3");
+          text = text.slice(0, index) + '\u{2154}' + text.slice(index + 3)
+        }   
+        if(text.includes("1/4")){
+          var index = text.indexOf("1/4");
+          text = text.slice(0, index) + '\u{00BC}' + text.slice(index + 3)
+        }   
+        if(text.includes(">=")){
+          var index = text.indexOf(">=");
+          text = text.slice(0, index) + '\u{2265}' + text.slice(index + 2)
+        }  
+        if(text.includes("+-")){
+          var index = text.indexOf("+-");
+          text = text.slice(0, index) + '\u{00B1}' + text.slice(index + 2)
+        }
+      }
+
+    return text;
   }
 
 };

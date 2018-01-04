@@ -1,18 +1,351 @@
 {
 	"a":{
-		"task": "2x + 4 = 8",
-		"answer": "2"
+		"task": "1/3 * x = 7:6",
+		"answer": "x = 3.5",
+		"wrongAnswer1": "x = 0",
+		"wrongAnswer2": "x = 7",
+		"wrongAnswer3": "x = 6",
+		"wrongAnswer4": "x = 4.5",
+		"wrongAnswer5": "x = 3",
+		"wrongAnswer6": "x = 2.5",
+		"wrongAnswer7": "x = 2",
+		"wrongAnswer8": "x = 1"
+		},
+	"b":{
+		"task": "3x : 10 = 9 : 5",
+		"answer": "x = 6",
+		"wrongAnswer1": "x = 2",
+		"wrongAnswer2": "x = 10",
+		"wrongAnswer3": "x = 9",
+		"wrongAnswer4": "x = 5",
+		"wrongAnswer5": "x = 1",
+		"wrongAnswer6": "x = -2",
+		"wrongAnswer7": "x = 3",
+		"wrongAnswer8": "x = -3"
 	},
+
 	"c":{
-		"task": "x^2 + 2 = 6",
-		"answer": "x = 2 or x = -2"
+		"task": "x - 1/3 * x = 1 : 6",
+		"answer": "x = 1/4",
+		"wrongAnswer1": "x = 1/2",
+		"wrongAnswer2": "x = 1/3",
+		"wrongAnswer3": "x = 4",
+		"wrongAnswer4": "x = 2",
+		"wrongAnswer5": "x = -4",
+		"wrongAnswer6": "x = 0",
+		"wrongAnswer7": "x = 10",
+		"wrongAnswer8": "x = 1/5"
 	},
+
 	"d":{
-		"task": "2x = 3x + 2",
-		"answer": "2"
+		"task": "1/2 * x - 1/3 * x = 1",
+		"answer": "x = 6",
+		"wrongAnswer1": "x = 2",
+		"wrongAnswer2": "x = -1",
+		"wrongAnswer3": "x = 4",
+		"wrongAnswer4": "x = 7",
+		"wrongAnswer5": "x = 12",
+		"wrongAnswer6": "x = 1/2",
+		"wrongAnswer7": "x = -5",
+		"wrongAnswer8": "x = 20"
 	},
+
 	"e":{
-		"task": "6/x = 2",
-		"answer": "3"
+		"task": "x - 1/2 * x = 8",
+		"answer": "x = 16",
+		"wrongAnswer1": "x = 5",
+		"wrongAnswer2": "x = 14",
+		"wrongAnswer3": "x = 5",
+		"wrongAnswer4": "x = 7",
+		"wrongAnswer5": "x = -16",
+		"wrongAnswer6": "x = 32",
+		"wrongAnswer7": "x = 35",
+		"wrongAnswer8": "x = 4"
+	},
+
+	"f":{
+		"task": "1/2 + x = 1/2 * x + 1",
+		"answer": "x = 1",
+		"wrongAnswer1": "x = -1",
+		"wrongAnswer2": "x = 2",
+		"wrongAnswer3": "x = -2",
+		"wrongAnswer4": "x = 1/2",
+		"wrongAnswer5": "x = 5",
+		"wrongAnswer6": "x = 10",
+		"wrongAnswer7": "x = -1/2",
+		"wrongAnswer8": "x = 3"
+	},
+
+	"g":{
+		"task": "x(2x + 1) = 2x^2 -x + 8",
+		"answer": "x = 4",
+		"wrongAnswer1": "x = 2",
+		"wrongAnswer2": "x = -2",
+		"wrongAnswer3": "x = -4",
+		"wrongAnswer4": "x = 6",
+		"wrongAnswer5": "x = -6",
+		"wrongAnswer6": "x = 8",
+		"wrongAnswer7": "x = 10",
+		"wrongAnswer8": "x = 15"
+	},
+
+	"h":{
+		"task": "-x(3 + 2) = 7(x + 2) + 10",
+		"answer": "x = -2",
+		"wrongAnswer1": "x = 2",
+		"wrongAnswer2": "x = -3",
+		"wrongAnswer3": "x = 3",
+		"wrongAnswer4": "x = 4",
+		"wrongAnswer5": "x = -4",
+		"wrongAnswer6": "x = 0",
+		"wrongAnswer7": "x = 1",
+		"wrongAnswer8": "x = -1"
+	},
+
+	"i":{
+		"task": "3 * 1/2 + 6x * 1/5 = 9 * 1/2",
+		"answer": "x = 2.5",
+		"wrongAnswer1": "x = -2.5",
+		"wrongAnswer2": "x = 3.5",
+		"wrongAnswer3": "x = -3.5",
+		"wrongAnswer4": "x = 0",
+		"wrongAnswer5": "x = -0",
+		"wrongAnswer6": "x = 1",
+		"wrongAnswer7": "x = -1",
+		"wrongAnswer8": "x = 1337"
+	},
+
+	"j":{
+		"task": "3 - 6(x + 1) = 2(2x - 1)",
+		"answer": "x = -0.1",
+		"wrongAnswer1": "x = 0.1",
+		"wrongAnswer2": "x = 0.4",
+		"wrongAnswer3": "x = -0.4",
+		"wrongAnswer4": "x = 1",
+		"wrongAnswer5": "x = -1",
+		"wrongAnswer6": "x = 0",
+		"wrongAnswer7": "x = 3",
+		"wrongAnswer8": "x = 6"
+	},
+
+	"k":{
+		"task": "2(x + 2) - (2x - 4) + x = 7",
+		"answer": "x = -1",
+		"wrongAnswer1": "x = 2",
+		"wrongAnswer2": "x = -2",
+		"wrongAnswer3": "x = 3",
+		"wrongAnswer4": "x = -3",
+		"wrongAnswer5": "x = 10",
+		"wrongAnswer6": "x = -10",
+		"wrongAnswer7": "x = 0",
+		"wrongAnswer8": "x = 12"
+	},
+
+	"l":{
+		"task": "10 + (4x - 2) -3(x + 2) = 0",
+		"answer": "x = -2",
+		"wrongAnswer1": "x = 3",
+		"wrongAnswer2": "x = 2",
+		"wrongAnswer3": "x = 5",
+		"wrongAnswer4": "x = 6",
+		"wrongAnswer5": "x = -6",
+		"wrongAnswer6": "x = 8",
+		"wrongAnswer7": "x = -8",
+		"wrongAnswer8": "x = 10"
+	},
+
+	"m":{
+		"task": "0.4x - 4 = 0",
+		"answer": "x = 10",
+		"wrongAnswer1": "x = 12",
+		"wrongAnswer2": "x = 13",
+		"wrongAnswer3": "x = 9",
+		"wrongAnswer4": "x = 8",
+		"wrongAnswer5": "x = -4",
+		"wrongAnswer6": "x = 6",
+		"wrongAnswer7": "x = 5",
+		"wrongAnswer8": "x = 4"
+	},
+
+	"n":{
+		"task": "2/3 * x = 0",
+		"answer": "x = 0",
+		"wrongAnswer1": "x = 2",
+		"wrongAnswer2": "x = 3",
+		"wrongAnswer3": "x = 1",
+		"wrongAnswer4": "x = 4",
+		"wrongAnswer5": "x = 6",
+		"wrongAnswer6": "x = 7",
+		"wrongAnswer7": "x = -2",
+		"wrongAnswer8": "x = -3"
+	},
+
+	"o":{
+		"task": "0.4x - 4 = 0",
+		"answer": "x = 10",
+		"wrongAnswer1": "x = 40",
+		"wrongAnswer2": "x = 20",
+		"wrongAnswer3": "x = 16",
+		"wrongAnswer4": "x = -10",
+		"wrongAnswer5": "x = -40",
+		"wrongAnswer6": "x = -20",
+		"wrongAnswer7": "x = 5",
+		"wrongAnswer8": "x = 0"
+	},
+
+	"p":{
+		"task": "-7x + 19 = -2(5x - 11)",
+		"answer": "x = 1",
+		"wrongAnswer1": "x = 2",
+		"wrongAnswer2": "x = -2",
+		"wrongAnswer3": "x = -1",
+		"wrongAnswer4": "x = 3",
+		"wrongAnswer5": "x = -3",
+		"wrongAnswer6": "x = 4",
+		"wrongAnswer7": "x = -4",
+		"wrongAnswer8": "x = 5"
+	},
+
+	"q":{
+		"task": "x^2 = 4",
+		"answer": "x = +-2",
+		"wrongAnswer1": "x = +-4",
+		"wrongAnswer2": "x = +-5",
+		"wrongAnswer3": "x = 4",
+		"wrongAnswer4": "x = 2",
+		"wrongAnswer5": "x = -1",
+		"wrongAnswer6": "x = 2",
+		"wrongAnswer7": "x = 0",
+		"wrongAnswer8": "x = 5"
+	},
+
+	"r":{
+		"task": "x^2 = 25",
+		"answer": "x = +-5",
+		"wrongAnswer1": "x = +-2",
+		"wrongAnswer2": "x = +-4",
+		"wrongAnswer3": "x = 5",
+		"wrongAnswer4": "x = -5",
+		"wrongAnswer5": "x = 3",
+		"wrongAnswer6": "x = 2",
+		"wrongAnswer7": "x = 1",
+		"wrongAnswer8": "x = 0"
+	},
+
+	"s":{
+		"task": "x^2 = 0.81",
+		"answer": "x = +-0.9",
+		"wrongAnswer1": "x = 0.9",
+		"wrongAnswer2": "x = -0.9",
+		"wrongAnswer3": "x = 0",
+		"wrongAnswer4": "x = +-0",
+		"wrongAnswer5": "x = 81",
+		"wrongAnswer6": "x = 56",
+		"wrongAnswer7": "x = 2",
+		"wrongAnswer8": "x = 5"
+	},
+
+	"t":{
+		"task": "x^2 - 9 = 0",
+		"answer": "x = +-3",
+		"wrongAnswer1": "x = 0.9",
+		"wrongAnswer2": "x = -0.9",
+		"wrongAnswer3": "x = 3",
+		"wrongAnswer4": "x = +-0",
+		"wrongAnswer5": "x = 81",
+		"wrongAnswer6": "x = 56",
+		"wrongAnswer7": "x = 2",
+		"wrongAnswer8": "x = -3"
+	},
+
+	"u":{
+		"task": "2(x^2 - 1) = 30",
+		"answer": "x = +-4",
+		"wrongAnswer1": "x = 4",
+		"wrongAnswer2": "x = -4",
+		"wrongAnswer3": "x = 3",
+		"wrongAnswer4": "x = +-0",
+		"wrongAnswer5": "x = +-1",
+		"wrongAnswer6": "x = 56",
+		"wrongAnswer7": "x = 2",
+		"wrongAnswer8": "x = -3"
+	},
+
+	"v":{
+		"task": "-x^2 -12 = x^2 - 20",
+		"answer": "x = +-2",
+		"wrongAnswer1": "x = 4",
+		"wrongAnswer2": "x = -4",
+		"wrongAnswer3": "x = 3",
+		"wrongAnswer4": "x = +-6",
+		"wrongAnswer5": "x = +-1",
+		"wrongAnswer6": "x = 56",
+		"wrongAnswer7": "x = -2",
+		"wrongAnswer8": "x = 2"
+	},
+
+	"x":{
+		"task": "x^2 = k",
+		"answer": "k >= 0",
+		"wrongAnswer1": "x = 5",
+		"wrongAnswer2": "x = 6",
+		"wrongAnswer3": "x < 7",
+		"wrongAnswer4": "x >= 0",
+		"wrongAnswer5": "x = -5",
+		"wrongAnswer6": "k = 4",
+		"wrongAnswer7": "k >= x",
+		"wrongAnswer8": "x = k"
+	},
+
+	"y":{
+		"task": "2x^2 = 8",
+		"answer": "x = +-2",
+		"wrongAnswer1": "x = 4",
+		"wrongAnswer2": "x = -4",
+		"wrongAnswer3": "x = 3",
+		"wrongAnswer4": "x = +-6",
+		"wrongAnswer5": "x = +-1",
+		"wrongAnswer6": "x = 56",
+		"wrongAnswer7": "x = -2",
+		"wrongAnswer8": "x = 2"
+	},
+
+	"z":{
+		"task": "3x^2 = 12",
+		"answer": "x = +-2",
+		"wrongAnswer1": "x = 4",
+		"wrongAnswer2": "x = -4",
+		"wrongAnswer3": "x = 3",
+		"wrongAnswer4": "x = +-6",
+		"wrongAnswer5": "x = +-1",
+		"wrongAnswer6": "x = 56",
+		"wrongAnswer7": "x = -2",
+		"wrongAnswer8": "x = 2"
+	},
+
+	"aaa":{
+		"task": "-1/3 * x^2 = -3",
+		"answer": "x = +-3",
+		"wrongAnswer1": "x = 4",
+		"wrongAnswer2": "x = -4",
+		"wrongAnswer3": "x = 3",
+		"wrongAnswer4": "x = +-6",
+		"wrongAnswer5": "x = +-1",
+		"wrongAnswer6": "x = 56",
+		"wrongAnswer7": "x = -3",
+		"wrongAnswer8": "x = 2"
+	},
+
+	"aab":{
+		"task": "x^2 = 0.001",
+		"answer": "x = +- 0.01",
+		"wrongAnswer1": "x = 1",
+		"wrongAnswer2": "x = -1",
+		"wrongAnswer3": "x = 3",
+		"wrongAnswer4": "x = +-6",
+		"wrongAnswer5": "x = +-1",
+		"wrongAnswer6": "x = +-0",
+		"wrongAnswer7": "x = -3",
+		"wrongAnswer8": "x = 2"
 	}
 }

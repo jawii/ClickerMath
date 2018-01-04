@@ -22,7 +22,7 @@ ClickerMath.Upgrade = function(state, x, y, data){
 	this.height = 60;
 
 	this.infoTextStyle = {
-		font: "16px aldrichregular",
+		font: "18px aldrichregular",
       	fill: "black",
       	align: "center",
       	wordWrap: "true",
@@ -68,7 +68,7 @@ ClickerMath.Upgrade.prototype.drawUpgrade = function(x, y) {
 	//graphics
 	this.graphics.lineStyle(2, 0x000000, 0.4);            
     this.graphics.beginFill(0x83B1DA, 1);            
-    this.graphics.drawRect(this.left - 20, this.top - 10, this.width + 40, 120);                      
+    this.graphics.drawRoundedRect(this.left - 20, this.top - 10, this.width + 40, 120, 15);                      
     this.graphics.endFill(); 
     this.graphics.inputEnabled = true;  
     this.graphics.events.onInputDown.add(this.buttonPress, this);
@@ -134,14 +134,14 @@ ClickerMath.Upgrade.prototype.buttonHover = function(button) {
 	//add the info screen about the upgrade
 	this.alpha = 0.1;
 	this.graphics.alpha = 0.1;
-	this.priceText.alpha = 0.1;
-	this.priceIcon.alpha = 0.1;
+	this.priceText.alpha = 0.5;
+	this.priceIcon.alpha = 0.5;
 
 	// this.infoText.visible = true;
 	this.infoScreen.reset(0, 0);
 	this.infoScreen.lineStyle(2, 0x000000, 0.4);            
     this.infoScreen.beginFill(0x83B1DA, 1);            
-    this.infoScreen.drawRect(this.left - 50, this.top - 10, this.width + 100, 120);                      
+    this.infoScreen.drawRoundedRect(this.left - 50, this.top - 10, this.width + 100, 120, 5);                      
     this.infoScreen.endFill(); 
     this.infoScreen.alpha = 0.5;
 
