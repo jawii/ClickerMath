@@ -28,10 +28,16 @@ ClickerMath.PreloadState = {
 		this.load.image("xUpgrade", "assets/images/xUpgrade.png");
 
 		//load equations
-		this.load.text('easyTasks', 'assets/data/easyTasks.json');
-		this.load.text('normalTasks', 'assets/data/normalTasks.json');
-		this.load.text('hardTasks', 'assets/data/hardTasks.json');
-		this.load.text('asianTasks', 'assets/data/asianTasks.json');
+		this.load.text('easyEquationTasks', 'assets/data/easyEquationTasks.json');
+		this.load.text('normalEquationTasks', 'assets/data/normalEquationTasks.json');
+		this.load.text('hardEquationTasks', 'assets/data/hardEquationTasks.json');
+		this.load.text('asianEquationTasks', 'assets/data/asianEquationTasks.json');
+
+		//load calculus
+		this.load.text('easyBasicTasks', 'assets/data/easyBasicTasks.json');
+		this.load.text('normalBasicTasks', 'assets/data/normalBasicTasks.json');
+		this.load.text('hardBasicTasks', 'assets/data/hardBasicTasks.json');
+		this.load.text('asianBasicTasks', 'assets/data/asianBasicTasks.json');
 
 		//PROGRESS BAR
 		this.progress = this.game.add.text(this.game.world.centerX, this.game.world.width/2, '0%', {fill: 'white'});    

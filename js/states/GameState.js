@@ -114,7 +114,7 @@ ClickerMath.GameState = {
         key: "xUpgrade",
         requirements: ["true"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1."
+        infoText: "Klikkaus +1."
       },
 
       clickGain2 : {
@@ -123,7 +123,7 @@ ClickerMath.GameState = {
         key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 2"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1."
+        infoText: "Klikkaus +1."
       },
 
       clickGain3 : {
@@ -132,7 +132,7 @@ ClickerMath.GameState = {
         key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 3"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1."
+        infoText: "Klikkaus +1."
       },
 
       clickGain4 : {
@@ -141,7 +141,7 @@ ClickerMath.GameState = {
         key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 4"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1."
+        infoText: "Klikkaus +1."
       },
 
       clickGain5 : {
@@ -613,10 +613,19 @@ ClickerMath.GameState = {
     this.graphics.name = "Graphics"
 
     //init tasks
-    this.easyTasks = this.initTasks("easyTasks");
-    this.normalTasks = this.initTasks("normalTasks");
-    this.hardTasks = this.initTasks("hardTasks");
-    this.asianTasks = this.initTasks("asianTasks");
+    //equation tasks
+    // this.easyTasks = this.initTasks("easyEquationTasks");
+    // this.normalTasks = this.initTasks("normalEquationTasks");
+    // this.hardTasks = this.initTasks("hardEquationTasks");
+    // this.asianTasks = this.initTasks("asianEquationTasks");
+
+    //equation tasks
+    this.easyTasks = this.initTasks("easyBasicTasks");
+    this.normalTasks = this.initTasks("normalBasicTasks");
+    this.hardTasks = this.initTasks("hardBasicTasks");
+    this.asianTasks = this.initTasks("asianBasicTasks");
+
+
 
     //gameOn for GameComplete function
     this.gameOn = true;
@@ -684,9 +693,6 @@ ClickerMath.GameState = {
       fill: "black"
     }
     var text = this.game.add.text(this.game.world.width - 200, 775, '\u00A9' + "Jaakko Kenttä", copyRigthTextStyle);
-
-    
-
   },
   update: function() {
     //update current x and total x
