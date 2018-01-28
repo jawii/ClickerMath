@@ -4,7 +4,9 @@ var ClickerMath = ClickerMath || {};
 ClickerMath.GameState = {
 
   //initiate game settings
-  init: function() {
+  init: function(levelType) {
+
+    this.levelType = levelType;
 
     this.totalX = 0;
     this.xData = {
@@ -150,7 +152,7 @@ ClickerMath.GameState = {
         key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 5"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1."
+        infoText: "Klikkaus +1."
       },
 
       clickGain6 : {
@@ -159,7 +161,7 @@ ClickerMath.GameState = {
         key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 6"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1."
+        infoText: "Klikkaus +1."
       },
 
       clickGain7 : {
@@ -168,7 +170,7 @@ ClickerMath.GameState = {
         key: "xUpgrade",
         requirements: ["ClickerMath.GameState.clickGain >= 7"],
         reward: ["ClickerMath.GameState.clickGain += 1"],
-        infoText: "Click gain +1."
+        infoText: "Klikkaus +1."
       },
 
       unlockEasyLevelData : {
@@ -177,7 +179,7 @@ ClickerMath.GameState = {
         key: "easy",
         requirements: ["this.studentData.amount >= 1"],
         reward: ["ClickerMath.GameState.easyTaskData.available = true"],
-        infoText: "Unlock easy level tasks."
+        infoText: "Vapauta helpot tehtävät."
       },
 
       unlockNormalLevelData : {
@@ -186,7 +188,7 @@ ClickerMath.GameState = {
         key: "normal",
         requirements: ["this.profData.amount >= 2", "this.easyTaskData.solved > 4"],
         reward: ["ClickerMath.GameState.normalTaskData.available = true"],
-        infoText: "Unlocks the normal level tasks!"
+        infoText: "Vapauta normaalit tehtävät."
       },
 
       unlockHardLevelData : {
@@ -195,7 +197,7 @@ ClickerMath.GameState = {
         key: "hard",
         requirements: ["this.profData.amount >= 5", "this.normalTaskData.solved > 4"],
         reward: ["ClickerMath.GameState.hardTaskData.available = true"],
-        infoText: "Unlocks the hard tasks!"
+        infoText: "Vapauta vaikeat tehtävät."
       },
 
       unlockAsianLevelData : {
@@ -204,7 +206,7 @@ ClickerMath.GameState = {
         key: "asian",
         requirements: ["this.xFarmData.amount >= 10", "this.hardTaskData.solved > 4"],
         reward: ["ClickerMath.GameState.asianTaskData.available = true"],
-        infoText: "Unlocks the asian level tasks!"
+        infoText: "Vapauta aasialaisten tehtävät."
       },
 
       easyTaskRewardRize : {
@@ -213,7 +215,7 @@ ClickerMath.GameState = {
         key: "easy",
         requirements: ["this.easyTaskData.solved >= 2"],
         reward: ["ClickerMath.GameState.easyTaskData.reward *= 2"],
-        infoText: "Doubles Easy tasks rewards"
+        infoText: "Tuplaa helpon tehtävän palkinto."
       },
 
       easyTaskRewardRize2 : {
@@ -222,7 +224,7 @@ ClickerMath.GameState = {
         key: "easy",
         requirements: ["this.easyTaskData.solved >= 5"],
         reward: ["ClickerMath.GameState.easyTaskData.reward *= 2"],
-        infoText: "Doubles Easy tasks rewards"
+        infoText: "Tuplaa helpon tehtävän palkinto."
       },
 
       easyTaskRewardRize3 : {
@@ -231,7 +233,7 @@ ClickerMath.GameState = {
         key: "easy",
         requirements: ["this.easyTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.easyTaskData.reward *= 2"],
-        infoText: "Doubles Easy tasks rewards"
+        infoText: "Tuplaa helpon tehtävän palkinto."
       },
 
       normalTaskRewardRize : {
@@ -240,7 +242,7 @@ ClickerMath.GameState = {
         key: "normal",
         requirements: ["this.normalTaskData.solved >= 2"],
         reward: ["ClickerMath.GameState.normalTaskData.reward *= 2"],
-        infoText: "Doubles normal tasks reward."
+        infoText: "Tuplaa normaalin tehtävän palkinto."
       },
 
       normalTaskRewardRize2 : {
@@ -249,7 +251,7 @@ ClickerMath.GameState = {
         key: "normal",
         requirements: ["this.normalTaskData.solved >= 5"],
         reward: ["ClickerMath.GameState.normalTaskData.reward *= 2"],
-        infoText: "Doubles normal tasks reward."
+        infoText: "Tuplaa normaalin tehtävän palkinto."
       },
 
       normalTaskRewardRize3 : {
@@ -258,7 +260,7 @@ ClickerMath.GameState = {
         key: "normal",
         requirements: ["this.normalTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.normalTaskData.reward *= 2"],
-        infoText: "Doubles normal tasks reward."
+        infoText: "Tuplaa normaalin tehtävän palkinto."
       },
 
       hardTaskRewardRize : {
@@ -267,7 +269,7 @@ ClickerMath.GameState = {
         key: "hard",
         requirements: ["this.hardTaskData.solved >= 2"],
         reward: ["ClickerMath.GameState.hardTaskData.reward *= 2"],
-        infoText: "Doubles hard tasks reward."
+        infoText: "Tuplaa vaikean tehtävän palkinto."
       },
 
       hardTaskRewardRize2 : {
@@ -276,7 +278,7 @@ ClickerMath.GameState = {
         key: "hard",
         requirements: ["this.hardTaskData.solved >= 5"],
         reward: ["ClickerMath.GameState.hardTaskData.reward *= 2"],
-        infoText: "Doubles hard tasks reward."
+        infoText: "Tuplaa vaikean tehtävän palkinto."
       },
 
       hardTaskRewardRize3 : {
@@ -285,7 +287,7 @@ ClickerMath.GameState = {
         key: "hard",
         requirements: ["this.hardTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.hardTaskData.reward *= 2"],
-        infoText: "Doubles hard tasks reward."
+        infoText: "Tuplaa vaikean tehtävän palkinto."
       },
 
       asianTaskRewardRize : {
@@ -294,7 +296,7 @@ ClickerMath.GameState = {
         key: "asian",
         requirements: ["this.asianTaskData.solved >= 2"],
         reward: ["ClickerMath.GameState.asianTaskData.reward *= 2"],
-        infoText: "Doubles asian tasks reward."
+        infoText: "Tuplaa aasialaisen tehtävän palkinto."
       },
 
       asianTaskRewardRize2 : {
@@ -303,7 +305,7 @@ ClickerMath.GameState = {
         key: "asian",
         requirements: ["this.asianTaskData.solved >= 5"],
         reward: ["ClickerMath.GameState.asianTaskData.reward *= 2"],
-        infoText: "Doubles asian tasks reward."
+        infoText: "Tuplaa aasialaisen tehtävän palkinto."
       },
 
       asianTaskRewardRize3 : {
@@ -312,7 +314,7 @@ ClickerMath.GameState = {
         key: "asian",
         requirements: ["this.asianTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.asianTaskData.reward *= 2"],
-        infoText: "Doubles asian tasks reward."
+        infoText: "Tuplaa aasialaisen tehtävän palkinto."
       },
 
 
@@ -322,7 +324,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.profData.amount >= 1", "this.easyTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.studentData.gain += 1"],
-        infoText: "Each student gains one more X per second."
+        infoText: "Oppilas takoo yhden X:n lisää sekunnissa."
       },
 
       studentGainPlus2: {
@@ -331,7 +333,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.xFarmData.amount >= 5", "this.normalTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.studentData.gain += 1"],
-        infoText: "Each student gains one more X per second."
+        infoText: "Oppilas takoo yhden X:n lisää sekunnissa."
       },
 
       studentGainPlus3: {
@@ -340,7 +342,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.profData.amount >= 10", "this.hardTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.studentData.gain += 1"],
-        infoText: "Each student gains one more X per second."
+        infoText: "Oppilas takoo yhden X:n lisää sekunnissa."
       },
 
       studentGainPlus4: {
@@ -349,7 +351,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.profData.amount >= 15", "this.asianTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.studentData.gain += 1"],
-        infoText: "Each student gains one more X per second."
+        infoText: "Oppilas takoo yhden X:n lisää sekunnissa."
       },
 
       studentGainPlus5: {
@@ -358,7 +360,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.easyTaskData.solved >= 10"],
         reward: ["ClickerMath.GameState.studentData.gain += 5"],
-        infoText: "Each student gains five more X in second."
+        infoText: "Oppilas takoo viisi X:ää lisää sekunnissa."
       },
 
       studentGainPlus6: {
@@ -367,7 +369,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.easyTaskData.solved >= 15"],
         reward: ["ClickerMath.GameState.studentData.gain += 5"],
-        infoText: "Each student gains five more X per second."
+        infoText: "Oppilas takoo viisi X:ää lisää sekunnissa."
       },
 
       studentGainPlus7: {
@@ -376,7 +378,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.easyTaskData.solved >= 20"],
         reward: ["ClickerMath.GameState.studentData.gain += 5"],
-        infoText: "Each student gains five more X per second."
+        infoText: "Oppilas takoo viisi X:ää lisää sekunnissa."
       },
 
       studentGainPlus9: {
@@ -385,7 +387,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.easyTaskData.solved >= 25"],
         reward: ["ClickerMath.GameState.studentData.gain *= 2"],
-        infoText: "Doubles students gain!"
+        infoText: "Tuplaa oppilaan X:n tekovauhti."
       },
 
       studentGainPlus10: {
@@ -394,7 +396,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.easyTaskData.solved >= 30"],
         reward: ["ClickerMath.GameState.studentData.gain *= 2"],
-        infoText: "Doubles students gain!"
+        infoText: "Tuplaa oppilaan X:n tekovauhti."
       },
 
       studentGainPlus11: {
@@ -403,7 +405,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.easyTaskData.solved >= 50"],
         reward: ["ClickerMath.GameState.studentData.gain *= 2"],
-        infoText: "Doubles students gain!"
+        infoText: "Tuplaa oppilaan X:n tekovauhti."
       },
 
       studentGainPlus12: {
@@ -412,7 +414,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.easyTaskData.solved >= 60"],
         reward: ["ClickerMath.GameState.studentData.gain *= 2"],
-        infoText: "Doubles students gain!"
+        infoText: "Tuplaa oppilaan X:n tekovauhti."
       },
 
       studentGainPlus13: {
@@ -421,7 +423,7 @@ ClickerMath.GameState = {
         key: "studentUpgrade",
         requirements: ["this.easyTaskData.solved >= 80"],
         reward: ["ClickerMath.GameState.studentData.gain *= 2"],
-        infoText: "Doubles students gain!"
+        infoText: "Tuplaa oppilaan X:n tekovauhti."
       },
 
 
@@ -431,7 +433,7 @@ ClickerMath.GameState = {
         key: "professorUpgrade",
         requirements: ["this.xFarmData.amount >= 1", "this.easyTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.profData.gain += 2"],
-        infoText: "Professor makes two more X per second."
+        infoText: "Professori tekee kaksi X:ää lisää sekunnissa."
       },
 
       profGainPlus2: {
@@ -440,7 +442,7 @@ ClickerMath.GameState = {
         key: "professorUpgrade",
         requirements: ["this.xFarmData.amount >= 5", "this.normalTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.profData.gain += 2"],
-        infoText: "Professor makes two more X per second!"
+        infoText: "Professori tekee kaksi X:ää lisää sekunnissa."
       },
 
       profGainPlus3: {
@@ -449,7 +451,7 @@ ClickerMath.GameState = {
         key: "professorUpgrade",
         requirements: ["this.xFarmData.amount >= 10", "this.hardTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.profData.gain += 2"],
-        infoText: "Professor makes two more X per second!"
+        infoText: "Professori tekee kaksi X:ää lisää sekunnissa."
       },
 
       profGainPlus4: {
@@ -458,7 +460,7 @@ ClickerMath.GameState = {
         key: "professorUpgrade",
         requirements: ["this.xFarmData.amount >= 15", "this.asianTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.profData.gain += 2"],
-        infoText: "Professor makes two more X per second!"
+        infoText: "Professori tekee kaksi X:ää lisää sekunnissa."
       },
 
       profGainPlus5: {
@@ -467,7 +469,7 @@ ClickerMath.GameState = {
         key: "professorUpgrade",
         requirements: ["this.normalTaskData.solved >= 10"],
         reward: ["ClickerMath.GameState.profData.gain += 5"],
-        infoText: "Professor makes five more X per second!"
+        infoText: "Professori tekee viisi X:ää lisää sekunnissa."
       },
 
       profGainPlus6: {
@@ -476,7 +478,7 @@ ClickerMath.GameState = {
         key: "professorUpgrade",
         requirements: ["this.normalTaskData.solved >= 15"],
         reward: ["ClickerMath.GameState.profData.gain += 5"],
-        infoText: "Professor makes five more X per second!"
+        infoText: "Professori tekee viisi X:ää lisää sekunnissa."
       },
 
       profGainPlus7: {
@@ -485,7 +487,7 @@ ClickerMath.GameState = {
         key: "professorUpgrade",
         requirements: ["this.normalTaskData.solved >= 17"],
         reward: ["ClickerMath.GameState.profData.gain += 5"],
-        infoText: "Each professor makes five more X per second!"
+        infoText: "Professori tekee viisi X:ää lisää sekunnissa."
       },
 
       xFarmGainPlus: {
@@ -494,7 +496,7 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.easyTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
-        infoText: "xFarm makes five more X per second."
+        infoText: "X-Farmi tekee viisi X:ää lisää sekunnissa."
       },   
 
       xFarmGainPlus1: {
@@ -503,7 +505,7 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.normalTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
-        infoText: "xFarm makes five more X per second."
+        infoText: "X-Farmi tekee viisi X:ää lisää sekunnissa."
       },
 
       xFarmGainPlus2: {
@@ -512,7 +514,7 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.hardTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
-        infoText: "xFarm makes five more X per second."
+        infoText: "X-Farmi tekee viisi X:ää lisää sekunnissa."
       },  
 
       xFarmGainPlus3: {
@@ -521,7 +523,7 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.asianTaskData.solved >= 1"],
         reward: ["ClickerMath.GameState.xFarmData.gain += 5"],
-        infoText: "xFarm makes five more X per second."
+        infoText: "X-Farmi tekee viisi X:ää lisää sekunnissa."
       },   
 
       xFarmGainPlus4: {
@@ -530,7 +532,7 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.asianTaskData.solved >= 5"],
         reward: ["ClickerMath.GameState.xFarmData.gain *= 2"],
-        infoText: "Doubles xFarm Gain."
+        infoText: "Tuplaa X-Farmin X:n tekovauhdin."
       },  
 
       xFarmGainPlus5: {
@@ -539,7 +541,7 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.asianTaskData.solved >= 7"],
         reward: ["ClickerMath.GameState.xFarmData.gain *= 2"],
-        infoText: "Doubles xFarm Gain."
+        infoText: "Tuplaa X-Farmin X:n tekovauhdin."
       },    
 
       xFarmGainPlus6: {
@@ -548,7 +550,7 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.asianTaskData.solved >= 10"],
         reward: ["ClickerMath.GameState.xFarmData.gain *= 2"],
-        infoText: "Doubles xFarm Gain."
+        infoText: "Tuplaa X-Farmin X:n tekovauhdin."
       },    
 
       xFarmGainPlus7: {
@@ -557,7 +559,7 @@ ClickerMath.GameState = {
         key: "xFarmUpgrade",
         requirements: ["this.asianTaskData.solved >= 15"],
         reward: ["ClickerMath.GameState.xFarmData.gain *= 2"],
-        infoText: "Doubles xFarm Gain."
+        infoText: "Tuplaa X-Farmin X:n tekovauhdin."
       },      
     };
     
@@ -613,19 +615,20 @@ ClickerMath.GameState = {
     this.graphics.name = "Graphics"
 
     //init tasks
-    //equation tasks
-    // this.easyTasks = this.initTasks("easyEquationTasks");
-    // this.normalTasks = this.initTasks("normalEquationTasks");
-    // this.hardTasks = this.initTasks("hardEquationTasks");
-    // this.asianTasks = this.initTasks("asianEquationTasks");
-
-    //equation tasks
-    this.easyTasks = this.initTasks("easyBasicTasks");
-    this.normalTasks = this.initTasks("normalBasicTasks");
-    this.hardTasks = this.initTasks("hardBasicTasks");
-    this.asianTasks = this.initTasks("asianBasicTasks");
-
-
+    if(this.levelType == "calculus"){
+      //equation tasks
+      this.easyTasks = this.initTasks("easyBasicTasks");
+      this.normalTasks = this.initTasks("normalBasicTasks");
+      this.hardTasks = this.initTasks("hardBasicTasks");
+      this.asianTasks = this.initTasks("asianBasicTasks");
+    }
+    else if(this.levelType == "equation"){
+      //equation tasks
+      this.easyTasks = this.initTasks("easyEquationTasks");
+      this.normalTasks = this.initTasks("normalEquationTasks");
+      this.hardTasks = this.initTasks("hardEquationTasks");
+      this.asianTasks = this.initTasks("asianEquationTasks");
+    }
 
     //gameOn for GameComplete function
     this.gameOn = true;
@@ -659,7 +662,7 @@ ClickerMath.GameState = {
     this.xAmountIcon.scale.setTo(0.5);
 
     //gain number
-    this.gainNumberSecondText = this.game.add.text(400, 620, "Gain: " + this.xGainPerSecond + " X/second", this.xIconClickPointStyle);
+    this.gainNumberSecondText = this.game.add.text(400, 620, "Gain: " + this.xGainPerSecond + " X/sek", this.xIconClickPointStyle);
     this.gainNumberSecondText.anchor.setTo(0.5);
 
     //set emitters
@@ -699,7 +702,7 @@ ClickerMath.GameState = {
     //this.xAmountText.text = Math.floor(this.xData.xNow);
     this.xAmountIcon.x = this.xAmountText.right + 30; 
     this.xAmountText.text = parseInt(this.xData.xNow, 10);
-    this.gainNumberSecondText.text = "+" + this.xGainPerSecond + " X/sec"
+    this.gainNumberSecondText.text = "+" + this.xGainPerSecond + " X/sek"
 
     if(this.xData.xNow >= 1000000 && this.gameOn){
       this.gameOn = false;
@@ -818,7 +821,7 @@ ClickerMath.GameState = {
     this.openStoreButton.drawRoundedRect(800, 0, 240, 80, 5);                      
     this.openStoreButton.endFill();   
     //store Text
-    this.storeText = this.game.add.text(920, 40, "Store", storeHeadLineStyle);
+    this.storeText = this.game.add.text(920, 40, "Kauppa", storeHeadLineStyle);
     this.storeText.name = "STORE text";
     this.storeText.anchor.setTo(0.5);     
     this.storeText.alpha = 1;    
@@ -840,7 +843,7 @@ ClickerMath.GameState = {
     this.openUpgradeButton.drawRoundedRect(1040, 0, 240, 80, 5);                      
     this.openUpgradeButton.endFill();   
     //upgradetext Text
-    this.UpgradeText = this.game.add.text(1160, 40, "Upgrades", storeHeadLineStyle);
+    this.UpgradeText = this.game.add.text(1160, 40, "Parannukset", storeHeadLineStyle);
     this.UpgradeText.name = "UPGRADE - text";
     this.UpgradeText.anchor.setTo(0.5);
     this.UpgradeText.alpha = 1;           
@@ -900,7 +903,7 @@ ClickerMath.GameState = {
     this.easyTaskData.solvedAmountText.visible = true;
     this.easyTaskData.rewardText.visible = true;
     this.easyTaskData.icon.visible = true;
-    this.createTaskArea(this.easyTaskData, this.easyTaskPriceIcon, 945, 160, 850, 175, 980, "Easy");
+    this.createTaskArea(this.easyTaskData, this.easyTaskPriceIcon, 945, 160, 850, 175, 980, "Helppo");
     
 
     this.normalTaskPriceIcon;
@@ -912,7 +915,7 @@ ClickerMath.GameState = {
     this.normalTaskData.solvedAmountText.visible = true;
     this.normalTaskData.rewardText.visible = true;
     this.normalTaskData.icon.visible = true;
-    this.createTaskArea(this.normalTaskData, this.normalTaskPriceIcon, 962, 240, 850, 255, 980, "Normal");
+    this.createTaskArea(this.normalTaskData, this.normalTaskPriceIcon, 962, 240, 850, 255, 980, "Normaali");
     
 
     this.hardTaskPriceIcon;
@@ -924,7 +927,7 @@ ClickerMath.GameState = {
     this.hardTaskData.solvedAmountText.visible = true;
     this.hardTaskData.rewardText.visible = true;
     this.hardTaskData.icon.visible = true;
-    this.createTaskArea(this.hardTaskData, this.hardTaskPriceIcon, 945, 320, 850, 340, 980, "Hard");
+    this.createTaskArea(this.hardTaskData, this.hardTaskPriceIcon, 945, 320, 850, 340, 980, "Vaikea");
     
     
     this.asianTaskPriceIcon;
@@ -936,7 +939,7 @@ ClickerMath.GameState = {
     this.asianTaskData.solvedAmountText.visible = true;
     this.asianTaskData.rewardText.visible = true;
     this.asianTaskData.icon.visible = true;
-    this.createTaskArea(this.asianTaskData, this.asianTaskPriceIcon, 945, 400, 850, 420, 980, "Asian");
+    this.createTaskArea(this.asianTaskData, this.asianTaskPriceIcon, 945, 400, 850, 420, 980, "Aasialainen");
     
 
     //HELPERS TEXT & ICONS
@@ -946,7 +949,7 @@ ClickerMath.GameState = {
     if(!this.studentData.priceText){this.studentData.priceText = this.game.add.text();}
     this.studentData.amountText.visible = true;
     this.studentData.priceText.visible = true;
-    this.createHelperText(this.studentData, this.buyStudentText, this.studentPriceIcon, this.storeAreaGroup, 800, 550 + 75 * 0, "Student", 1000, 580 + 74 * 0, 850, 565);
+    this.createHelperText(this.studentData, this.buyStudentText, this.studentPriceIcon, this.storeAreaGroup, 800, 550 + 75 * 0, "Oppilas", 1000, 580 + 74 * 0, 850, 565);
     
     this.buyProfessorText;
     this.professorPriceIcon;
@@ -954,7 +957,7 @@ ClickerMath.GameState = {
     if(!this.profData.priceText){this.profData.priceText = this.game.add.text();}
     this.profData.amountText.visible = true;
     this.profData.priceText.visible = true;
-    this.createHelperText(this.profData, this.buyProfessorText, this.professorPriceIcon, this.storeAreaGroup, 800 + 15, 550 + 75 * 1, "Professor", 1000, 580 + 74 * 1, 850, 635);
+    this.createHelperText(this.profData, this.buyProfessorText, this.professorPriceIcon, this.storeAreaGroup, 800 + 15, 550 + 75 * 1, "Professori", 1000, 580 + 74 * 1, 850, 635);
     
     this.buyXFarmText;
     this.xFarmPriceIcon;
@@ -962,7 +965,7 @@ ClickerMath.GameState = {
     if(!this.xFarmData.priceText){this.xFarmData.priceText = this.game.add.text();}
     this.xFarmData.amountText.visible = true;
     this.xFarmData.priceText.visible = true;
-    this.createHelperText(this.xFarmData, this.buyXFarmText, this.xFarmPriceIcon, this.storeAreaGroup, 800 - 15, 550 + 75 * 2, "xFarm", 1000, 580 + 74 * 2, 850, 705);
+    this.createHelperText(this.xFarmData, this.buyXFarmText, this.xFarmPriceIcon, this.storeAreaGroup, 800 - 15, 550 + 75 * 2, "X-Farmi", 1000, 580 + 74 * 2, 850, 705);
 
     //
     //taskbuttons
@@ -1031,13 +1034,13 @@ ClickerMath.GameState = {
     };
 
     //INFOTEXTS
-    this.buyTaskText = this.game.add.text(1040, 110, "Buy Equations", buyTaskTextStyle);
+    this.buyTaskText = this.game.add.text(1040, 110, "Osta tehtäviä", buyTaskTextStyle);
     this.buyTaskText.name = "Buy Equations - text";
     this.buyTaskText.anchor.setTo(0.5);
     this.buyTaskText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
     this.storeAreaGroup.add(this.buyTaskText);
 
-    this.buyHelpersText = this.game.add.text(1040, 495, "Buy Helpers", buyTaskTextStyle);
+    this.buyHelpersText = this.game.add.text(1040, 495, "Osta apulaisia", buyTaskTextStyle);
     this.buyHelpersText.anchor.setTo(0.5);
     this.buyHelpersText.name = "Buy Helpers - text";
     this.buyHelpersText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
@@ -1359,7 +1362,7 @@ ClickerMath.GameState = {
     gainText.anchor.setTo(0.5);
     this.storeAreaGroup.add(gainText);
 
-    var gainAmountText = this.game.add.text(gainText.x + 30, gainText.y + 30,"+"+ Math.round(data.gain * 100)/100 + "  X/second", gainTextStyle);
+    var gainAmountText = this.game.add.text(gainText.x + 30, gainText.y + 30,"+"+ Math.round(data.gain * 100)/100 + "  X/sekunti", gainTextStyle);
     gainAmountText.anchor.setTo(0.5);
     this.storeAreaGroup.add(gainAmountText);
 
@@ -1414,7 +1417,7 @@ ClickerMath.GameState = {
     this.storeAreaGroup.add(priceIcon); 
 
     //reward text
-    var rewardText = this.game.add.text(1150, data.priceText.y, "Reward", rewardTextStyle);
+    var rewardText = this.game.add.text(1150, data.priceText.y, "Palkinto", rewardTextStyle);
     rewardText.anchor.setTo(0.5);
     this.storeAreaGroup.add(rewardText);
 
@@ -1443,11 +1446,11 @@ ClickerMath.GameState = {
     //create this if button is not purchased
     if(!data.available){
         var availableTextStyle = {
-        font: "bold 35px aldrichregular",
+        font: "bold 25px aldrichregular",
         fill: "red"
         };
 
-      var notAvailableText = this.game.add.text(IconX + 200, IconY, "Not available!", availableTextStyle);
+      var notAvailableText = this.game.add.text(IconX + 200, IconY, "Lukittu", availableTextStyle);
       notAvailableText.anchor.setTo(0.5);
       notAvailableText.angle = 5;
       this.storeAreaGroup.add(notAvailableText);
@@ -1576,7 +1579,7 @@ ClickerMath.GameState = {
       taskData.solved += 1;
       taskData.solvedAmountText.setText("#" + taskData.solved, true);
       textStyle.fill = "green";
-      text = "Correct!";   
+      text = "Oikein!";   
       emitter = this.game.add.emitter(400, 250, 100)
       emitter.name = "Correct Answer Emitter";
       emitter.makeParticles('xIcon');
@@ -1590,7 +1593,7 @@ ClickerMath.GameState = {
     else{
       answerCorrect = false;
       textStyle.fill = "red";
-      text = "Wrong!";
+      text = "Väärin.";
     }
     //tweening tweening tweening
     var text = this.game.add.text(400, 300, text, textStyle);
@@ -1785,12 +1788,12 @@ ClickerMath.GameState = {
     totalX.anchor.setTo(0.5);
     //powered by autoclicker text if solved tasks amount are all under 3
     if(this.easyTaskData.solved > 4){
-      complimentText.text = "You made it!"
+      complimentText.text = "Teit sen!"
       var timeSeconds = this.game.time.totalElapsedSeconds();
       var minutes = Math.floor(timeSeconds/60);
       var seconds = Math.round(timeSeconds - minutes * 60);
-      timeText.text = "Time " + minutes + " minutes and " + seconds + " seconds";
-      totalX.text = "Collected total " + Math.round(this.totalX);
+      timeText.text = "Aika " + minutes + " minuuttia ja " + seconds + " sekuntia.";
+      totalX.text = "Keräsit yhteensä " + Math.round(this.totalX);
     }
     else{
       
@@ -1836,7 +1839,7 @@ ClickerMath.GameState = {
       fill: "black",
       align: "center"
     };
-    var infoText = this.game.add.text(400, 700, "Collect 1 000 000 points. \n Please.", infoTextStyle);
+    var infoText = this.game.add.text(400, 700, "Kerää 1 000 000 X:ää. \n Kiitos!.", infoTextStyle);
     infoText.anchor.setTo(0.5);
     infoTextGroup.add(infoText);
 

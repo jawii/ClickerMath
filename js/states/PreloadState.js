@@ -39,10 +39,16 @@ ClickerMath.PreloadState = {
 		this.load.text('hardBasicTasks', 'assets/data/hardBasicTasks.json');
 		this.load.text('asianBasicTasks', 'assets/data/asianBasicTasks.json');
 
+		//buttons
+		this.load.image("button1", "assets/images/button1.png");
+		this.load.image("button2", "assets/images/button2.png");
+
 		//PROGRESS BAR
 		this.progress = this.game.add.text(this.game.world.centerX, this.game.world.width/2, '0%', {fill: 'white'});    
 		this.progress.anchor.setTo(0.5);           
 		this.game.load.onFileComplete.add(this.fileComplete, this);
+
+
 	},
 
 	create: function(){
