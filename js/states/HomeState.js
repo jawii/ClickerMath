@@ -63,7 +63,9 @@ ClickerMath.HomeState = {
         // this.buttonCalculus.scale.setTo(0.4, 0.7);
         var buttonCalculusText = this.game.add.text(this.buttonCalculus.position.x, this.buttonCalculus.position.y, "Laskutoimituksia", levelChoiceTextstyle);
         buttonCalculusText.anchor.setTo(0.5);
-        this.buttonCalculus.width = buttonCalculusText.width + 30;
+        this.buttonCalculus.width = 250;
+        this.buttonCalculus.height = 80;
+
         this.buttonCalculus.selected = false;
 
 
