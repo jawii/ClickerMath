@@ -57,7 +57,7 @@ ClickerMath.HomeState = {
 
 
     	//buttons for level select
-    	this.buttonCalculus = this.game.add.button(320, choiceText.y + 150, "button1", this.clickHandler);
+    	this.buttonCalculus = this.game.add.button(400, choiceText.y + 100, "button1", this.clickHandler);
         this.buttonCalculus.anchor.setTo(0.5);
         this.buttonCalculus.alpha = 0.5;
         // this.buttonCalculus.scale.setTo(0.4, 0.7);
@@ -69,7 +69,7 @@ ClickerMath.HomeState = {
         this.buttonCalculus.selected = false;
 
 
-        this.buttonEquation = this.game.add.button(960, choiceText.y + 150, "button1", this.clickHandler);
+        this.buttonEquation = this.game.add.button(880, choiceText.y + 100, "button1", this.clickHandler);
         this.buttonEquation.anchor.setTo(0.5);
         this.buttonEquation.alpha = 0.5;
         // this.buttonEquation.scale.setTo(0.4, 0.7);
@@ -83,8 +83,11 @@ ClickerMath.HomeState = {
         var startGameButton = this.game.add.button(640, 700, 'button2', this.playButtonHandler);
         startGameButton.anchor.setTo(0.5);
         startGameButton.scale.setTo(1);
-        var startGameText =this.game.add.text(startGameButton.position.x, startGameButton.position.y, 'Letsdotis', this.startGameTextstyle);
+        var startGameText =this.game.add.text(startGameButton.position.x, startGameButton.position.y, 'Pelaa', this.startGameTextstyle);
         startGameText.anchor.setTo(0.5);
+
+        //add background images
+        this.game.add.sprite(150, 400, 'mainmenu');
     },
 
     clickHandler: function(button, pointer){

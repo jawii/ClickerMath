@@ -1,4 +1,4 @@
-/* global Phaser */
+12/* global Phaser */
 var ClickerMath = ClickerMath || {};
 
 //initiate the Phaser framework

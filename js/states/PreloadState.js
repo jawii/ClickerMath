@@ -7,6 +7,8 @@ ClickerMath.PreloadState = {
 	},
 
 	preload: function(){
+		//main menu
+		this.load.image("mainmenu", "assets/images/mainmenu.png");
 
 		//The X
 		this.load.image("X", "assets/images/X.png");
